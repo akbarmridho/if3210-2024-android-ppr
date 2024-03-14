@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BondoMan</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_transaction">Transaction</string>
+    <string name="title_report">Report</string>
+    <string name="title_scanner">Scanner</string>
+    <string name="title_twibbon">Twibbon</string>
+    <string name="title_settings">Settings</string>
 </resources>
