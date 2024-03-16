@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.informatika.bondoman"
-    compileSdk = 32
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.informatika.bondoman"
         minSdk = 29
-        targetSdk = 32
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -49,6 +49,19 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.annotation:annotation:1.6.0")
+    implementation("androidx.activity:activity:1.8.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.moshi:moshi:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
+    implementation("io.coil-kt:coil:1.4.0")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("io.github.osipxd:security-crypto-datastore-preferences:1.0.0-alpha04")
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha05")
+    implementation("androidx.fragment:fragment-ktx:1.5.6")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
