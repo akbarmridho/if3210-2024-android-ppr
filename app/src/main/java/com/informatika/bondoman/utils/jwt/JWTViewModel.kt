@@ -1,22 +1,32 @@
-package com.informatika.bondoman.ui.login
+package com.informatika.bondoman.utils.jwt
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.informatika.bondoman.utils.JWTManager
+import com.informatika.bondoman.utils.jwt.JWTManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class JWTViewModel(private val jwtManager: JWTManager): ViewModel() {
     val token = MutableLiveData<String>()
 
-    init {
+    fun getToken() {
         viewModelScope.launch(Dispatchers.IO) {
-            jwtManager.getToken().collect {
+            var isAuth = false
+            jwtManager.isAuthenticated().collect {
                 withContext(Dispatchers.Main) {
-                    token.value = it
+                    isAuth = it
                 }
+            }
+
+            if (!isAuth) {
+                return@launch
+            }
+
+            jwtManager.getToken().let {
+                token.postValue(it)
             }
         }
     }

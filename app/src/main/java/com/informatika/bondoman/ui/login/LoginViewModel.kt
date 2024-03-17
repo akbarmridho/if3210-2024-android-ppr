@@ -20,6 +20,9 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
+    private val _loginToken = MutableLiveData<String>()
+    val loginToken: LiveData<String> = _loginToken
+
     fun login(username: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = loginRepository.login(username, password)
@@ -27,6 +30,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             when (result) {
                 is ApiResponse.Success -> {
                     _loginResult.postValue(LoginResult())
+                    _loginToken.postValue(result.data)
                 }
                 is ApiResponse.Error -> {
                     _loginResult.postValue(LoginResult(error = R.string.login_failed))

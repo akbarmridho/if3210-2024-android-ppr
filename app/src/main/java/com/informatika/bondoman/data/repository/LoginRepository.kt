@@ -11,28 +11,9 @@ import java.io.IOException
  * maintains an in-memory cache of login status and user credentials information.
  */
 
+
 class LoginRepository {
-
-    // in-memory cache of the loggedInUser object
-    var user: Boolean? = null
-        private set
-
-    val isLoggedIn: Boolean
-        get() = user != null
-
-    init {
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-
-        user = null
-    }
-
-    fun logout() {
-        // TODO: revoke authentication
-        user = null
-    }
-
-    suspend fun login(username: String, password: String): ApiResponse<Boolean> {
+    suspend fun login(username: String, password: String): ApiResponse<String> {
         try {
             val call = ApiClient.authService.login(LoginRequest(username, password))
             val response = call.awaitResponse()
@@ -40,8 +21,7 @@ class LoginRepository {
             if (response.isSuccessful) {
                 val token = response.body()?.token
                 if (token != null) {
-                    setLoggedInUser(true)
-                    return ApiResponse.Success(true) // Return success with data
+                    return ApiResponse.Success(token) // Return success with data
                 } else {
                     throw IOException("Error logging in", Throwable("Token is invalid"))
                 }
@@ -53,9 +33,4 @@ class LoginRepository {
         }
     }
 
-    public fun setLoggedInUser(isUserValid: Boolean) {
-        this.user = isUserValid
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-    }
 }

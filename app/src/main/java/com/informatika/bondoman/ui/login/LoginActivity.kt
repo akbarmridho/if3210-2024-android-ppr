@@ -13,20 +13,23 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import com.informatika.bondoman.MainActivity
 import com.informatika.bondoman.databinding.ActivityLoginBinding
-
 import com.informatika.bondoman.R
-import kotlinx.coroutines.launch
+import com.informatika.bondoman.utils.DataStoreManager
+import com.informatika.bondoman.utils.jwt.JWTManager
+import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
-
+    private lateinit var jwtManager: JWTManager
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // get context from main activity
+        jwtManager = JWTManager(applicationContext)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -50,6 +53,16 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        loginViewModel.loginToken.observe(this@LoginActivity, Observer {
+            val loginToken = it ?: return@Observer
+
+            if (loginToken != null) {
+                runBlocking {
+                    jwtManager.saveToken(loginToken)
+                }
+            }
+        })
+
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
 
@@ -58,7 +71,8 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             } else {
                 updateUiWithUser()
-                startActivity(Intent(this, MainActivity::class.java))
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intent)
                 finish()
             }
 
