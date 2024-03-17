@@ -6,13 +6,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.informatika.bondoman.databinding.ActivityMainEmptyBinding
 import com.informatika.bondoman.ui.login.LoginActivity
-import com.informatika.bondoman.utils.jwt.JWTManager
+import com.informatika.bondoman.utils.JWTManager
 import kotlinx.coroutines.launch
 
 class MainEmptyActivity : AppCompatActivity() {
