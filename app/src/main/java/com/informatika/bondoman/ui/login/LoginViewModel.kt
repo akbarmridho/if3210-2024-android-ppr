@@ -1,5 +1,6 @@
 package com.informatika.bondoman.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import com.informatika.bondoman.data.repository.LoginRepository
 import com.informatika.bondoman.utils.ApiResponse
 
 import com.informatika.bondoman.R
+import com.informatika.bondoman.utils.jwt.JWTViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -20,8 +22,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    private val _loginToken = MutableLiveData<String>()
-    val loginToken: LiveData<String> = _loginToken
 
     fun login(username: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -29,8 +29,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
             when (result) {
                 is ApiResponse.Success -> {
-                    _loginResult.postValue(LoginResult())
-                    _loginToken.postValue(result.data)
+                    _loginResult.postValue(LoginResult(jwtToken = result.data))
                 }
                 is ApiResponse.Error -> {
                     _loginResult.postValue(LoginResult(error = R.string.login_failed))

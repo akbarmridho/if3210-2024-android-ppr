@@ -6,40 +6,23 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.informatika.bondoman.data.repository.TokenRepository
-import com.informatika.bondoman.utils.ApiResponse
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "jwt_token")
 
 class JWTManager(private val context: Context) {
     // returns a flow of is authenticated state
-
-    suspend fun isAuthenticated(): Flow<Boolean> {
+    fun isAuthenticated(): Flow<Boolean> {
         // flow of token existence from dataStore
-        val isStoreToken =  context.dataStore.data.map {
+        return context.dataStore.data.map {
             it.contains(KEY_TOKEN)
-        }
-        if (isStoreToken.equals(true)){
-            // check token
-            val token = context.dataStore.data.map {
-                it[KEY_TOKEN]
-            }
-
-            val tokenRepository = TokenRepository()
-            val result = tokenRepository.token(token.toString())
-            if (result is ApiResponse.Success){
-                return isStoreToken
-            } else {
-                onLogout()
-                return context.dataStore.data.map {
-                    it.contains(KEY_TOKEN)
-                }
-            }
-        } else {
-            return isStoreToken
         }
     }
 

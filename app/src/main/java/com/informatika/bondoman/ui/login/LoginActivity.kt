@@ -16,20 +16,18 @@ import android.widget.Toast
 import com.informatika.bondoman.MainActivity
 import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.R
-import com.informatika.bondoman.utils.DataStoreManager
 import com.informatika.bondoman.utils.jwt.JWTManager
+import com.informatika.bondoman.utils.jwt.JWTViewModel
+import com.informatika.bondoman.utils.jwt.JWTViewModelFactory
 import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var jwtManager: JWTManager
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var jwtManager: JWTManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // get context from main activity
-        jwtManager = JWTManager(applicationContext)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -42,6 +40,8 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
+        jwtManager = JWTManager(applicationContext)
+
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
@@ -53,16 +53,6 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        loginViewModel.loginToken.observe(this@LoginActivity, Observer {
-            val loginToken = it ?: return@Observer
-
-            if (loginToken != null) {
-                runBlocking {
-                    jwtManager.saveToken(loginToken)
-                }
-            }
-        })
-
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
 
@@ -70,10 +60,16 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             } else {
-                updateUiWithUser()
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                if (loginResult.jwtToken != null) {
+                    runBlocking {
+                        jwtManager.saveToken(loginResult.jwtToken)
+                    }
+
+                    updateUiWithUser()
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
 
             setResult(Activity.RESULT_OK)
