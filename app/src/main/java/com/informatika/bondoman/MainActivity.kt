@@ -1,19 +1,15 @@
 package com.informatika.bondoman
 
-import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.informatika.bondoman.databinding.ActivityMainBinding
-import com.informatika.bondoman.ui.login.LoginActivity
-import com.informatika.bondoman.utils.jwt.JWTManager
-import kotlinx.coroutines.launch
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         // disable night mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        // Enable support for Splash Screen API for
+        // proper Android 12+ support
+        installSplashScreen()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
