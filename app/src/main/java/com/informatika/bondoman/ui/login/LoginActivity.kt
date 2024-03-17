@@ -17,8 +17,6 @@ import com.informatika.bondoman.MainActivity
 import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.R
 import com.informatika.bondoman.utils.jwt.JWTManager
-import com.informatika.bondoman.utils.jwt.JWTViewModel
-import com.informatika.bondoman.utils.jwt.JWTViewModelFactory
 import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {

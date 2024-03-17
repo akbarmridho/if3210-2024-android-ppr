@@ -1,6 +1,5 @@
 package com.informatika.bondoman.ui.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.informatika.bondoman.data.repository.LoginRepository
 import com.informatika.bondoman.utils.ApiResponse
 
 import com.informatika.bondoman.R
-import com.informatika.bondoman.utils.jwt.JWTViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
