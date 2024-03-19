@@ -18,7 +18,7 @@ class MainEmptyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         binding = ActivityMainEmptyBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -32,7 +32,7 @@ class MainEmptyActivity : AppCompatActivity() {
 
         jwtManager = JWTManager(applicationContext)
         lifecycleScope.launch {
-            jwtManager.isAuthenticated().collect() {
+            jwtManager.isAuthenticated().collect {
                 if (it) {
                     val intent = Intent(this@MainEmptyActivity, MainActivity::class.java)
                     startActivity(intent)

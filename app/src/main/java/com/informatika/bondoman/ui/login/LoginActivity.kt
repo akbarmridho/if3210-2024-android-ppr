@@ -13,6 +13,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.informatika.bondoman.MainActivity
 import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.R
@@ -20,7 +21,7 @@ import com.informatika.bondoman.utils.JWTManager
 import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
     private lateinit var jwtManager: JWTManager
 
@@ -34,9 +35,6 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.password
         val login = binding.login
         val loading = binding.loading
-
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
 
         jwtManager = JWTManager(applicationContext)
 

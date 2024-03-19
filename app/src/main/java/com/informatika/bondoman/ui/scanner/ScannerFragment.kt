@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.informatika.bondoman.R
 
 class ScannerFragment : Fragment() {
@@ -14,7 +15,7 @@ class ScannerFragment : Fragment() {
         fun newInstance() = ScannerFragment()
     }
 
-    private lateinit var viewModel: ScannerViewModel
+    private val viewModel: ScannerViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,11 +23,4 @@ class ScannerFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_scanner, container, false)
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ScannerViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

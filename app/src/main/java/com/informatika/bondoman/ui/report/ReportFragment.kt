@@ -1,11 +1,11 @@
 package com.informatika.bondoman.ui.report
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.informatika.bondoman.R
 
 class ReportFragment : Fragment() {
@@ -14,7 +14,7 @@ class ReportFragment : Fragment() {
         fun newInstance() = ReportFragment()
     }
 
-    private lateinit var viewModel: ReportViewModel
+    private val viewModel: ReportViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,11 +22,4 @@ class ReportFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_report, container, false)
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ReportViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.informatika.bondoman.R
 
 class TransactionFragment : Fragment() {
@@ -14,7 +15,7 @@ class TransactionFragment : Fragment() {
         fun newInstance() = TransactionFragment()
     }
 
-    private lateinit var viewModel: TransactionViewModel
+    private val viewModel: TransactionViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,11 +23,4 @@ class TransactionFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_transaction, container, false)
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(TransactionViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

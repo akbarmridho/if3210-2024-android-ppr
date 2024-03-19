@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.informatika.bondoman.R
 
 class TwibbonFragment : Fragment() {
@@ -14,7 +15,7 @@ class TwibbonFragment : Fragment() {
         fun newInstance() = TwibbonFragment()
     }
 
-    private lateinit var viewModel: TwibbonViewModel
+    private val viewModel: TwibbonViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,11 +23,4 @@ class TwibbonFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_twibbon, container, false)
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(TwibbonViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }
