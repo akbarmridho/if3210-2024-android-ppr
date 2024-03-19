@@ -13,8 +13,10 @@ class TokenRepository {
 
             Log.d("status", response.code().toString())
 
-            if (response.isSuccessful) {
-                return ApiResponse.Success(true) // Return success with data
+            return if (response.isSuccessful) {
+                ApiResponse.Success(true) // Return success with data
+            } else if (response.code() == 401) {
+                ApiResponse.Success(false)
             } else {
                 throw Exception("Error token")
             }

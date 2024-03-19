@@ -24,9 +24,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     fun login(username: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = loginRepository.login(username, password)
 
-            when (result) {
+            when (val result = loginRepository.login(username, password)) {
                 is ApiResponse.Success -> {
                     _loginResult.postValue(LoginResult(jwtToken = result.data))
                 }
@@ -40,7 +39,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {
-            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
+            _loginForm.value = LoginFormState(usernameError = R.string.invalid_email)
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
