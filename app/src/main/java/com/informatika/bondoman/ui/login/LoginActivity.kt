@@ -3,7 +3,6 @@ package com.informatika.bondoman.ui.login
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,10 @@ import com.informatika.bondoman.utils.JWTManager
 import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
-    private val loginViewModel: LoginViewModel by viewModels()
+    private val loginViewModel: LoginViewModel by viewModels {
+        LoginViewModel.Factory
+    }
+
     private lateinit var binding: ActivityLoginBinding
     private lateinit var jwtManager: JWTManager
 

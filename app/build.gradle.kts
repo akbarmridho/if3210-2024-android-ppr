@@ -55,6 +55,7 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.annotation:annotation:1.7.1")
     implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
     implementation("com.squareup.moshi:moshi:$moshiVersion")

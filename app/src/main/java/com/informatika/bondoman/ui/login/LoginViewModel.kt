@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.informatika.bondoman.data.repository.LoginRepository
 import com.informatika.bondoman.utils.ApiResponse
@@ -48,5 +49,19 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(username).matches()
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+                    return LoginViewModel(
+                        loginRepository = LoginRepository()
+                    ) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class")
+            }
+        }
     }
 }
