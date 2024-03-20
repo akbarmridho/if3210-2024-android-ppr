@@ -11,8 +11,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.informatika.bondoman.databinding.ActivityMainBinding
-import com.informatika.bondoman.ui.login.LoginActivity
-import com.informatika.bondoman.utils.JWTManager
+import com.informatika.bondoman.view.activity.login.LoginActivity
+import com.informatika.bondoman.prefdatastore.JWTManager
 import kotlinx.coroutines.launch
 
 

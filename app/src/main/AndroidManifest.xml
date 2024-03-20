@@ -16,7 +16,7 @@
         android:theme="@style/Theme.AppSplash"
         tools:targetApi="31">
         <activity
-            android:name=".MainEmptyActivity"
+            android:name=".view.activity.MainEmptyActivity"
             android:exported="true"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
@@ -32,7 +32,7 @@
             >
         </activity>
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".view.activity.login.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.BondoMan"
             />

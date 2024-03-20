@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.informatika.bondoman.ui.settings.SettingsFragment"
+        android:name="com.informatika.bondoman.view.fragment.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/navigation_report"
-        android:name="com.informatika.bondoman.ui.report.ReportFragment"
+        android:name="com.informatika.bondoman.view.fragment.ReportFragment"
         android:label="@string/title_report"
         tools:layout="@layout/fragment_report" />
     <fragment
         android:id="@+id/navigation_scanner"
-        android:name="com.informatika.bondoman.ui.scanner.ScannerFragment"
+        android:name="com.informatika.bondoman.view.fragment.ScannerFragment"
         android:label="@string/title_scanner"
         tools:layout="@layout/fragment_scanner" />
     <fragment
         android:id="@+id/navigation_twibbon"
-        android:name="com.informatika.bondoman.ui.twibbon.TwibbonFragment"
+        android:name="com.informatika.bondoman.view.fragment.TwibbonFragment"
         android:label="@string/title_twibbon"
         tools:layout="@layout/fragment_twibbon" />
     <fragment
         android:id="@+id/navigation_transaction"
-        android:name="com.informatika.bondoman.ui.transaction.TransactionFragment"
+        android:name="com.informatika.bondoman.view.fragment.TransactionFragment"
         android:label="@string/title_transaction"
         tools:layout="@layout/fragment_transaction" />
 
