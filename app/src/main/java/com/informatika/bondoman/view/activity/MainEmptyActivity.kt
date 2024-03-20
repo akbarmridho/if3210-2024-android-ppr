@@ -9,7 +9,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.informatika.bondoman.MainActivity
 import com.informatika.bondoman.databinding.ActivityMainEmptyBinding
-import com.informatika.bondoman.view.login.LoginActivity
+import com.informatika.bondoman.view.activity.login.LoginActivity
 import com.informatika.bondoman.prefdatastore.JWTManager
 import kotlinx.coroutines.launch
 
