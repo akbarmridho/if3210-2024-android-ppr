@@ -1,4 +1,4 @@
-package com.informatika.bondoman.view.activity.login
+package com.informatika.bondoman.view.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -17,13 +17,11 @@ import com.informatika.bondoman.MainActivity
 import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.R
 import com.informatika.bondoman.prefdatastore.JWTManager
-import com.informatika.bondoman.viewmodel.LoginViewModel
+import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
-    private val loginViewModel: LoginViewModel by viewModels {
-        LoginViewModel.Factory
-    }
+    private val loginViewModel: LoginViewModel by viewModels<LoginViewModel>()
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var jwtManager: JWTManager

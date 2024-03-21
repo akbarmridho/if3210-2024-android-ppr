@@ -32,7 +32,7 @@
             >
         </activity>
         <activity
-            android:name=".view.activity.login.LoginActivity"
+            android:name=".view.activity.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.BondoMan"
             />

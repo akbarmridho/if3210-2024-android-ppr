@@ -6,8 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.informatika.bondoman.network.ApiResponse
-import com.informatika.bondoman.repository.TokenRepository
+import com.informatika.bondoman.model.Resource
+import com.informatika.bondoman.model.repository.TokenRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -41,8 +41,8 @@ class JWTManager(private val context: Context) {
     }
 
     suspend fun isExpired(): Boolean {
-        return when (val result = tokenRepository.token("Bearer " + getToken())) {
-            is ApiResponse.Success -> {
+        return when (val result = tokenRepository.token(getToken())) {
+            is Resource.Success -> {
                 !result.data
             }
 

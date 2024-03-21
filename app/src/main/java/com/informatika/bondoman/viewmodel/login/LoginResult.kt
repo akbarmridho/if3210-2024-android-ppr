@@ -1,4 +1,4 @@
-package com.informatika.bondoman.view.activity.login
+package com.informatika.bondoman.viewmodel.login
 
 /**
  * Authentication result : success (user details) or error message.
