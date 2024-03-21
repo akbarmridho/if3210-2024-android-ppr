@@ -88,8 +88,6 @@ dependencies {
     val koinVersion = "3.5.3"
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-android:$koinVersion")
-    implementation("io.insert-koin:koin-androidx-viewmodel:$koinVersion")
-    implementation("io.insert-koin:koin-androidx-scope:$koinVersion")
 
     // Room
     val roomVersion = "2.6.1"
