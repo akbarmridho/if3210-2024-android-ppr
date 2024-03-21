@@ -26,6 +26,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://pbd-backend-2024.vercel.app/api/\"")
+        }
+
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://pbd-backend-2024.vercel.app/api/\"")
         }
     }
     compileOptions {
@@ -67,6 +72,11 @@ dependencies {
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
+
+    // OkHttp
+    val okhttpVersion = "4.12.0"
+    implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
 
     // Moshi
     val moshiVersion = "1.12.0"
