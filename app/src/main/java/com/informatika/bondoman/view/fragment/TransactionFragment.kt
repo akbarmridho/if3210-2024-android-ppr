@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.informatika.bondoman.R
-import com.informatika.bondoman.viewmodel.TransactionViewModel
+import com.informatika.bondoman.viewmodel.transaction.ListTransactionViewModel
 
 class TransactionFragment : Fragment() {
 
@@ -15,7 +15,7 @@ class TransactionFragment : Fragment() {
         fun newInstance() = TransactionFragment()
     }
 
-    private val viewModel: TransactionViewModel by viewModels()
+    private val viewModel: ListTransactionViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

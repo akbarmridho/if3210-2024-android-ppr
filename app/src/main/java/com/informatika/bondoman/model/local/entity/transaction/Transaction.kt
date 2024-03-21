@@ -23,7 +23,6 @@ data class Transaction (
 
     val amount: Int,
 
-    @Embedded
-    val location: Coordinates,
+    val location: String,
 ) : Parcelable
 
