@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.informatika.bondoman.model.repository.LoginRepository
+import com.informatika.bondoman.model.repository.login.LoginRepositoryImpl
 import com.informatika.bondoman.model.Resource
 
 import com.informatika.bondoman.R
+import com.informatika.bondoman.model.repository.login.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

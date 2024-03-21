@@ -1,15 +1,15 @@
-package com.informatika.bondoman.model.repository
+package com.informatika.bondoman.model.repository.token
 
-import android.util.Log
 import com.informatika.bondoman.network.ApiClient
 import com.informatika.bondoman.model.Resource
+import com.informatika.bondoman.model.remote.AuthService
 import retrofit2.awaitResponse
 import timber.log.Timber
 
-class TokenRepository {
-    suspend fun token(token: String): Resource<Boolean> {
+class TokenRepositoryImpl(private var authService: AuthService) : TokenRepository {
+    override suspend fun token(token: String): Resource<Boolean> {
         try {
-            val call = ApiClient.authService.token("Bearer $token")
+            val call = authService.token("Bearer $token")
             val response = call.awaitResponse()
 
             Timber.tag("status").d(response.code().toString())

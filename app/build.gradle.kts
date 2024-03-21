@@ -88,6 +88,7 @@ dependencies {
     val koinVersion = "3.5.3"
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-android:$koinVersion")
+    testImplementation("io.insert-koin:koin-test-junit4:$koinVersion")
 
     // Room
     val roomVersion = "2.6.1"
@@ -99,6 +100,10 @@ dependencies {
     // Timber
     val timberVersion = "5.0.1"
     implementation("com.jakewharton.timber:timber:$timberVersion")
+
+    // mockk
+    val mockkVersion = "1.13.10"
+    testImplementation("io.mockk:mockk:$mockkVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

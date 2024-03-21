@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
-import com.informatika.bondoman.model.repository.TransactionRepository
+import com.informatika.bondoman.model.repository.transaction.TransactionRepository
 import kotlinx.coroutines.launch
 
 class ListTransactionViewModel(private var transactionRepository: TransactionRepository) : ViewModel() {
@@ -15,7 +15,7 @@ class ListTransactionViewModel(private var transactionRepository: TransactionRep
     }
 
     init {
-        transactionRepository.getListTransactionLiveData().observeForever(observer)
+        transactionRepository.listTransactionLiveData.observeForever(observer)
     }
 
     fun getAllTransaction() {
@@ -26,7 +26,7 @@ class ListTransactionViewModel(private var transactionRepository: TransactionRep
 
     override fun onCleared() {
         super.onCleared()
-        transactionRepository.getListTransactionLiveData().removeObserver(observer)
+        transactionRepository.listTransactionLiveData.removeObserver(observer)
     }
 
 

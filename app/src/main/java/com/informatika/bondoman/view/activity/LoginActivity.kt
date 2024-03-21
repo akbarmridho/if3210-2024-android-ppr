@@ -12,22 +12,32 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.viewModels
 import com.informatika.bondoman.MainActivity
 import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.R
 import com.informatika.bondoman.prefdatastore.JWTManager
+import com.informatika.bondoman.prefdatastore.JWTManagerImpl
+import com.informatika.bondoman.viewmodel.JWTViewModel
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
+import org.koin.core.context.startKoin
+import timber.log.Timber
 
 class LoginActivity : AppCompatActivity() {
-    private val loginViewModel: LoginViewModel by viewModels<LoginViewModel>()
+    private val loginViewModel: LoginViewModel by viewModel()
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var jwtManager: JWTManager
+    private val jwtViewModel: JWTViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        initTimber()
+//        initKoin()
+        // koin set android context
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -37,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
         val login = binding.login
         val loading = binding.loading
 
-        jwtManager = JWTManager(applicationContext)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -59,9 +68,8 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 if (loginResult.jwtToken != null) {
                     runBlocking {
-                        jwtManager.saveToken(loginResult.jwtToken)
+                        jwtViewModel.jwtManager.saveToken(loginResult.jwtToken)
                     }
-
                     updateUiWithUser()
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
@@ -129,4 +137,5 @@ class LoginActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
     }
+
 }

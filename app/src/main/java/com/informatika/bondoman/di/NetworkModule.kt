@@ -3,7 +3,6 @@ package com.informatika.bondoman.di
 import com.informatika.bondoman.BuildConfig
 import com.informatika.bondoman.model.remote.AuthService
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,15 +30,8 @@ val networkModule = module {
             .build()
     }
 
-    // Dependency: Moshi
-    single<Moshi> {
-        Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-    }
-
     // Dependency: Retrofit
-    single {
+    single<Retrofit> {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .client(get())
@@ -48,8 +40,5 @@ val networkModule = module {
     }
 
     // Dependency: ApiService
-    single {
-        val retrofit: Retrofit = get()
-        retrofit.create(AuthService::class.java)
-    }
+    single<AuthService> {get<Retrofit>().create(AuthService::class.java)}
 }

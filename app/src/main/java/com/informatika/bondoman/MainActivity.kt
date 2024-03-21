@@ -13,13 +13,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.informatika.bondoman.databinding.ActivityMainBinding
 import com.informatika.bondoman.view.activity.LoginActivity
 import com.informatika.bondoman.prefdatastore.JWTManager
+import com.informatika.bondoman.viewmodel.JWTViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var jwtManager: JWTManager
+    private val jwtViewModel: JWTViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        jwtManager = JWTManager(applicationContext)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -54,8 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         lifecycleScope.launch {
-            if (jwtManager.isExpired()) {
-                jwtManager.onLogout()
+            if (jwtViewModel.isExpired()) {
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()

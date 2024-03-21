@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.informatika.bondoman.R
 import com.informatika.bondoman.model.local.entity.transaction.Category
-import com.informatika.bondoman.model.repository.TransactionRepository
+import com.informatika.bondoman.model.repository.transaction.TransactionRepository
 import com.informatika.bondoman.viewmodel.transaction.helper.TransactionFormState
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.informatika.bondoman.model.repository
+package com.informatika.bondoman.model.repository.transaction
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,14 +7,20 @@ import com.informatika.bondoman.model.local.dao.TransactionDao
 import com.informatika.bondoman.model.local.entity.transaction.Category
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 
-class TransactionRepository(private var transactionDao: TransactionDao) {
-    private val _listTransactionLiveData = MutableLiveData<Resource<List<Transaction>>>()
-    private val listTransactionLiveData : LiveData<Resource<List<Transaction>>> = _listTransactionLiveData
+class TransactionRepositoryImpl(private var transactionDao: TransactionDao) : TransactionRepository {
+    override var _listTransactionLiveData = MutableLiveData<Resource<List<Transaction>>>()
+        private set
+    override var listTransactionLiveData : LiveData<Resource<List<Transaction>>> = _listTransactionLiveData
+        private set
+        get() = _listTransactionLiveData
 
-    private val _transactionLiveData = MutableLiveData<Resource<Transaction>>()
-    private val transactionLiveData : LiveData<Resource<Transaction>> = _transactionLiveData
+    override var _transactionLiveData = MutableLiveData<Resource<Transaction>>()
+        private set
+    override var transactionLiveData : LiveData<Resource<Transaction>> = _transactionLiveData
+        private set
+        get() = _transactionLiveData
 
-    suspend fun getTransaction(id: Int) {
+    override suspend fun getTransaction(id: Int) {
         _transactionLiveData.postValue(Resource.Loading())
         try {
             val transaction = transactionDao.get(id)
@@ -24,7 +30,7 @@ class TransactionRepository(private var transactionDao: TransactionDao) {
         }
     }
 
-    suspend fun getAllTransaction() {
+    override suspend fun getAllTransaction() {
         _listTransactionLiveData.postValue(Resource.Loading())
         try {
             val transactionList = transactionDao.getAll()
@@ -34,27 +40,27 @@ class TransactionRepository(private var transactionDao: TransactionDao) {
         }
     }
 
-    suspend fun insertTransaction(title: String, category: Category, amount: Int, location: String) {
+    override suspend fun insertTransaction(title: String, category: Category, amount: Int, location: String) {
         transactionDao.insert(title, category, amount, location)
     }
 
-    suspend fun insertTransaction(title: String, category: Category, amount: Int) {
+    override suspend fun insertTransaction(title: String, category: Category, amount: Int) {
         transactionDao.insert(title, category, amount)
     }
 
-    suspend fun updateTransaction(title: String, amount: Int, location: String) {
+    override suspend fun updateTransaction(title: String, amount: Int, location: String) {
         transactionDao.update(title, amount, location)
     }
 
-    suspend fun updateTransaction(title: String, amount: Int) {
+    override suspend fun updateTransaction(title: String, amount: Int) {
         transactionDao.update(title, amount)
     }
 
-    suspend fun deleteTransaction(transaction: Transaction) {
+    override suspend fun deleteTransaction(transaction: Transaction) {
         transactionDao.delete(transaction)
     }
 
-    suspend fun refreshTransaction() {
+    override suspend fun refreshTransaction() {
         _listTransactionLiveData.postValue(Resource.Loading())
         try {
             val transactionList = transactionDao.getAll()
@@ -63,8 +69,4 @@ class TransactionRepository(private var transactionDao: TransactionDao) {
             _listTransactionLiveData.postValue(Resource.Error(e))
         }
     }
-
-    fun getListTransactionLiveData() = listTransactionLiveData
-
-    fun getTransactionLiveData() = transactionLiveData
 }
