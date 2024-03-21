@@ -1,4 +1,4 @@
-package com.informatika.bondoman.model.local.entity
+package com.informatika.bondoman.model.local.entity.transaction
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
@@ -7,18 +7,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.informatika.bondoman.model.local.DBConstants
 import kotlinx.parcelize.Parcelize
-
-enum class Category(s: String) {
-    PEMASUKAN("Pemasukan"),
-    PENGELUARAN("Pengeluaran")
-}
-
-@Parcelize
-data class Coordinates(
-    @ColumnInfo(defaultValue = "NULL")
-    val latitude: Double,
-    val longitude: Double
-): Parcelable
 
 @Entity(tableName = DBConstants.mTableTransaction)
 @Parcelize
@@ -38,3 +26,4 @@ data class Transaction (
     @Embedded
     val location: Coordinates,
 ) : Parcelable
+

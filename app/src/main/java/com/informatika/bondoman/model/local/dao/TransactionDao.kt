@@ -2,13 +2,11 @@ package com.informatika.bondoman.model.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
 import com.informatika.bondoman.model.local.DBConstants
-import com.informatika.bondoman.model.local.entity.Category
-import com.informatika.bondoman.model.local.entity.Coordinates
-import com.informatika.bondoman.model.local.entity.Transaction
+import com.informatika.bondoman.model.local.entity.transaction.Category
+import com.informatika.bondoman.model.local.entity.transaction.Coordinates
+import com.informatika.bondoman.model.local.entity.transaction.Transaction
 
 @Dao
 interface TransactionDao {

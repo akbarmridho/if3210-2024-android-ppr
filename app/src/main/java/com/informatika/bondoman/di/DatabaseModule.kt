@@ -12,6 +12,7 @@ val databaseModule = module {
         Room.databaseBuilder(androidContext(), AppDB::class.java, DBConstants.mName).build()
     }
 
+    // Dependency: TransactionDao
     single {
         val appDB: AppDB = get()
         appDB.transactionDao()
