@@ -23,8 +23,9 @@
     <string name="action_save">"Save"</string>
     <string name="action_cancel">"Cancel"</string>
     <string name="action_delete">"Delete"</string>
-    <string name="action_edit">"Edit"</string>
     <string name="action_add">"+"</string>
+    <string name="edit_description">"Edit"</string>
+    <string name="delete_description">"Delete"</string>
     <string name="invalid_title">"Fill the title!"</string>
     <string name="invalid_amount_empty">"Fill the amount!"</string>
     <string name="invalid_amount_negative">"Amount must be positive!"</string>
@@ -36,5 +37,8 @@
     <string name="transaction_not_deleted">"Transaction not deleted!"</string>
     <string name="transaction_not_updated">"Transaction not updated!"</string>
     <string name="transaction_not_found">"Transaction not found!"</string>
+    <string name="empty_transaction_list">"No transaction yet!"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
