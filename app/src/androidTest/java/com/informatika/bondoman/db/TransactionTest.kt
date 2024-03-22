@@ -42,5 +42,33 @@ class TransactionTest {
         transactionDao.insert(title = "Test2", category = Category.PENGELUARAN, amount = 2000,)
         val transactions = transactionDao.getAll()
         assert(transactions.size == 2)
+
+        val lastId = transactions.last()._id
+        val transaction = transactionDao.get(lastId)
+        assert(transaction.title == "Test2")
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun update() {
+        transactionDao.insert(title = "Test1", category = Category.PEMASUKAN, amount = 1000, location = "Jakarta")
+        val transactions = transactionDao.getAll()
+        val lastId = transactions.last()._id
+        transactionDao.update("Test2", 2000, "Bandung")
+        val transaction = transactionDao.get(lastId)
+        assert(transaction.title == "Test2")
+        assert(transaction.amount == 2000)
+        assert(transaction.location == "Bandung")
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun delete() {
+        transactionDao.insert(title = "Test1", category = Category.PEMASUKAN, amount = 1000, location = "Jakarta")
+        val transactions = transactionDao.getAll()
+        val lastId = transactions.last()._id
+        transactionDao.delete(transactions.last())
+        val transaction = transactionDao.get(lastId)
+        assert(transaction == null)
     }
 }

@@ -23,6 +23,7 @@ data class Transaction (
 
     val amount: Int,
 
-    val location: String,
+    @ColumnInfo(defaultValue = "NULL")
+    val location: String?,
 ) : Parcelable
 
