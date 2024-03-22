@@ -2,6 +2,7 @@ package com.informatika.bondoman
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
@@ -12,7 +13,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.informatika.bondoman.databinding.ActivityMainBinding
 import com.informatika.bondoman.view.activity.LoginActivity
-import com.informatika.bondoman.prefdatastore.JWTManager
 import com.informatika.bondoman.viewmodel.JWTViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -54,7 +54,10 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         lifecycleScope.launch {
-            if (jwtViewModel.isExpired()) {
+            val isExpired = jwtViewModel.isExpired()
+            if (isExpired) {
+                jwtViewModel.jwtManager.onLogout()
+                Toast.makeText(this@MainActivity, "Token expired", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()

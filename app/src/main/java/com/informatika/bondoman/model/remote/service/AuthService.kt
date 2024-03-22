@@ -1,4 +1,4 @@
-package com.informatika.bondoman.model.remote
+package com.informatika.bondoman.model.remote.service
 
 import com.informatika.bondoman.model.remote.request.LoginRequest
 import com.informatika.bondoman.model.remote.response.LoginResponse

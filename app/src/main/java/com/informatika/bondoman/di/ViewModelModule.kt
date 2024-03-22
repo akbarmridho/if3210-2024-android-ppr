@@ -16,7 +16,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     // Dependency: JWTViewModel
     viewModel {
-        JWTViewModel(JWTManagerImpl(androidContext()), get())
+        JWTViewModel(JWTManagerImpl(get()), get())
     }
 
     // Dependency: LoginViewModel

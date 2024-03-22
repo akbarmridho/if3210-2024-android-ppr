@@ -2,7 +2,7 @@ package com.informatika.bondoman.model.repository.login
 
 import com.informatika.bondoman.model.remote.request.LoginRequest
 import com.informatika.bondoman.model.Resource
-import com.informatika.bondoman.model.remote.AuthService
+import com.informatika.bondoman.model.remote.service.AuthService
 import retrofit2.awaitResponse
 import java.io.IOException
 

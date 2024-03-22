@@ -35,10 +35,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        initTimber()
-//        initKoin()
-        // koin set android context
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

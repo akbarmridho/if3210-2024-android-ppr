@@ -1,8 +1,7 @@
 package com.informatika.bondoman.model.repository.token
 
-import com.informatika.bondoman.network.ApiClient
 import com.informatika.bondoman.model.Resource
-import com.informatika.bondoman.model.remote.AuthService
+import com.informatika.bondoman.model.remote.service.AuthService
 import retrofit2.awaitResponse
 import timber.log.Timber
 
