@@ -21,6 +21,12 @@ class DetailTransactionViewModel(private var transactionRepository: TransactionR
         }
     }
 
+    fun deleteTransaction(transaction: Transaction) {
+        viewModelScope.launch {
+            transactionRepository.deleteTransaction(transaction)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         transactionRepository.transactionLiveData.removeObserver(observer)
