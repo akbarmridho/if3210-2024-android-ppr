@@ -47,7 +47,6 @@ android {
     }
 }
 
-
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -108,6 +107,10 @@ dependencies {
     // mockk
     val mockkVersion = "1.13.10"
     testImplementation("io.mockk:mockk:$mockkVersion")
+
+    // spinKit
+    val spinKitVersion = "1.4.0"
+    implementation("com.github.ybq:Android-SpinKit:$spinKitVersion")
 
     // Unit Test
     testImplementation("junit:junit:4.13.2")
