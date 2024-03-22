@@ -22,6 +22,4 @@ interface TransactionRepository {
     suspend fun updateTransaction(title: String, amount: Int, location: String)
     suspend fun updateTransaction(title: String, amount: Int)
     suspend fun deleteTransaction(transaction: Transaction)
-    suspend fun refreshTransaction()
-
 }

@@ -59,14 +59,4 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao) : Tr
     override suspend fun deleteTransaction(transaction: Transaction) {
         transactionDao.delete(transaction)
     }
-
-    override suspend fun refreshTransaction() {
-        _listTransactionLiveData.postValue(Resource.Loading())
-        try {
-            val transactionList = transactionDao.getAll()
-            _listTransactionLiveData.postValue(Resource.Success(transactionList))
-        } catch (e: Exception) {
-            _listTransactionLiveData.postValue(Resource.Error(e))
-        }
-    }
 }
