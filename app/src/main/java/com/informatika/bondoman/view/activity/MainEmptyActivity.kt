@@ -16,16 +16,16 @@ import com.informatika.bondoman.di.databaseModule
 import com.informatika.bondoman.di.networkModule
 import com.informatika.bondoman.di.repositoryModule
 import com.informatika.bondoman.di.viewModelModule
-import com.informatika.bondoman.viewmodel.JWTViewModel
+import com.informatika.bondoman.prefdatastore.JWTManager
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
 class MainEmptyActivity : AppCompatActivity() {
-    private val jwtViewModel: JWTViewModel by viewModel()
+    private val jwtManager: JWTManager by inject()
     private lateinit var binding: ActivityMainEmptyBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class MainEmptyActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         lifecycleScope.launch {
-            jwtViewModel.jwtManager.isAuthenticated().collect{
+            jwtManager.isAuthenticated().collect{
                 if (it) {
                     val intent = Intent(this@MainEmptyActivity, MainActivity::class.java)
                     startActivity(intent)
