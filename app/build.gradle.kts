@@ -17,6 +17,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
     }
 
     buildTypes {
@@ -46,6 +47,7 @@ android {
     }
 }
 
+
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -58,6 +60,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.test.ext:junit-ktx:1.2.0-alpha03")
+    implementation("androidx.test:runner:1.5.2")
 
     // LifeCycle
     val lifecycleVersion = "2.7.0"
@@ -105,7 +109,15 @@ dependencies {
     val mockkVersion = "1.13.10"
     testImplementation("io.mockk:mockk:$mockkVersion")
 
+    // Unit Test
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.ext:junit:1.2.0-alpha03")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.2.0-alpha03")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test:core:1.5.0")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+    androidTestImplementation("androidx.test.ext:truth:1.5.0")
+    androidTestImplementation("com.google.truth:truth:1.0.1")
+    androidTestImplementation("org.mockito:mockito-android:5.11.0")
 }

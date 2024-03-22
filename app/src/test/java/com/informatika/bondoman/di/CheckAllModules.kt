@@ -1,4 +1,4 @@
-package com.informatika.bondoman
+package com.informatika.bondoman.di
 
 import android.app.Application
 import com.informatika.bondoman.di.applicationModule
