@@ -12,19 +12,12 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.informatika.bondoman.MainActivity
 import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.R
-import com.informatika.bondoman.prefdatastore.JWTManager
-import com.informatika.bondoman.prefdatastore.JWTManagerImpl
 import com.informatika.bondoman.viewmodel.JWTViewModel
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import kotlinx.coroutines.runBlocking
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
-import org.koin.core.context.startKoin
-import timber.log.Timber
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModel()
@@ -105,10 +98,10 @@ class LoginActivity : AppCompatActivity() {
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
+            }
         }
-    }
 
-}
+    }
     private fun updateUiWithUser() {
         val welcome = getString(R.string.welcome)
         Toast.makeText(
