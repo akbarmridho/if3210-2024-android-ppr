@@ -38,8 +38,8 @@ class TransactionTest {
     @Test
     @Throws(Exception::class)
     fun insertAndRetrieve() {
-        transactionDao.insert(title = "Test1", category = Category.PEMASUKAN, amount = 1000, location = "Jakarta")
-        transactionDao.insert(title = "Test2", category = Category.PENGELUARAN, amount = 2000,)
+        transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000, location = "Jakarta")
+        transactionDao.insert(title = "Test2", category = Category.EXPENSE, amount = 2000,)
         val transactions = transactionDao.getAll()
         assert(transactions.size == 2)
 
@@ -51,7 +51,7 @@ class TransactionTest {
     @Test
     @Throws(Exception::class)
     fun update() {
-        transactionDao.insert(title = "Test1", category = Category.PEMASUKAN, amount = 1000, location = "Jakarta")
+        transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000, location = "Jakarta")
         val transactions = transactionDao.getAll()
         val lastId = transactions.last()._id
         transactionDao.update("Test2", 2000, "Bandung")
@@ -64,7 +64,7 @@ class TransactionTest {
     @Test
     @Throws(Exception::class)
     fun delete() {
-        transactionDao.insert(title = "Test1", category = Category.PEMASUKAN, amount = 1000, location = "Jakarta")
+        transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000, location = "Jakarta")
         val transactions = transactionDao.getAll()
         val lastId = transactions.last()._id
         transactionDao.delete(transactions.last())
