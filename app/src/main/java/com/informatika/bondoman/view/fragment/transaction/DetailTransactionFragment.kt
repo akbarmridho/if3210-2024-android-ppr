@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import com.informatika.bondoman.DetailTransactionFragmentBinding
 import com.informatika.bondoman.R
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
+import com.informatika.bondoman.view.activity.MainActivity.Companion.updateTransactionFragmentTag
 import com.informatika.bondoman.viewmodel.transaction.DetailTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -18,9 +19,9 @@ import org.koin.core.parameter.parametersOf
 class DetailTransactionFragment : Fragment() {
 
     lateinit var mDetailTransactionFragmentBinding: DetailTransactionFragmentBinding
-    private var transaction: Transaction? = null
+    private lateinit var transaction: Transaction;
     private val detatilTransactionViewModel: DetailTransactionViewModel by viewModel {
-        parametersOf(transaction?._id ?: -1)
+        parametersOf(transaction)
     }
 
 
@@ -49,9 +50,7 @@ class DetailTransactionFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        transaction?.let {
-            mDetailTransactionFragmentBinding.transaction = it
-        }
+        mDetailTransactionFragmentBinding.transaction = transaction
 
         val ibClose: ImageButton = mDetailTransactionFragmentBinding.ibClose
         val ibDelete: ImageButton = mDetailTransactionFragmentBinding.ibDelete
@@ -61,19 +60,19 @@ class DetailTransactionFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        // TODO : set delete and edit transaction
         ibDelete.setOnClickListener {
-            // delete transaction
-            detatilTransactionViewModel.deleteTransaction(transaction!!)
+            detatilTransactionViewModel.deleteTransaction(transaction)
             requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_activity_container, ListTransactionFragment.newInstance())
+                .commit()
         }
 
         ibEdit.setOnClickListener {
-            // edit transaction
-            // finish detail fragment and go to update fragment
+            requireActivity().supportFragmentManager.popBackStack()
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.detail_transaction_fragment_container, UpdateTransactionFragment.newInstance(transaction!!))
-                .addToBackStack(null)
+                .replace(R.id.main_activity_container, UpdateTransactionFragment.newInstance(transaction!!))
+                .addToBackStack(updateTransactionFragmentTag)
                 .commit()
         }
     }
