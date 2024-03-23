@@ -1,6 +1,7 @@
 package com.informatika.bondoman
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.informatika.bondoman.di.applicationModule
 import com.informatika.bondoman.di.databaseModule
 import com.informatika.bondoman.di.networkModule
@@ -14,6 +15,8 @@ import timber.log.Timber
 class BondomanApp : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         initTimber()
         initKoin()
