@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import com.informatika.bondoman.DetailTransactionFragmentBinding
 import com.informatika.bondoman.R
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
@@ -66,6 +67,7 @@ class DetailTransactionFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_activity_container, ListTransactionFragment.newInstance())
                 .commit()
+            Toast.makeText(requireContext(), "Transaction Deleted", Toast.LENGTH_SHORT).show()
         }
 
         ibEdit.setOnClickListener {
