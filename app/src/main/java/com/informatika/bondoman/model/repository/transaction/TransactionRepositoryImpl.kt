@@ -48,12 +48,12 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao) : Tr
         transactionDao.insert(title, category, amount)
     }
 
-    override suspend fun updateTransaction(title: String, amount: Int, location: String) {
-        transactionDao.update(title, amount, location)
+    override suspend fun updateTransaction(_id: Int, title: String, amount: Int, location: String) {
+        transactionDao.update(_id, title, amount, location)
     }
 
-    override suspend fun updateTransaction(title: String, amount: Int) {
-        transactionDao.update(title, amount)
+    override suspend fun updateTransaction(_id: Int, title: String, amount: Int) {
+        transactionDao.update(_id, title, amount)
     }
 
     override suspend fun deleteTransaction(transaction: Transaction) {

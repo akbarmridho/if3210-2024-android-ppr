@@ -98,12 +98,6 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
             return@setOnItemSelectedListener true
         }
 
-//        val navViewHeight = navView.height
-//        for (navItem in navView.menu) {
-//            navItem.title
-//        }
-
-
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_activity_container, ListTransactionFragment.newInstance())
@@ -130,7 +124,7 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
         const val detailTransactionFragmentTag = "detail_transaction_fragment"
         const val listTransactionFragmentTag = "list_transaction_fragment"
         const val createTransactionFragmentTag = "create_transaction_fragment"
-        const val updateTransactionFragment = "update_transaction_fragment"
+        const val updateTransactionFragmentTag = "update_transaction_fragment"
     }
 
 }

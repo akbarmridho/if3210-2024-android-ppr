@@ -21,11 +21,11 @@ interface TransactionDao {
     @Query("INSERT INTO `" + DBConstants.mTableTransaction + "` (title, category, amount) VALUES(:title, :category, :amount)")
     fun insert(title: String, category: Category, amount: Int)
 
-    @Query("UPDATE `" + DBConstants.mTableTransaction + "` SET title = :title, amount = :amount, location = :location")
-    fun update(title: String, amount: Int, location: String)
+    @Query("UPDATE `" + DBConstants.mTableTransaction + "` SET title = :title, amount = :amount, location = :location WHERE _id = :id")
+    fun update(id: Int, title: String, amount: Int, location: String)
 
-    @Query("UPDATE `" + DBConstants.mTableTransaction + "` SET title = :title, amount = :amount")
-    fun update(title: String, amount: Int)
+    @Query("UPDATE `" + DBConstants.mTableTransaction + "` SET title = :title, amount = :amount WHERE _id = :id")
+    fun update(id: Int, title: String, amount: Int)
 
     @Delete
     fun delete(transaction: Transaction)

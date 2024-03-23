@@ -25,7 +25,6 @@
             tools:listitem="@layout/list_item_transaction"
             />
 
-        <!-- TODO: change layout constraint if fragment view was resolved-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddTransaction"
             android:layout_width="wrap_content"

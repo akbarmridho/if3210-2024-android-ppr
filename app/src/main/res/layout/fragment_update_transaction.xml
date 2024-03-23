@@ -1,13 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="UpdateTransactionFragmentBinding"/>
+    <data class="UpdateTransactionFragmentBinding">
+        <import type="com.informatika.bondoman.util.BindingUtils"/>
+        <import type="android.view.View"/>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        <variable
+            name="transaction"
+            type="com.informatika.bondoman.model.local.entity.transaction.Transaction" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".view.fragment.transaction.UpdateTransactionFragment">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:background="@color/white"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTransactionTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="144dp"
+                android:hint="@string/prompt_title"
+                android:text="@{transaction.title}"
+                android:inputType="text"
+                android:selectAllOnFocus="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            />
+
+            <TextView
+                android:id="@+id/tvTransactionCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textAlignment="viewStart"
+                android:text="@{BindingUtils.getCategory(transaction.category)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etTransactionTitle" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTransactionAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{BindingUtils.getAmountString(transaction.amount)}"
+                android:hint="@string/prompt_amount"
+                android:inputType="number"
+                android:selectAllOnFocus="true"
+                app:layout_constraintTop_toBottomOf="@+id/tvTransactionCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            />
+
+            <Button
+                android:id="@+id/btnUpdateTransaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:enabled="false"
+                android:textAlignment="center"
+                android:text="@string/action_save"
+                app:layout_constraintTop_toBottomOf="@+id/etTransactionAmount"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 </layout>

@@ -27,12 +27,12 @@ val viewModelModule = module {
 
     // Dependency: DetailTransactionViewModel
     viewModel {
-        parameters -> DetailTransactionViewModel(get(), _id = parameters.get())
+        parameters -> DetailTransactionViewModel(get(), transaction = parameters.get())
     }
 
     // Dependency: UpdateTransactionViewModel
     viewModel {
-        parameters -> UpdateTransactionViewModel(get(), _id = parameters.get())
+        parameters -> UpdateTransactionViewModel(get(), transaction = parameters.get())
     }
 
     // Dependency: ListTransactionViewModel
