@@ -31,31 +31,31 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val username = binding.username
-        val password = binding.password
-        val login = binding.login
-        val loading = binding.loading
+        val etUsername = binding.etUsername
+        val etPassword = binding.etPassword
+        val etLogin = binding.btnSignIn
+        val pbLoading = binding.pbLoading
 
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+            etLogin.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
+                etUsername.error = getString(loginState.usernameError)
             }
 
             if (loginState.passwordError != null) {
-                password.error = getString(loginState.passwordError)
+                etPassword.error = getString(loginState.passwordError)
             }
         })
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
+            pbLoading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
@@ -73,18 +73,18 @@ class LoginActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK)
         })
 
-        username.afterTextChanged {
+        etUsername.afterTextChanged {
             loginViewModel.loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
+                etUsername.text.toString(),
+                etPassword.text.toString()
             )
         }
 
-        password.apply {
+        etPassword.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
+                    etUsername.text.toString(),
+                    etPassword.text.toString()
                 )
             }
 
@@ -92,16 +92,16 @@ class LoginActivity : AppCompatActivity() {
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString()
+                            etUsername.text.toString(),
+                            etPassword.text.toString()
                         )
                 }
                 false
             }
 
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+            etLogin.setOnClickListener {
+                pbLoading.visibility = View.VISIBLE
+                loginViewModel.login(etUsername.text.toString(), etPassword.text.toString())
             }
         }
 

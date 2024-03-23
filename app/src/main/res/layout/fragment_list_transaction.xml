@@ -15,18 +15,21 @@
             android:id="@+id/rvTransactions"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/list_item_transaction"
             />
 
+        <!-- TODO: change layout constraint if fragment view was resolved-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddTransaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/action_add"
-            app:icon="@drawable/ic_add"
+            android:text="@string/action_create"
+            android:src="@drawable/ic_add"
             android:layout_margin="16dp"
             android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:backgroundTint="@color/white"

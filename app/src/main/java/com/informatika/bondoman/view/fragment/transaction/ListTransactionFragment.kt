@@ -1,22 +1,18 @@
 package com.informatika.bondoman.view.fragment.transaction
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.informatika.bondoman.DetailTransactionFragmentBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.ListTransactionFragmentBinding
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.view.adapter.TransactionRecyclerAdapter
-import com.informatika.bondoman.viewmodel.transaction.CreateTransactionViewModel
-import com.informatika.bondoman.viewmodel.transaction.DetailTransactionViewModel
 import com.informatika.bondoman.viewmodel.transaction.ListTransactionViewModel
-import com.informatika.bondoman.viewmodel.transaction.UpdateTransactionViewModel
-import org.koin.core.parameter.parametersOf
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListTransactionFragment : Fragment() {
 
@@ -46,14 +42,6 @@ class ListTransactionFragment : Fragment() {
         initViews()
         listenToViewModel()
         fetchTransactions()
-
-        if (transactionRecyclerAdapter.itemCount == 0) {
-            mListTransactionFragmentBinding.rvTransactions.visibility = View.GONE
-            mListTransactionFragmentBinding.tvEmpty.visibility = View.VISIBLE
-        } else {
-            mListTransactionFragmentBinding.rvTransactions.visibility = View.VISIBLE
-            mListTransactionFragmentBinding.tvEmpty.visibility = View.GONE
-        }
     }
 
     private fun fetchTransactions() {
@@ -73,6 +61,7 @@ class ListTransactionFragment : Fragment() {
                     is Resource.Loading ->
                         transactionRecyclerAdapter.addLoader()
                 }
+                displayTransactions()
             }
         })
     }
@@ -86,18 +75,19 @@ class ListTransactionFragment : Fragment() {
             animator.supportsChangeAnimations = false
         }
 
-        if (transactionRecyclerAdapter.itemCount == 0) {
+        if (!transactionRecyclerAdapter.isLoading()) {
             transactionRecyclerAdapter.addLoader()
         }
+    }
 
-//        mListTransactionFragmentBinding.rvTransactions.setInfiniteScroll {
-//            if (!transactionRecyclerAdapter.isLoading()) {
-//                post {
-//                    transactionRecyclerAdapter.addLoader()
-//                }
-//                listTransactionViewModel.getNextPageTransaction()
-//            }
-//        }
+    private fun displayTransactions() {
+        if (transactionRecyclerAdapter.itemCount == 0) {
+            mListTransactionFragmentBinding.rvTransactions.visibility = View.GONE
+            mListTransactionFragmentBinding.tvEmpty.visibility = View.VISIBLE
+        } else {
+            mListTransactionFragmentBinding.rvTransactions.visibility = View.VISIBLE
+            mListTransactionFragmentBinding.tvEmpty.visibility = View.GONE
+        }
     }
 
     companion object {

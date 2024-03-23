@@ -8,8 +8,10 @@ import com.informatika.bondoman.di.networkModule
 import com.informatika.bondoman.di.repositoryModule
 import com.informatika.bondoman.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import timber.log.Timber
 
 class BondomanApp : Application() {
@@ -25,6 +27,7 @@ class BondomanApp : Application() {
     private fun initKoin() {
         Timber.tag("Koin").d("Init Koin")
         GlobalContext.getOrNull() ?: startKoin {
+            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@BondomanApp)
             modules(
                 listOf(

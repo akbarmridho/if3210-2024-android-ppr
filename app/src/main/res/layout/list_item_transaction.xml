@@ -38,6 +38,7 @@
                 android:id="@+id/tv_list_item_transaction_createdAt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:text="@{BindingUtils.getDate(transaction.createdAt)}"
                 android:textSize="12sp"
                 android:layout_marginStart="5dp"

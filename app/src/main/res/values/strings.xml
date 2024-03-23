@@ -23,13 +23,14 @@
     <string name="action_save">"Save"</string>
     <string name="action_cancel">"Cancel"</string>
     <string name="action_delete">"Delete"</string>
-    <string name="action_add">"+"</string>
+    <string name="action_create">"Add"</string>
     <string name="edit_description">"Edit"</string>
     <string name="delete_description">"Delete"</string>
+    <string name="select_category">"Select Category"</string>
     <string name="invalid_title">"Fill the title!"</string>
     <string name="invalid_amount_empty">"Fill the amount!"</string>
     <string name="invalid_amount_negative">"Amount must be positive!"</string>
-    <string name="invalid_category">"Choose the category!"</string>
+    <string name="invalid_category">"Category Required!"</string>
     <string name="transaction_saved">"Transaction saved!"</string>
     <string name="transaction_deleted">"Transaction deleted!"</string>
     <string name="transaction_updated">"Transaction updated!"</string>

@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
                 R.id.navigation_settings
             )
         )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         // on click listener for each navigation item
