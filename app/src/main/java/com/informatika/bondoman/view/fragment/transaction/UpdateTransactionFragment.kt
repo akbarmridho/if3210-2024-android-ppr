@@ -90,6 +90,7 @@ class UpdateTransactionFragment : Fragment() {
         }
 
         btnUpdateTransaction.setOnClickListener {
+            // TODO: add location
             updateTransactionViewModel.updateTransaction(
                 etTransactionTitle.text.toString(),
                 etTransactionAmount.text.toString().toInt()

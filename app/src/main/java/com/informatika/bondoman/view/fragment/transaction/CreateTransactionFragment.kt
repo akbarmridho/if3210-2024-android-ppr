@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -91,12 +92,14 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
         }
 
         btnCreateTransaction.setOnClickListener {
+            // TODO: add location
             createTransactionViewModel.createTransaction(
                 etTransactionTitle.text.toString(),
                 Category.valueOf(spTransactionCategory.selectedItem.toString()),
                 etTransactionAmount.text.toString().toInt()
             )
             requireActivity().supportFragmentManager.popBackStack()
+            Toast.makeText(context, "Transaction created", Toast.LENGTH_SHORT).show()
         }
     }
 
