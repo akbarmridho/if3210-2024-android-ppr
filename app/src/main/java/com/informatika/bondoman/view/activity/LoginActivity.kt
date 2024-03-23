@@ -2,18 +2,18 @@ package com.informatika.bondoman.view.activity
 
 import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.Observer
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.informatika.bondoman.databinding.ActivityLoginBinding
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.informatika.bondoman.R
+import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.viewmodel.JWTViewModel
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import kotlinx.coroutines.runBlocking
@@ -46,6 +46,10 @@ class LoginActivity : AppCompatActivity() {
             if (loginState.usernameError != null) {
                 username.error = getString(loginState.usernameError)
             }
+
+            if (loginState.passwordError != null) {
+                password.error = getString(loginState.passwordError)
+            }
         })
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
@@ -54,16 +58,16 @@ class LoginActivity : AppCompatActivity() {
             loading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
-            } else {
-                if (loginResult.jwtToken != null) {
-                    runBlocking {
+            }
+
+            if (loginResult.jwtToken != null) {
+                runBlocking {
                         jwtViewModel.jwtManager.saveToken(loginResult.jwtToken)
-                    }
-                    updateUiWithUser()
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
                 }
+                updateUiWithUser()
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
 
             setResult(Activity.RESULT_OK)
