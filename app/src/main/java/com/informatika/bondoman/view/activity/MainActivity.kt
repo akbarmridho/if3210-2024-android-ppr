@@ -3,7 +3,10 @@ package com.informatika.bondoman.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import android.window.OnBackInvokedDispatcher
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.iterator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
 
     override fun onItemClick(transaction: Transaction) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.container, DetailTransactionFragment.newInstance(transaction))
+            .add(R.id.main_activity_container, DetailTransactionFragment.newInstance(transaction))
             .addToBackStack(detailTransactionFragmentTag)
             .commit()
     }
@@ -63,42 +66,47 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
             when (it.itemId) {
                 R.id.navigation_transaction -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, ListTransactionFragment.newInstance())
+                        .replace(R.id.main_activity_container, ListTransactionFragment.newInstance())
                         .commit()
                 }
                 R.id.navigation_scanner -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, ScannerFragment.newInstance())
+                        .replace(R.id.main_activity_container, ScannerFragment.newInstance())
                         .commit()
                 }
                 R.id.navigation_twibbon -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, TwibbonFragment.newInstance())
+                        .replace(R.id.main_activity_container, TwibbonFragment.newInstance())
                         .commit()
                 }
                 R.id.navigation_report -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, ReportFragment.newInstance())
+                        .replace(R.id.main_activity_container, ReportFragment.newInstance())
                         .commit()
                 }
                 R.id.navigation_settings -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, SettingsFragment.newInstance())
+                        .replace(R.id.main_activity_container, SettingsFragment.newInstance())
                         .commit()
                 }
                 else -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, ListTransactionFragment.newInstance())
+                        .replace(R.id.main_activity_container, ListTransactionFragment.newInstance())
                         .commit()
                 }
             }
             return@setOnItemSelectedListener true
         }
 
+//        val navViewHeight = navView.height
+//        for (navItem in navView.menu) {
+//            navItem.title
+//        }
+
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, ListTransactionFragment.newInstance())
+                .replace(R.id.main_activity_container, ListTransactionFragment.newInstance())
                 .commit()
         }
     }
@@ -120,6 +128,9 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
 
     companion object {
         const val detailTransactionFragmentTag = "detail_transaction_fragment"
+        const val listTransactionFragmentTag = "list_transaction_fragment"
+        const val createTransactionFragmentTag = "create_transaction_fragment"
+        const val updateTransactionFragment = "update_transaction_fragment"
     }
 
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.ListTransactionFragmentBinding
 import com.informatika.bondoman.model.Resource
+import com.informatika.bondoman.view.activity.MainActivity.Companion.createTransactionFragmentTag
 import com.informatika.bondoman.view.adapter.TransactionRecyclerAdapter
 import com.informatika.bondoman.viewmodel.transaction.ListTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,8 +35,8 @@ class ListTransactionFragment : Fragment() {
 
         mListTransactionFragmentBinding.fabAddTransaction.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.container, CreateTransactionFragment.newInstance())
-                .addToBackStack(null)
+                .replace(R.id.main_activity_container, CreateTransactionFragment.newInstance())
+                .addToBackStack(createTransactionFragmentTag)
                 .commit()
         }
 

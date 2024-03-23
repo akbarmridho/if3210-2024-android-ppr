@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.databinding.DataBindingUtil
 import com.informatika.bondoman.DetailTransactionFragmentBinding
 import com.informatika.bondoman.R
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
@@ -73,7 +72,7 @@ class DetailTransactionFragment : Fragment() {
             // edit transaction
             // finish detail fragment and go to update fragment
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.container, UpdateTransactionFragment.newInstance(transaction!!))
+                .replace(R.id.detail_transaction_fragment_container, UpdateTransactionFragment.newInstance(transaction!!))
                 .addToBackStack(null)
                 .commit()
         }

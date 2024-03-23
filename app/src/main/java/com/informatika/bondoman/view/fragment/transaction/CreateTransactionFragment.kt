@@ -96,6 +96,7 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
                 Category.valueOf(spTransactionCategory.selectedItem.toString()),
                 etTransactionAmount.text.toString().toInt()
             )
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 
