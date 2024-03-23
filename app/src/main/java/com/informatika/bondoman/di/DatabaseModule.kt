@@ -10,7 +10,8 @@ import org.koin.dsl.module
 val databaseModule = module {
     // Dependency: AppDB
     single {
-        Room.databaseBuilder(androidContext(), AppDatabase::class.java, DBConstants.mName).build()
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, DBConstants.mName)
+            .build()
     }
 
     // Dependency: TransactionDao

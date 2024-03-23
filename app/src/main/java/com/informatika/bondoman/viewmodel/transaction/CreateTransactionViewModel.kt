@@ -8,6 +8,7 @@ import com.informatika.bondoman.R
 import com.informatika.bondoman.model.local.entity.transaction.Category
 import com.informatika.bondoman.model.repository.transaction.TransactionRepository
 import com.informatika.bondoman.viewmodel.transaction.helper.TransactionFormState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CreateTransactionViewModel(private var transactionRepository: TransactionRepository) : ViewModel() {
@@ -18,9 +19,9 @@ class CreateTransactionViewModel(private var transactionRepository: TransactionR
         title: String,
         category: Category,
         amount: Int,
-        location: String?
+        location: String? = null
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (location != null) {
                 transactionRepository.insertTransaction(title, category, amount, location)
             } else {
@@ -29,7 +30,11 @@ class CreateTransactionViewModel(private var transactionRepository: TransactionR
         }
     }
 
-    fun createTransactionDataChanged(title: String, amount: String, category: String) {
+    fun createTransactionDataChanged(
+        title: String,
+        amount: String,
+        category: String
+    ) {
         if (!isTitleValid(title)) {
             _createTransactionForm.value = TransactionFormState(titleError = R.string.invalid_title)
         } else if (isAmountValid(amount) > 0) {
