@@ -11,6 +11,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
+    <string name="action_logout">Logout</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="invalid_email">Not a valid email</string>
     <string name="invalid_password">Password must be >8 characters</string>
@@ -38,7 +39,10 @@
     <string name="transaction_not_deleted">"Transaction not deleted!"</string>
     <string name="transaction_not_updated">"Transaction not updated!"</string>
     <string name="transaction_not_found">"Transaction not found!"</string>
-    <string name="empty_transaction_list">"No transaction yet!"</string>
+    <string name="empty_transaction_list">"No transaction"</string>
+
+    <string name="action_send_transaction">"Send Transactions"</string>
+    <string name="action_export_transaction">"Export Transactions"</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

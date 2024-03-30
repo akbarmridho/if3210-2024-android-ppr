@@ -23,8 +23,10 @@ import com.informatika.bondoman.view.fragment.SettingsFragment
 import com.informatika.bondoman.view.fragment.TwibbonFragment
 import com.informatika.bondoman.view.fragment.ListTransactionFragment
 import com.informatika.bondoman.viewmodel.JWTViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.androidx.scope.activityScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -106,6 +108,7 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
                 .replace(R.id.main_activity_container, ListTransactionFragment.newInstance())
                 .commit()
         }
+
     }
 
     override fun onStart() {
@@ -148,11 +151,22 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
         }
     }
 
+    fun logout() {
+        lifecycleScope.launch (Dispatchers.IO) {
+            jwtViewModel.jwtManager.onLogout();
+            val intent = Intent(this@MainActivity, LoginActivity::class.java);
+            Toast.makeText(this@MainActivity, "Logout Succesful", Toast.LENGTH_SHORT).show()
+            startActivity(intent);
+        }
+    }
+
     companion object {
         const val detailTransactionFragmentTag = "detail_transaction_fragment"
         const val listTransactionFragmentTag = "list_transaction_fragment"
         const val createTransactionFragmentTag = "create_transaction_fragment"
         const val updateTransactionFragmentTag = "update_transaction_fragment"
+        const val settingFragmentTag = "settings_fragment"
+
     }
 
 }
