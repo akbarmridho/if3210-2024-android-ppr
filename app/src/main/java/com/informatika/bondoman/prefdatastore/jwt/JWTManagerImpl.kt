@@ -1,4 +1,4 @@
-package com.informatika.bondoman.prefdatastore
+package com.informatika.bondoman.prefdatastore.jwt
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -14,6 +14,7 @@ const val KEY_TOKEN = "jwt_token"
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = KEY_TOKEN)
 
 class JWTManagerImpl(private val context: Context) : JWTManager {
+
 
     // returns a flow of is authenticated state
     override fun isAuthenticated(): Flow<Boolean> {

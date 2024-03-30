@@ -1,4 +1,4 @@
-package com.informatika.bondoman.prefdatastore
+package com.informatika.bondoman.prefdatastore.jwt
 
 import kotlinx.coroutines.flow.Flow
 
@@ -10,4 +10,5 @@ interface JWTManager {
     suspend fun saveToken(token: String)
 
     suspend fun onLogout()
+
 }
