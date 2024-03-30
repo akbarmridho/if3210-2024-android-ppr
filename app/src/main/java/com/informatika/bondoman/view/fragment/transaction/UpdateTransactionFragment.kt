@@ -115,7 +115,6 @@ class UpdateTransactionFragment : Fragment() {
                 etTransactionAmount.text.toString().toInt(),
                 if (locationUpdated) tvTransactionLocation.text.toString() else null
             )
-            // TODO
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_activity_container, DetailTransactionFragment.newInstance(transaction))
                 .commit()
