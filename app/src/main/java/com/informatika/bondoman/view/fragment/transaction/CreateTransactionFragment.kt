@@ -1,28 +1,36 @@
-package com.informatika.bondoman.view.activity.transaction
+package com.informatika.bondoman.view.fragment.transaction
 
 import android.R
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Context.RECEIVER_EXPORTED
+import android.content.Intent
+import android.content.IntentFilter
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.informatika.bondoman.databinding.ActivityCreateTransactionBinding
+import com.informatika.bondoman.databinding.FragmentCreateTransactionBinding
 import com.informatika.bondoman.model.local.entity.transaction.Category
 import com.informatika.bondoman.util.LocationUtil
+import com.informatika.bondoman.view.activity.BROADCAST_TRANSACTION
 import com.informatika.bondoman.viewmodel.transaction.CreateTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -30,27 +38,48 @@ import java.io.IOException
 import java.util.Locale
 
 
-class CreateTransactionActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
+class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
 
+    lateinit var randomizeTransactionReceiver: BroadcastReceiver
+
     private val createTransactionViewModel: CreateTransactionViewModel by viewModel()
-    private lateinit var mCreateTransactionFragmentBinding: ActivityCreateTransactionBinding
+    private lateinit var mCreateTransactionFragmentBinding: FragmentCreateTransactionBinding
 
-    override fun onCreate(
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) {
-        super.onCreate(savedInstanceState)
-        mCreateTransactionFragmentBinding = ActivityCreateTransactionBinding.inflate(layoutInflater)
-        setContentView(mCreateTransactionFragmentBinding.root)
+    ): View? {
+        // Inflate the layout for this fragment
+        mCreateTransactionFragmentBinding = FragmentCreateTransactionBinding.inflate(inflater, container, false)
+        return mCreateTransactionFragmentBinding.root
+    }
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@CreateTransactionActivity)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         val etTransactionTitle = mCreateTransactionFragmentBinding.etTransactionTitle
         val spTransactionCategory = mCreateTransactionFragmentBinding.spTransactionCategory
         val etTransactionAmount = mCreateTransactionFragmentBinding.etTransactionAmount
         val tvTransactionLocation = mCreateTransactionFragmentBinding.tvTransactionLocation
         val btnCreateTransaction = mCreateTransactionFragmentBinding.btnCreateTransaction
+
+        randomizeTransactionReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val amount = intent?.getIntExtra("amount", 0)
+                etTransactionAmount.setText(amount.toString())
+            }
+        }
+        IntentFilter(BROADCAST_TRANSACTION).also {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requireActivity().registerReceiver(randomizeTransactionReceiver, it, RECEIVER_EXPORTED)
+            } else {
+                requireActivity().registerReceiver(randomizeTransactionReceiver, it)
+            }
+        }
 
         // add category to spinner
         val categories: MutableList<String> = ArrayList()
@@ -59,11 +88,11 @@ class CreateTransactionActivity : AppCompatActivity(), AdapterView.OnItemClickLi
                 categories.add(category.name)
             }
         }
-        val dataAdapter = ArrayAdapter(this@CreateTransactionActivity, R.layout.simple_spinner_item, categories)
+        val dataAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, categories)
         dataAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         spTransactionCategory.adapter = dataAdapter
 
-        createTransactionViewModel.createTransactionFormState.observe(this@CreateTransactionActivity, Observer {
+        createTransactionViewModel.createTransactionFormState.observe(viewLifecycleOwner, Observer {
             val createTransactionState = it ?: return@Observer
 
             btnCreateTransaction.isEnabled = createTransactionState.isDataValid
@@ -109,15 +138,15 @@ class CreateTransactionActivity : AppCompatActivity(), AdapterView.OnItemClickLi
                 etTransactionAmount.text.toString().toInt(),
                 if (tvTransactionLocation.visibility == View.VISIBLE) tvTransactionLocation.text.toString() else null
             )
-            finish()
-            Toast.makeText(this@CreateTransactionActivity, "Transaction created", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.popBackStack()
+            Toast.makeText(context, "Transaction created", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onStart() {
         super.onStart()
-        if (LocationUtil.checkLocationPermission(this)) {
-            if (LocationUtil.isLocationEnabled(this@CreateTransactionActivity)) {
+        if (LocationUtil.checkLocationPermission(requireContext())) {
+            if (LocationUtil.isLocationEnabled(requireContext())) {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     val location: Location? = task.result
                     if(location == null) {
@@ -127,7 +156,7 @@ class CreateTransactionActivity : AppCompatActivity(), AdapterView.OnItemClickLi
                             fastestInterval = 0
                             numUpdates = 1
                         }
-                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@CreateTransactionActivity)
+                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
                         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
                     } else {
                         getCityName(location.latitude, location.longitude)
@@ -142,9 +171,14 @@ class CreateTransactionActivity : AppCompatActivity(), AdapterView.OnItemClickLi
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().unregisterReceiver(randomizeTransactionReceiver)
+    }
+
     fun getCityName(lat: Double, lon: Double) {
         var cityName: String? = null
-        val geocoder = Geocoder(this@CreateTransactionActivity, Locale.getDefault())
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             geocoder.getFromLocation(lat, lon, 1) { list ->
                 if (list.size != 0) {
@@ -194,5 +228,9 @@ class CreateTransactionActivity : AppCompatActivity(), AdapterView.OnItemClickLi
             mCreateTransactionFragmentBinding.etTransactionAmount.text.toString(),
             mCreateTransactionFragmentBinding.spTransactionCategory.selectedItem.toString()
         )
+    }
+
+    companion object {
+        fun newInstance() = CreateTransactionFragment()
     }
 }

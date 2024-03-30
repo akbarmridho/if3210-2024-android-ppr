@@ -19,9 +19,8 @@ import com.informatika.bondoman.view.activity.transaction.DetailTransactionActiv
 import com.informatika.bondoman.view.adapter.TransactionRecyclerAdapter
 import com.informatika.bondoman.view.fragment.ReportFragment
 import com.informatika.bondoman.view.fragment.ScannerFragment
-import com.informatika.bondoman.view.fragment.SettingsFragment
 import com.informatika.bondoman.view.fragment.TwibbonFragment
-import com.informatika.bondoman.view.fragment.ListTransactionFragment
+import com.informatika.bondoman.view.fragment.transaction.ListTransactionFragment
 import com.informatika.bondoman.viewmodel.JWTViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -88,9 +87,9 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
                         .commit()
                 }
                 R.id.navigation_settings -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_activity_container, SettingsFragment.newInstance())
-                        .commit()
+                    val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+                    startActivity(intent)
+                    return@setOnItemSelectedListener false
                 }
                 else -> {
                     supportFragmentManager.beginTransaction()
