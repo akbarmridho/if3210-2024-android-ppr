@@ -1,16 +1,15 @@
-package com.informatika.bondoman.view.fragment.transaction
+package com.informatika.bondoman.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.ListTransactionFragmentBinding
 import com.informatika.bondoman.model.Resource
-import com.informatika.bondoman.view.activity.MainActivity.Companion.createTransactionFragmentTag
+import com.informatika.bondoman.view.activity.transaction.CreateTransactionActivity
 import com.informatika.bondoman.view.adapter.TransactionRecyclerAdapter
 import com.informatika.bondoman.viewmodel.transaction.ListTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,14 +33,17 @@ class ListTransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mListTransactionFragmentBinding.fabAddTransaction.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_activity_container, CreateTransactionFragment.newInstance())
-                .addToBackStack(createTransactionFragmentTag)
-                .commit()
+            val intent = Intent(requireContext(), CreateTransactionActivity::class.java)
+            startActivity(intent)
         }
 
         initViews()
         listenToViewModel()
+        fetchTransactions()
+    }
+
+    override fun onResume() {
+        super.onResume()
         fetchTransactions()
     }
 

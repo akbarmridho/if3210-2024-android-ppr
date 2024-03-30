@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="60dp"
-    tools:context=".view.fragment.transaction.CreateTransactionFragment">
+    tools:context=".view.activity.transaction.CreateTransactionActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-            />
+
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spTransactionCategory"
@@ -54,7 +53,19 @@
             app:layout_constraintTop_toBottomOf="@+id/spTransactionCategory"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-        />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvTransactionLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:textAlignment="textStart"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/etTransactionAmount"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@tools:sample/cities"
+            />
 
         <Button
             android:id="@+id/btnCreateTransaction"
@@ -65,7 +76,7 @@
             android:enabled="false"
             android:textAlignment="center"
             android:text="@string/action_create"
-            app:layout_constraintTop_toBottomOf="@+id/etTransactionAmount"
+            app:layout_constraintTop_toBottomOf="@+id/tvTransactionLocation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

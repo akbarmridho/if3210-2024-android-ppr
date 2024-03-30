@@ -54,7 +54,7 @@ class TransactionTest {
         transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000, location = "Jakarta")
         val transactions = transactionDao.getAll()
         val lastId = transactions.last()._id
-        transactionDao.update("Test2", 2000, "Bandung")
+        transactionDao.update(lastId,"Test2", 2000, "Bandung")
         val transaction = transactionDao.get(lastId)
         assert(transaction.title == "Test2")
         assert(transaction.amount == 2000)

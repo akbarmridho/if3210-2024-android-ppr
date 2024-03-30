@@ -1,12 +1,10 @@
 package com.informatika.bondoman.view.activity
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
-import android.window.OnBackInvokedDispatcher
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.iterator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,28 +13,33 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.ActivityMainBinding
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
+import com.informatika.bondoman.prefdatastore.isfirsttime.IsFirstTime
+import com.informatika.bondoman.util.LocationUtil
+import com.informatika.bondoman.view.activity.transaction.DetailTransactionActivity
 import com.informatika.bondoman.view.adapter.TransactionRecyclerAdapter
 import com.informatika.bondoman.view.fragment.ReportFragment
 import com.informatika.bondoman.view.fragment.ScannerFragment
 import com.informatika.bondoman.view.fragment.SettingsFragment
 import com.informatika.bondoman.view.fragment.TwibbonFragment
-import com.informatika.bondoman.view.fragment.transaction.DetailTransactionFragment
-import com.informatika.bondoman.view.fragment.transaction.ListTransactionFragment
+import com.informatika.bondoman.view.fragment.ListTransactionFragment
 import com.informatika.bondoman.viewmodel.JWTViewModel
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchListener {
 
     private lateinit var binding: ActivityMainBinding
     private val jwtViewModel: JWTViewModel by viewModel()
+    private val isFirstTime: IsFirstTime by inject()
 
     override fun onItemClick(transaction: Transaction) {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.main_activity_container, DetailTransactionFragment.newInstance(transaction))
-            .addToBackStack(detailTransactionFragmentTag)
-            .commit()
+        val bundle = Bundle()
+        bundle.putParcelable(DetailTransactionActivity.ARG_TRANSACTION, transaction)
+        val intent = Intent(this, DetailTransactionActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,6 +119,31 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
+            }
+
+            if (!LocationUtil.checkLocationPermission(this@MainActivity)) {
+                isFirstTime.isFirstTime().collect {
+                    if (it) {
+                        LocationUtil.requestLocationPermission(this@MainActivity)
+                        isFirstTime.setFirstTimeToFalse()
+                    }
+                }
+            }
+
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LocationUtil.LOCATION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Timber.d("Location permission granted")
+            } else {
+                Timber.e("Location permission denied")
             }
         }
     }

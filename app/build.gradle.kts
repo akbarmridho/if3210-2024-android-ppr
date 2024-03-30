@@ -113,6 +113,9 @@ dependencies {
     val spinKitVersion = "1.4.0"
     implementation("com.github.ybq:Android-SpinKit:$spinKitVersion")
 
+    // fusedLocationProvider
+    implementation("com.google.android.gms:play-services-location:18.0.0")
+
     // Unit Test
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.0-alpha03")

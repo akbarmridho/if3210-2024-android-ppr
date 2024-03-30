@@ -27,7 +27,7 @@
         tools:layout="@layout/fragment_twibbon" />
     <fragment
         android:id="@+id/navigation_transaction"
-        android:name="com.informatika.bondoman.view.fragment.transaction.ListTransactionFragment"
+        android:name="com.informatika.bondoman.view.fragment.ListTransactionFragment"
         android:label="@string/title_transaction"
         tools:layout="@layout/fragment_list_transaction" />
 
