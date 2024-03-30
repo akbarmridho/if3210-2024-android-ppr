@@ -3,7 +3,7 @@ package com.informatika.bondoman.viewmodel
 import androidx.lifecycle.ViewModel
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.repository.token.TokenRepository
-import com.informatika.bondoman.prefdatastore.JWTManager
+import com.informatika.bondoman.prefdatastore.jwt.JWTManager
 import timber.log.Timber
 
 class JWTViewModel(var jwtManager: JWTManager, private var tokenRepository: TokenRepository): ViewModel() {

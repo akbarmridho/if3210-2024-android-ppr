@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.informatika.bondoman.databinding.ActivityMainEmptyBinding
-import com.informatika.bondoman.prefdatastore.JWTManager
+import com.informatika.bondoman.prefdatastore.jwt.JWTManager
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -41,4 +41,5 @@ class MainEmptyActivity : AppCompatActivity() {
             }
         }
     }
+
 }
