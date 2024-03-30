@@ -39,15 +39,14 @@
             android:exported="true"
             android:theme="@style/Theme.BondoMan" />
         <activity
-            android:name=".view.activity.transaction.CreateTransactionActivity"
-            android:exported="true"
-            android:theme="@style/Theme.BondoMan" />
-        <activity
             android:name=".view.activity.transaction.DetailTransactionActivity"
             android:exported="true"
             android:theme="@style/Theme.BondoMan" />
         <activity
             android:name=".view.activity.transaction.UpdateTransactionActivity"
+            android:exported="true"
+            android:theme="@style/Theme.BondoMan" />
+        <activity android:name=".view.activity.SettingsActivity"
             android:exported="true"
             android:theme="@style/Theme.BondoMan" />
     </application>

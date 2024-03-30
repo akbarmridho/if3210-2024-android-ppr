@@ -5,16 +5,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.informatika.bondoman.DetailTransactionActivityBinding
-import com.informatika.bondoman.R
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
-import com.informatika.bondoman.view.activity.MainActivity.Companion.updateTransactionFragmentTag
-import com.informatika.bondoman.view.fragment.ListTransactionFragment
 import com.informatika.bondoman.viewmodel.transaction.DetailTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
