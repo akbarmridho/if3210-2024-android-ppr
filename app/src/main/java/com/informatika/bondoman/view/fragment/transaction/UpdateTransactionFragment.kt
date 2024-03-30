@@ -1,4 +1,4 @@
-package com.informatika.bondoman.view.activity.transaction
+package com.informatika.bondoman.view.fragment.transaction
 
 import android.location.Geocoder
 import android.location.Location
@@ -6,20 +6,23 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.informatika.bondoman.databinding.UpdateTransactionActivityBinding
+import com.informatika.bondoman.R
+import com.informatika.bondoman.databinding.UpdateTransactionFragmentBinding
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 import com.informatika.bondoman.util.LocationUtil
-import com.informatika.bondoman.view.activity.transaction.DetailTransactionActivity.Companion.ARG_TRANSACTION
+import com.informatika.bondoman.view.fragment.transaction.DetailTransactionFragment.Companion.ARG_TRANSACTION
 import com.informatika.bondoman.viewmodel.transaction.UpdateTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -27,12 +30,11 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.Locale
 
-
-class UpdateTransactionActivity : AppCompatActivity() {
+class UpdateTransactionFragment : Fragment() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
 
-    lateinit var mUpdateTransactionActivityBinding: UpdateTransactionActivityBinding
+    lateinit var mUpdateTransactionActivityBinding: UpdateTransactionFragmentBinding
     private lateinit var transaction: Transaction;
     private val updateTransactionViewModel: UpdateTransactionViewModel by viewModel {
         parametersOf(transaction)
@@ -42,24 +44,34 @@ class UpdateTransactionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mUpdateTransactionActivityBinding = UpdateTransactionActivityBinding.inflate(layoutInflater)
-        setContentView(mUpdateTransactionActivityBinding.root)
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@UpdateTransactionActivity)
-
-        intent?.extras?.let {
+        arguments?.let {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                (it.getParcelable(ARG_TRANSACTION, Transaction::class.java) as? Transaction)?.let {
+                (it.getParcelable(DetailTransactionFragment.ARG_TRANSACTION, Transaction::class.java) as? Transaction)?.let {
                     transaction = it
                 }
             } else {
-                (it.getParcelable(ARG_TRANSACTION) as? Transaction)?.let {
+                (it.getParcelable(DetailTransactionFragment.ARG_TRANSACTION) as? Transaction)?.let {
                     transaction = it
                 }
             }
         }
+    }
 
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mUpdateTransactionActivityBinding =
+            UpdateTransactionFragmentBinding.inflate(inflater, container, false)
+        return mUpdateTransactionActivityBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mUpdateTransactionActivityBinding.transaction = transaction
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         val etTransactionTitle = mUpdateTransactionActivityBinding.etTransactionTitle
         val tvTransactionCategory = mUpdateTransactionActivityBinding.tvTransactionCategory
@@ -67,7 +79,7 @@ class UpdateTransactionActivity : AppCompatActivity() {
         val tvTransactionLocation = mUpdateTransactionActivityBinding.tvTransactionLocation
         val btnUpdateTransaction = mUpdateTransactionActivityBinding.btnUpdateTransaction
 
-        updateTransactionViewModel.updateTransactionFormState.observe(this@UpdateTransactionActivity, Observer {
+        updateTransactionViewModel.updateTransactionFormState.observe(viewLifecycleOwner, Observer {
             val createTransactionState = it ?: return@Observer
 
             btnUpdateTransaction.isEnabled = createTransactionState.isDataValid
@@ -103,15 +115,18 @@ class UpdateTransactionActivity : AppCompatActivity() {
                 etTransactionAmount.text.toString().toInt(),
                 if (locationUpdated) tvTransactionLocation.text.toString() else null
             )
-            finish()
-            Toast.makeText(this@UpdateTransactionActivity, "Transaction updated", Toast.LENGTH_SHORT).show()
+            // TODO
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_activity_container, DetailTransactionFragment.newInstance(transaction))
+                .commit()
+            Toast.makeText(requireContext(), "Transaction updated", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onStart() {
         super.onStart()
-        if (LocationUtil.checkLocationPermission(this)) {
-            if (LocationUtil.isLocationEnabled(this@UpdateTransactionActivity)) {
+        if (LocationUtil.checkLocationPermission(requireContext())) {
+            if (LocationUtil.isLocationEnabled(requireContext())) {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     val location: Location? = task.result
                     if(location == null) {
@@ -121,7 +136,7 @@ class UpdateTransactionActivity : AppCompatActivity() {
                             fastestInterval = 0
                             numUpdates = 1
                         }
-                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@UpdateTransactionActivity)
+                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
                         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
                     } else {
                         getCityName(location.latitude, location.longitude)
@@ -138,7 +153,7 @@ class UpdateTransactionActivity : AppCompatActivity() {
 
     fun getCityName(lat: Double, lon: Double) {
         var cityName: String? = null
-        val geocoder = Geocoder(this@UpdateTransactionActivity, Locale.getDefault())
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             geocoder.getFromLocation(lat, lon, 1) { list ->
                 if (list.size != 0) {
@@ -184,4 +199,13 @@ class UpdateTransactionActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        fun newInstance(transaction: Transaction) : UpdateTransactionFragment {
+            val updateTransactionFragment = UpdateTransactionFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(ARG_TRANSACTION, transaction)
+            updateTransactionFragment.arguments = bundle
+            return updateTransactionFragment
+        }
+    }
 }

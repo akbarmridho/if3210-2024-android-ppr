@@ -1,36 +1,35 @@
-package com.informatika.bondoman.view.activity.transaction
+package com.informatika.bondoman.view.fragment.transaction
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.informatika.bondoman.DetailTransactionActivityBinding
+import androidx.fragment.app.Fragment
+import com.informatika.bondoman.DetailTransactionFragmentBinding
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
+import com.informatika.bondoman.view.activity.MainActivity.Companion.updateTransactionFragmentTag
 import com.informatika.bondoman.viewmodel.transaction.DetailTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
+class DetailTransactionFragment : Fragment() {
 
-class DetailTransactionActivity : AppCompatActivity() {
-
-    lateinit var mDetailTransactionFragmentBinding: DetailTransactionActivityBinding
+    lateinit var mDetailTransactionFragmentBinding: DetailTransactionFragmentBinding
     private lateinit var transaction: Transaction;
     private val detailTransactionViewModel: DetailTransactionViewModel by viewModel {
         parametersOf(transaction)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mDetailTransactionFragmentBinding = DetailTransactionActivityBinding.inflate(layoutInflater)
-        setContentView(mDetailTransactionFragmentBinding.root)
-
-        intent.extras?.let {
+        arguments?.let {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 (it.getParcelable(ARG_TRANSACTION, Transaction::class.java) as? Transaction)?.let {
                     transaction = it
@@ -41,7 +40,19 @@ class DetailTransactionActivity : AppCompatActivity() {
                 }
             }
         }
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mDetailTransactionFragmentBinding =
+            DetailTransactionFragmentBinding.inflate(inflater, container, false)
+        return mDetailTransactionFragmentBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mDetailTransactionFragmentBinding.transaction = transaction
 
         val ibClose: ImageButton = mDetailTransactionFragmentBinding.ibClose
@@ -49,21 +60,22 @@ class DetailTransactionActivity : AppCompatActivity() {
         val ibEdit: ImageButton = mDetailTransactionFragmentBinding.ibEdit
 
         ibClose.setOnClickListener {
-            finish()
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
         ibDelete.setOnClickListener {
             detailTransactionViewModel.deleteTransaction(transaction)
-            Toast.makeText(this@DetailTransactionActivity, "Transaction Deleted", Toast.LENGTH_SHORT).show()
-            finish()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(com.informatika.bondoman.R.id.main_activity_container, ListTransactionFragment())
+                .commit()
+            Toast.makeText(requireContext(), "Transaction Deleted", Toast.LENGTH_SHORT).show()
         }
 
         ibEdit.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable(ARG_TRANSACTION, transaction)
-            val intent = Intent(this, UpdateTransactionActivity::class.java)
-            intent.putExtras(bundle)
-            startActivity(intent)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(com.informatika.bondoman.R.id.main_activity_container, UpdateTransactionFragment.newInstance(transaction))
+                .addToBackStack(updateTransactionFragmentTag)
+                .commit()
         }
     }
 
@@ -90,5 +102,12 @@ class DetailTransactionActivity : AppCompatActivity() {
 
     companion object {
         const val ARG_TRANSACTION = "transaction"
+        fun newInstance(transaction: Transaction): DetailTransactionFragment {
+            val detailTransactionFragment = DetailTransactionFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(ARG_TRANSACTION, transaction)
+            detailTransactionFragment.arguments = bundle
+            return detailTransactionFragment
+        }
     }
 }

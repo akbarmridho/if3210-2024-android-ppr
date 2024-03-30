@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="60dp">
 
-    <data class="UpdateTransactionActivityBinding">
+    <data class="UpdateTransactionFragmentBinding">
         <import type="com.informatika.bondoman.util.BindingUtils"/>
         <import type="android.view.View"/>
 
@@ -16,7 +16,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.activity.transaction.UpdateTransactionActivity">
+        tools:context=".view.fragment.transaction.UpdateTransactionFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

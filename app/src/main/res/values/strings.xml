@@ -41,6 +41,7 @@
     <string name="transaction_not_found">"Transaction not found!"</string>
     <string name="empty_transaction_list">"No transaction"</string>
 
+    <string name="action_broadast_transaction">"Broadcast Transaction"</string>
     <string name="action_send_transaction">"Send Transactions"</string>
     <string name="action_export_transaction">"Export Transactions"</string>
 

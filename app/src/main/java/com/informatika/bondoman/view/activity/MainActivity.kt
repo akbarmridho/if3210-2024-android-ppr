@@ -15,11 +15,11 @@ import com.informatika.bondoman.databinding.ActivityMainBinding
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 import com.informatika.bondoman.prefdatastore.isfirsttime.IsFirstTime
 import com.informatika.bondoman.util.LocationUtil
-import com.informatika.bondoman.view.activity.transaction.DetailTransactionActivity
 import com.informatika.bondoman.view.adapter.TransactionRecyclerAdapter
 import com.informatika.bondoman.view.fragment.ReportFragment
 import com.informatika.bondoman.view.fragment.ScannerFragment
 import com.informatika.bondoman.view.fragment.TwibbonFragment
+import com.informatika.bondoman.view.fragment.transaction.DetailTransactionFragment
 import com.informatika.bondoman.view.fragment.transaction.ListTransactionFragment
 import com.informatika.bondoman.viewmodel.JWTViewModel
 import kotlinx.coroutines.Dispatchers
@@ -36,11 +36,10 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
     private val isFirstTime: IsFirstTime by inject()
 
     override fun onItemClick(transaction: Transaction) {
-        val bundle = Bundle()
-        bundle.putParcelable(DetailTransactionActivity.ARG_TRANSACTION, transaction)
-        val intent = Intent(this, DetailTransactionActivity::class.java)
-        intent.putExtras(bundle)
-        startActivity(intent)
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_activity_container, DetailTransactionFragment.newInstance(transaction))
+            .addToBackStack(detailTransactionFragmentTag)
+            .commit()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,15 +146,6 @@ class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchLi
             } else {
                 Timber.e("Location permission denied")
             }
-        }
-    }
-
-    fun logout() {
-        lifecycleScope.launch (Dispatchers.IO) {
-            jwtViewModel.jwtManager.onLogout();
-            val intent = Intent(this@MainActivity, LoginActivity::class.java);
-            Toast.makeText(this@MainActivity, "Logout Succesful", Toast.LENGTH_SHORT).show()
-            startActivity(intent);
         }
     }
 
