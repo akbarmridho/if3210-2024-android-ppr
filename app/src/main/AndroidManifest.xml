@@ -8,7 +8,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:name=".BondomanApp"
@@ -33,13 +33,16 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.BondoMan"/>
+            android:theme="@style/Theme.BondoMan" />
         <activity
             android:name=".view.activity.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.BondoMan" />
-        <activity android:name=".view.activity.SettingsActivity"
+        <activity
+            android:name=".view.activity.SettingsActivity"
             android:exported="true"
             android:theme="@style/Theme.BondoMan" />
+
+        <service android:name=".backgroundservice.AuthService" />
     </application>
 </manifest>

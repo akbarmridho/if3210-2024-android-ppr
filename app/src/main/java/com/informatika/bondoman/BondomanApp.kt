@@ -1,7 +1,9 @@
 package com.informatika.bondoman
 
 import android.app.Application
+import android.content.Intent
 import androidx.appcompat.app.AppCompatDelegate
+import com.informatika.bondoman.backgroundservice.AuthService
 import com.informatika.bondoman.di.applicationModule
 import com.informatika.bondoman.di.databaseModule
 import com.informatika.bondoman.di.networkModule
@@ -22,6 +24,9 @@ class BondomanApp : Application() {
 
         initTimber()
         initKoin()
+
+        val serviceIntent = Intent(this, AuthService::class.java)
+        startService(serviceIntent)
     }
 
     private fun initKoin() {
@@ -46,5 +51,4 @@ class BondomanApp : Application() {
             Timber.plant(Timber.DebugTree())
         }
     }
-
 }
