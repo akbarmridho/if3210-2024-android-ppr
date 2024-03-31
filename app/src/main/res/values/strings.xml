@@ -43,7 +43,8 @@
 
     <string name="action_broadast_transaction">"Broadcast Transaction"</string>
     <string name="action_send_transaction">"Send Transactions"</string>
-    <string name="action_export_transaction">"Export Transactions"</string>
+    <string name="action_export_transaction">"Export Transactions (XLSX)"</string>
+    <string name="action_export_transaction_xls">"Export Transactions (XLS)"</string>
     <string name="action_back">"Back"</string>
 
     <string name="expense">"Expense"</string>
