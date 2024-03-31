@@ -16,14 +16,14 @@ interface TransactionDao {
     @Query("SELECT * FROM `" + DBConstants.mTableTransaction + "` ORDER BY createdAt DESC")
     fun getAll(): List<Transaction>
 
-    @Query("INSERT INTO `" + DBConstants.mTableTransaction + "` (title, category, amount, locLatitude, locLongitude, locAdminArea) VALUES(:title, :category, :amount, :locLatitude, :locLongitude, :locAdminArea)")
-    fun insert(title: String, category: Category, amount: Int, locLatitude: Double, locLongitude: Double, locAdminArea: String)
+    @Query("INSERT INTO `" + DBConstants.mTableTransaction + "` (title, category, amount, location_lat, location_lon, location_adminArea) VALUES(:title, :category, :amount, :location_lat, :location_lon, :location_adminArea)")
+    fun insert(title: String, category: Category, amount: Int, location_lat: Double, location_lon: Double, location_adminArea: String)
 
     @Query("INSERT INTO `" + DBConstants.mTableTransaction + "` (title, category, amount) VALUES(:title, :category, :amount)")
     fun insert(title: String, category: Category, amount: Int)
 
-    @Query("UPDATE `" + DBConstants.mTableTransaction + "` SET title = :title, amount = :amount, locLatitude = :locLatitude, locLongitude = :locLongitude, locAdminArea = :locAdminArea WHERE _id = :id")
-    fun update(id: Int, title: String, amount: Int, locLatitude: Double, locLongitude: Double, locAdminArea: String)
+    @Query("UPDATE `" + DBConstants.mTableTransaction + "` SET title = :title, amount = :amount, location_lat = :location_lat, location_lon = :location_lon, location_adminArea = :location_adminArea WHERE _id = :id")
+    fun update(id: Int, title: String, amount: Int, location_lat: Double, location_lon: Double, location_adminArea: String)
 
     @Query("UPDATE `" + DBConstants.mTableTransaction + "` SET title = :title, amount = :amount WHERE _id = :id")
     fun update(id: Int, title: String, amount: Int)

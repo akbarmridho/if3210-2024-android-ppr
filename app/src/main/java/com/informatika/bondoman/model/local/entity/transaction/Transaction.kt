@@ -24,11 +24,7 @@ data class Transaction (
 
     val amount: Int,
 
-    @ColumnInfo(defaultValue = "NULL")
-    val locLatitude: Double?,
-    @ColumnInfo(defaultValue = "NULL")
-    val locLongitude: Double?,
-    @ColumnInfo(defaultValue = "NULL")
-    val locAdminArea: String?
+    @Embedded(prefix = "location_")
+    val location: Location? = null
 ) : Parcelable
 

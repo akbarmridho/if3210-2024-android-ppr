@@ -117,9 +117,7 @@ class UpdateTransactionFragment : Fragment() {
                 etTransactionAmount.text.toString().toInt(),
                 if (locationUpdated) location else null
             )
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_activity_container, DetailTransactionFragment.newInstance(transaction))
-                .commit()
+            requireActivity().supportFragmentManager.popBackStack()
             Toast.makeText(requireContext(), "Transaction updated", Toast.LENGTH_SHORT).show()
         }
     }

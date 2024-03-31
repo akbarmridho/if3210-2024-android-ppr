@@ -158,7 +158,7 @@
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:visibility="@{BindingUtils.isLocationNotNull(transaction.locAdminArea) ? View.VISIBLE : View.GONE}"
+            android:visibility="@{BindingUtils.isLocationNotNull(transaction.location) ? View.VISIBLE : View.GONE}"
             />
 
         <TextView
@@ -167,10 +167,10 @@
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@{transaction.locAdminArea}"
+            android:text="@{transaction.location.adminArea}"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:visibility="@{BindingUtils.isLocationNotNull(transaction.locAdminArea) ? View.VISIBLE : View.GONE}"
+            android:visibility="@{BindingUtils.isLocationNotNull(transaction.location) ? View.VISIBLE : View.GONE}"
             tools:text="@tools:sample/cities"
             />
 

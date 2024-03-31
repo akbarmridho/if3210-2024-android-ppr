@@ -3,6 +3,7 @@ package com.informatika.bondoman.util
 import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
 import com.informatika.bondoman.model.local.entity.transaction.Category
+import com.informatika.bondoman.model.local.entity.transaction.Location
 
 object BindingUtils {
     @JvmStatic
@@ -32,13 +33,12 @@ object BindingUtils {
     @JvmStatic
     fun createAmount(amount: Int): String {
         val formatter: NumberFormat = DecimalFormat("#,###")
-        val formattedNumber: String = formatter.format(amount)
-        return "$formattedNumber"
+        return formatter.format(amount)
     }
 
     @JvmStatic
-    fun isLocationNotNull(locAdminArea: String?): Boolean {
-        return locAdminArea != null
+    fun isLocationNotNull(location: Location?): Boolean {
+        return location != null
     }
 
     @JvmStatic
