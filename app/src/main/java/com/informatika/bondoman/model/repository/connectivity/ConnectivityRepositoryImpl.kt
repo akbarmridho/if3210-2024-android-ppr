@@ -12,7 +12,13 @@ class ConnectivityRepositoryImpl(context: Context) : ConnectivityRepository {
 
     override val isConnected: Flow<Boolean> = _isConnected
 
-    override val isToastSent: MutableMap<Boolean, Boolean> = mutableMapOf(true to false, false to false)
+    override fun lastStatus(): Boolean {
+        return _isConnected.value
+    }
+
+    override val isToastSent: MutableMap<Boolean, Boolean> =
+        mutableMapOf(true to false, false to false)
+
     override fun markToastSent(connectivityStatus: Boolean) {
         isToastSent.put(connectivityStatus, true)
     }
@@ -22,7 +28,8 @@ class ConnectivityRepositoryImpl(context: Context) : ConnectivityRepository {
     }
 
     init {
-        connectivityManager.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
+        connectivityManager.registerDefaultNetworkCallback(object :
+            ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: android.net.Network) {
                 _isConnected.value = true
                 markToastNotSent(true)

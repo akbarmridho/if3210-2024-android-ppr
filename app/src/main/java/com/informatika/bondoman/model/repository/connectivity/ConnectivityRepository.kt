@@ -6,5 +6,7 @@ interface ConnectivityRepository {
     val isConnected: Flow<Boolean>
     val isToastSent: MutableMap<Boolean, Boolean>
 
-    abstract fun markToastSent(connectivityStatus : Boolean)
+    abstract fun markToastSent(connectivityStatus: Boolean)
+
+    abstract fun lastStatus(): Boolean
 }

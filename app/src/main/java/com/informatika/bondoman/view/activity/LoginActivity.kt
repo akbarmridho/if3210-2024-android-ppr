@@ -10,19 +10,15 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.Observable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.viewmodel.JWTViewModel
-import com.informatika.bondoman.viewmodel.connectivity.ConnectivityViewModel
 import com.informatika.bondoman.viewmodel.login.LoginFormState
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.combineLatest
 import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -43,7 +39,13 @@ class LoginActivity : NetworkAwareActivity() {
         val etLogin = binding.btnSignIn
         val pbLoading = binding.pbLoading
 
-        loginViewModel.loginFormState.asFlow().combine(this.connectivityViewModel.getConnectivityFlow()) {a: LoginFormState, b: Boolean ->  Pair(a, b)} .asLiveData().observe(this@LoginActivity, Observer {
+        loginViewModel.loginFormState.asFlow()
+            .combine(this.connectivityViewModel.getConnectivityFlow()) { a: LoginFormState, b: Boolean ->
+                Pair(
+                    a,
+                    b
+                )
+            }.asLiveData().observe(this@LoginActivity, Observer {
             val loginState = it.first ?: return@Observer
             val isOnline = it.second
 
@@ -69,7 +71,7 @@ class LoginActivity : NetworkAwareActivity() {
 
             if (loginResult.jwtToken != null) {
                 runBlocking {
-                        jwtViewModel.jwtManager.saveToken(loginResult.jwtToken)
+                    jwtViewModel.jwtManager.saveToken(loginResult.jwtToken)
                 }
                 updateUiWithUser()
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
@@ -95,7 +97,7 @@ class LoginActivity : NetworkAwareActivity() {
                 )
             }
 
-            setOnEditorActionListener {_, actionId, _ ->
+            setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
@@ -113,6 +115,7 @@ class LoginActivity : NetworkAwareActivity() {
         }
 
     }
+
     private fun updateUiWithUser() {
         val welcome = getString(R.string.welcome)
         Toast.makeText(

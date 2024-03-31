@@ -14,7 +14,6 @@ import com.informatika.bondoman.view.activity.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import timber.log.Timber
@@ -50,9 +49,11 @@ class AuthService : Service() {
             period = TimeUnit.MINUTES.toMillis(1)
         ) {
             scope.launch {
-                val isExpired = isExpired()
+                Timber.tag("JWT").d("IM RUNNNINGGGGGG WOHO")
+                val expire = isExpired()
+                Timber.tag("JWT").d("got result $expire")
 
-                if (isExpired) {
+                if (expire) {
                     jwtManager.onLogout()
 
                     val intent = Intent(applicationContext, LoginActivity::class.java)
@@ -70,30 +71,33 @@ class AuthService : Service() {
     }
 
     private suspend fun isExpired(): Boolean {
+        val isConnectedLiveData = connectivityRepository.lastStatus()
+
         return try {
-            if (!connectivityRepository.isConnected.last()) {
+            if (isConnectedLiveData == null || !isConnectedLiveData) {
                 return false
             }
 
             when (val result = tokenRepository.token(jwtManager.getToken())) {
                 is Resource.Success -> {
-                    !result.data
+                    return !result.data
                 }
 
                 else -> {
                     jwtManager.onLogout()
-                    true
+                    return true
                 }
             }
         } catch (e: Exception) {
             Timber.tag("JWT").d("No token found")
-            false // false here because we assume if no token was found, user already in login activity
+            return false // false here because we assume if no token was found, user already in login activity
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         timer?.cancel()
+        timer = null
         job.cancel()
     }
 }
