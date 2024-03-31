@@ -1,6 +1,7 @@
 package com.informatika.bondoman.di
 
 import com.informatika.bondoman.viewmodel.JWTViewModel
+import com.informatika.bondoman.viewmodel.connectivity.ConnectivityViewModel
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import com.informatika.bondoman.viewmodel.transaction.CreateTransactionViewModel
 import com.informatika.bondoman.viewmodel.transaction.DetailTransactionViewModel
@@ -10,6 +11,11 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
+    // Dependency: ConnectivityViewModel
+    viewModel {
+        ConnectivityViewModel(get())
+    }
+
     // Dependency: JWTViewModel
     viewModel {
         JWTViewModel(get(), get())

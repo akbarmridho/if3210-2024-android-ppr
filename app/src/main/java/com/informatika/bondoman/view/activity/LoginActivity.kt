@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.viewmodel.JWTViewModel
+import com.informatika.bondoman.viewmodel.connectivity.ConnectivityViewModel
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,6 +25,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val jwtViewModel: JWTViewModel by viewModel()
+
+    private val connectivityViewModel : ConnectivityViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,14 @@ class LoginActivity : AppCompatActivity() {
         val etPassword = binding.etPassword
         val etLogin = binding.btnSignIn
         val pbLoading = binding.pbLoading
+
+        connectivityViewModel.isOnline.observe(this@LoginActivity, Observer {
+            Toast.makeText(
+                applicationContext,
+                if(it) "Connected" else "Not Connected",
+                Toast.LENGTH_LONG
+            ).show()
+        })
 
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
