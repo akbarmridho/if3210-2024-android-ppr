@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.ReportFragment"
-    android:layout_marginBottom="60dp">
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context=".view.activity.MainActivity">
 
     <TextView
+        android:id="@+id/report_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Report" />
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="@string/title_report"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-</FrameLayout>
+    <!--Ui component for our pie chart-->
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/report_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pie_chart"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/custom_border"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:weightSum="3">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_weight="1"
+            android:background="@color/black" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/expense_text"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/expense"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/income_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/income_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/income"
+                android:textColor="@android:color/holo_green_dark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/expense_text"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

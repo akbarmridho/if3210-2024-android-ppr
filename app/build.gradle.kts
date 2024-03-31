@@ -116,6 +116,15 @@ dependencies {
     // fusedLocationProvider
     implementation("com.google.android.gms:play-services-location:18.0.0")
 
+    // AndroidPlot
+//    val androidPlotVersion = "1.5.7"
+//    implementation ("com.androidplot:androidplot-core:$androidPlotVersion")
+
+    // MPAndroidChart
+    val MPAndroidChartVersion = "3.1.0"
+    implementation("com.github.PhilJay:MPAndroidChart:v$MPAndroidChartVersion")
+
+
     // Unit Test
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.0-alpha03")
