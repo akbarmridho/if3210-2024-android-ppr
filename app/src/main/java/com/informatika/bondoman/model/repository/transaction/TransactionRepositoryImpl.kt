@@ -43,7 +43,7 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao) : Tr
     }
 
     override suspend fun insertTransaction(title: String, category: Category, amount: Int, location: Location) {
-        transactionDao.insert(title, category, amount, location.lat, location.lon, location.adminArea)
+        transactionDao.insert(title = title, category = category, amount = amount, location_lat = location.lat, location_lon = location.lon, location_adminArea = location.adminArea)
     }
 
     override suspend fun insertTransaction(title: String, category: Category, amount: Int) {
