@@ -5,6 +5,7 @@ import com.informatika.bondoman.viewmodel.connectivity.ConnectivityViewModel
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import com.informatika.bondoman.viewmodel.transaction.CreateTransactionViewModel
 import com.informatika.bondoman.viewmodel.transaction.DetailTransactionViewModel
+import com.informatika.bondoman.viewmodel.transaction.ExporterTransactionViewModel
 import com.informatika.bondoman.viewmodel.transaction.ListTransactionViewModel
 import com.informatika.bondoman.viewmodel.transaction.UpdateTransactionViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -46,4 +47,8 @@ val viewModelModule = module {
         ListTransactionViewModel(get())
     }
 
+    // Dependency: ExporterTransactionViewModel
+    viewModel {
+        ExporterTransactionViewModel(get())
+    }
 }

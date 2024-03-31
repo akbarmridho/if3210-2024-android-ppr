@@ -62,6 +62,8 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.test.ext:junit-ktx:1.2.0-alpha03")
     implementation("androidx.test:runner:1.5.2")
+    implementation("org.apache.poi:poi:5.2.5")
+    implementation("org.apache.poi:poi-ooxml:5.2.5")
 
     // LifeCycle
     val lifecycleVersion = "2.7.0"

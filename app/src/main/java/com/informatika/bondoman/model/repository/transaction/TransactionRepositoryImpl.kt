@@ -7,18 +7,21 @@ import com.informatika.bondoman.model.local.dao.TransactionDao
 import com.informatika.bondoman.model.local.entity.transaction.Category
 import com.informatika.bondoman.model.local.entity.transaction.Location
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
+import timber.log.Timber
 
-class TransactionRepositoryImpl(private var transactionDao: TransactionDao) : TransactionRepository {
+class TransactionRepositoryImpl(private var transactionDao: TransactionDao) :
+    TransactionRepository {
 
     override var _listTransactionLiveData = MutableLiveData<Resource<List<Transaction>>>()
         private set
-    override var listTransactionLiveData : LiveData<Resource<List<Transaction>>> = _listTransactionLiveData
+    override var listTransactionLiveData: LiveData<Resource<List<Transaction>>> =
+        _listTransactionLiveData
         private set
         get() = _listTransactionLiveData
 
     override var _transactionLiveData = MutableLiveData<Resource<Transaction>>()
         private set
-    override var transactionLiveData : LiveData<Resource<Transaction>> = _transactionLiveData
+    override var transactionLiveData: LiveData<Resource<Transaction>> = _transactionLiveData
         private set
         get() = _transactionLiveData
 
@@ -42,15 +45,32 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao) : Tr
         }
     }
 
-    override suspend fun insertTransaction(title: String, category: Category, amount: Int, location: Location) {
-        transactionDao.insert(title = title, category = category, amount = amount, location_lat = location.lat, location_lon = location.lon, location_adminArea = location.adminArea)
+    override suspend fun insertTransaction(
+        title: String,
+        category: Category,
+        amount: Int,
+        location: Location
+    ) {
+        transactionDao.insert(
+            title = title,
+            category = category,
+            amount = amount,
+            location_lat = location.lat,
+            location_lon = location.lon,
+            location_adminArea = location.adminArea
+        )
     }
 
     override suspend fun insertTransaction(title: String, category: Category, amount: Int) {
         transactionDao.insert(title, category, amount)
     }
 
-    override suspend fun updateTransaction(_id: Int, title: String, amount: Int, location: Location) {
+    override suspend fun updateTransaction(
+        _id: Int,
+        title: String,
+        amount: Int,
+        location: Location
+    ) {
         transactionDao.update(_id, title, amount, location.lat, location.lon, location.adminArea)
     }
 
