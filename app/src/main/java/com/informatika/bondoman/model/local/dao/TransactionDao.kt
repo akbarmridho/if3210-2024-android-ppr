@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Query
 import com.informatika.bondoman.model.local.DBConstants
 import com.informatika.bondoman.model.local.entity.transaction.Category
+import com.informatika.bondoman.model.local.entity.transaction.CategoryPercentage
 import com.informatika.bondoman.model.local.entity.transaction.Location
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 
@@ -15,6 +16,9 @@ interface TransactionDao {
 
     @Query("SELECT * FROM `" + DBConstants.mTableTransaction + "` ORDER BY createdAt DESC")
     fun getAll(): List<Transaction>
+
+//    @Query("SELECT category, COUNT(*) * 100.0 / SUM(COUNT(*)) OVER() AS percentage FROM `" + DBConstants.mTableTransaction + "` GROUP BY category")
+//    fun getCategoryPercentages(): List<CategoryPercentage>
 
     @Query("INSERT INTO `" + DBConstants.mTableTransaction + "` (title, category, amount, location_lat, location_lon, location_adminArea) VALUES(:title, :category, :amount, :location_lat, :location_lon, :location_adminArea)")
     fun insert(title: String, category: Category, amount: Int, location_lat: Double, location_lon: Double, location_adminArea: String)

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.dao.TransactionDao
 import com.informatika.bondoman.model.local.entity.transaction.Category
+import com.informatika.bondoman.model.local.entity.transaction.CategoryPercentage
 import com.informatika.bondoman.model.local.entity.transaction.Location
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 import timber.log.Timber
@@ -24,6 +25,12 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao) :
     override var transactionLiveData: LiveData<Resource<Transaction>> = _transactionLiveData
         private set
         get() = _transactionLiveData
+
+    override var _categoryPercentageLiveData = MutableLiveData<Resource<List<CategoryPercentage>>>()
+        private set
+    override var categoryPercentageLiveData : LiveData<Resource<List<CategoryPercentage>>> = _categoryPercentageLiveData
+        private set
+        get() = _categoryPercentageLiveData
 
     override suspend fun getTransaction(id: Int) {
         _transactionLiveData.postValue(Resource.Loading())
@@ -60,6 +67,15 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao) :
             location_adminArea = location.adminArea
         )
     }
+//    override suspend fun getCategoryPercentage() {
+//        _categoryPercentageLiveData.postValue(Resource.Loading())
+//        try {
+//            val categoryPercentage = transactionDao.getCategoryPercentages()
+//            _categoryPercentageLiveData.postValue(Resource.Success(categoryPercentage))
+//        } catch (e: Exception) {
+//            _categoryPercentageLiveData.postValue(Resource.Error(e))
+//        }
+//    }
 
     override suspend fun insertTransaction(title: String, category: Category, amount: Int) {
         transactionDao.insert(title, category, amount)
