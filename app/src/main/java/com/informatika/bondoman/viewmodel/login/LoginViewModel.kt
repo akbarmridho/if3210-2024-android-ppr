@@ -36,7 +36,14 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                 is Resource.Loading -> Unit // Do nothing
             }
         }
+    }
 
+    fun getEmail() : String {
+        return loginRepository.getEmail();
+    }
+
+    suspend fun logout() {
+        loginRepository.logout();
     }
 
     fun loginDataChanged(username: String, password: String) {

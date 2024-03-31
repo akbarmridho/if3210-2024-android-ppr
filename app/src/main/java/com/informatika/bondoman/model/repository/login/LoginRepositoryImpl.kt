@@ -7,6 +7,7 @@ import retrofit2.awaitResponse
 import java.io.IOException
 
 class LoginRepositoryImpl constructor(private var authService: AuthService) : LoginRepository {
+    private var email : String = "";
     override suspend fun login(username: String, password: String): Resource<String> {
         try {
             val call = authService.login(LoginRequest(username, password))
@@ -15,6 +16,7 @@ class LoginRepositoryImpl constructor(private var authService: AuthService) : Lo
             if (response.isSuccessful) {
                 val token = response.body()?.token
                 if (token != null) {
+                    this.email = username;
                     return Resource.Success(token) // Return success with data
                 } else {
                     throw IOException("Error logging in", Throwable("Token is invalid"))
@@ -25,6 +27,14 @@ class LoginRepositoryImpl constructor(private var authService: AuthService) : Lo
         } catch (e: Throwable) {
             return Resource.Error(e) // Return error with throwable
         }
+    }
+
+    override fun getEmail(): String {
+        return this.email;
+    }
+
+    override suspend fun logout() {
+        this.email = "";
     }
 
 }
