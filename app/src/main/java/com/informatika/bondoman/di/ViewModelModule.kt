@@ -19,7 +19,7 @@ val viewModelModule = module {
 
     // Dependency: JWTViewModel
     viewModel {
-        JWTViewModel(get(), get(), get())
+        JWTViewModel(get(), get())
     }
 
     // Dependency: LoginViewModel
