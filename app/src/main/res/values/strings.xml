@@ -44,6 +44,7 @@
     <string name="action_broadast_transaction">"Broadcast Transaction"</string>
     <string name="action_send_transaction">"Send Transactions"</string>
     <string name="action_export_transaction">"Export Transactions"</string>
+    <string name="action_back">"Back"</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

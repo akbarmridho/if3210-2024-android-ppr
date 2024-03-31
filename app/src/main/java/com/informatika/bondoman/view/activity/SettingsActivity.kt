@@ -32,6 +32,7 @@ class SettingsActivity: AppCompatActivity() {
         val btnBroadcastTransaction = mSettingsActivityBinding.btnBroadcastTransaction
         val btnLogout = mSettingsActivityBinding.btnLogout
         val btnSend = mSettingsActivityBinding.btnSend
+        val btnBack = mSettingsActivityBinding.btnBack
 
         btnBroadcastTransaction.setOnClickListener {
             val intent = Intent(BROADCAST_TRANSACTION)
@@ -47,6 +48,10 @@ class SettingsActivity: AppCompatActivity() {
             sendEmail();
         }
 
+        btnBack.setOnClickListener {
+            back()
+        }
+
     }
 
     fun sendEmail() {
@@ -60,6 +65,11 @@ class SettingsActivity: AppCompatActivity() {
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(Intent.createChooser(intent, "Send Transaction Through Email"))
         }
+    }
+
+    fun back() {
+        val intent = Intent(this@SettingsActivity, MainActivity::class.java);
+        startActivity(intent);
     }
 
     fun logout() {
