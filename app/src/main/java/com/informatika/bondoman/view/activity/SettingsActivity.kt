@@ -1,17 +1,16 @@
 package com.informatika.bondoman.view.activity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.informatika.bondoman.databinding.ActivitySettingsBinding
-import com.informatika.bondoman.viewmodel.JWTViewModel
+import com.informatika.bondoman.prefdatastore.jwt.JWTManager
 import com.informatika.bondoman.viewmodel.SettingsViewModel
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.random.Random
 
@@ -20,7 +19,7 @@ const val BROADCAST_TRANSACTION = "com.informatika.bondomanapp.receiver.Randomiz
 class SettingsActivity: NetworkAwareActivity() {
     lateinit var mSettingsActivityBinding: ActivitySettingsBinding
     private val settingsViewModel: SettingsViewModel by viewModels()
-    private val jwtViewModel: JWTViewModel by viewModel()
+    private val jwtManager: JWTManager by inject()
     private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +68,7 @@ class SettingsActivity: NetworkAwareActivity() {
 
     fun logout() {
         lifecycleScope.launch {
-            jwtViewModel.jwtManager.onLogout();
+            jwtManager.onLogout();
             loginViewModel.logout();
             val intent = Intent(this@SettingsActivity, LoginActivity::class.java);
             Toast.makeText(this@SettingsActivity, "Logout Succesful", Toast.LENGTH_SHORT).show()
