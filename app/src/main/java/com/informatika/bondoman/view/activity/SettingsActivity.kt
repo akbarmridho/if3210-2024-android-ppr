@@ -17,7 +17,7 @@ import kotlin.random.Random
 
 const val BROADCAST_TRANSACTION = "com.informatika.bondomanapp.receiver.RandomizeTransactionReceiver"
 
-class SettingsActivity: AppCompatActivity() {
+class SettingsActivity: NetworkAwareActivity() {
     lateinit var mSettingsActivityBinding: ActivitySettingsBinding
     private val settingsViewModel: SettingsViewModel by viewModels()
     private val jwtViewModel: JWTViewModel by viewModel()

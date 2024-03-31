@@ -11,22 +11,26 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.Observable
 import androidx.lifecycle.Observer
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
 import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.ActivityLoginBinding
 import com.informatika.bondoman.viewmodel.JWTViewModel
 import com.informatika.bondoman.viewmodel.connectivity.ConnectivityViewModel
+import com.informatika.bondoman.viewmodel.login.LoginFormState
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.combineLatest
 import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : NetworkAwareActivity() {
     private val loginViewModel: LoginViewModel by viewModel()
 
     private lateinit var binding: ActivityLoginBinding
     private val jwtViewModel: JWTViewModel by viewModel()
-
-    private val connectivityViewModel : ConnectivityViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,20 +43,15 @@ class LoginActivity : AppCompatActivity() {
         val etLogin = binding.btnSignIn
         val pbLoading = binding.pbLoading
 
-        connectivityViewModel.isOnline.observe(this@LoginActivity, Observer {
-            Toast.makeText(
-                applicationContext,
-                if(it) "Connected" else "Not Connected",
-                Toast.LENGTH_LONG
-            ).show()
-        })
 
 
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
-            val loginState = it ?: return@Observer
+
+        loginViewModel.loginFormState.asFlow().combine(this.connectivityViewModel.connectivityRepository.isConnected) {a: LoginFormState, b: Boolean ->  Pair(a, b)} .asLiveData().observe(this@LoginActivity, Observer {
+            val loginState = it.first ?: return@Observer
+            val isOnline = it.second
 
             // disable login button unless both username / password is valid
-            etLogin.isEnabled = loginState.isDataValid
+            etLogin.isEnabled = loginState.isDataValid && isOnline
 
             if (loginState.usernameError != null) {
                 etUsername.error = getString(loginState.usernameError)

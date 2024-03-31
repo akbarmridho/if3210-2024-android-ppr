@@ -29,7 +29,7 @@ import org.koin.androidx.scope.activityScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity(), TransactionRecyclerAdapter.ItemTouchListener {
+class MainActivity : NetworkAwareActivity(), TransactionRecyclerAdapter.ItemTouchListener {
 
     private lateinit var binding: ActivityMainBinding
     private val jwtViewModel: JWTViewModel by viewModel()
