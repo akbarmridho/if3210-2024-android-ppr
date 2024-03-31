@@ -2,13 +2,24 @@ package com.informatika.bondoman.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.informatika.bondoman.model.Resource
+import com.informatika.bondoman.model.repository.connectivity.ConnectivityRepository
 import com.informatika.bondoman.model.repository.token.TokenRepository
 import com.informatika.bondoman.prefdatastore.jwt.JWTManager
+import kotlinx.coroutines.flow.last
 import timber.log.Timber
 
-class JWTViewModel(var jwtManager: JWTManager, private var tokenRepository: TokenRepository) :
+class JWTViewModel(
+    var jwtManager: JWTManager,
+    private var tokenRepository: TokenRepository,
+    private var connectivityRepository: ConnectivityRepository
+) :
     ViewModel() {
+
     suspend fun isExpired(): Boolean {
+        if (!connectivityRepository.isConnected.last()) {
+            return false
+        }
+
         try {
             return when (val result = tokenRepository.token(jwtManager.getToken())) {
                 is Resource.Success -> {

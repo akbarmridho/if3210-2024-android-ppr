@@ -18,7 +18,7 @@ val viewModelModule = module {
 
     // Dependency: JWTViewModel
     viewModel {
-        JWTViewModel(get(), get())
+        JWTViewModel(get(), get(), get())
     }
 
     // Dependency: LoginViewModel
@@ -32,13 +32,13 @@ val viewModelModule = module {
     }
 
     // Dependency: DetailTransactionViewModel
-    viewModel {
-        parameters -> DetailTransactionViewModel(get(), transaction = parameters.get())
+    viewModel { parameters ->
+        DetailTransactionViewModel(get(), transaction = parameters.get())
     }
 
     // Dependency: UpdateTransactionViewModel
-    viewModel {
-        parameters -> UpdateTransactionViewModel(get(), transaction = parameters.get())
+    viewModel { parameters ->
+        UpdateTransactionViewModel(get(), transaction = parameters.get())
     }
 
     // Dependency: ListTransactionViewModel

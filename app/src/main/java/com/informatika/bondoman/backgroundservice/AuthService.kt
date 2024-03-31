@@ -7,12 +7,14 @@ import android.os.IBinder
 import android.os.Looper
 import android.widget.Toast
 import com.informatika.bondoman.model.Resource
+import com.informatika.bondoman.model.repository.connectivity.ConnectivityRepository
 import com.informatika.bondoman.model.repository.token.TokenRepository
 import com.informatika.bondoman.prefdatastore.jwt.JWTManager
 import com.informatika.bondoman.view.activity.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import timber.log.Timber
@@ -26,6 +28,7 @@ class AuthService : Service() {
     private var timer: Timer? = null
     private val jwtManager: JWTManager by inject()
     private val tokenRepository: TokenRepository by inject()
+    private val connectivityRepository: ConnectivityRepository by inject()
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -68,6 +71,10 @@ class AuthService : Service() {
 
     private suspend fun isExpired(): Boolean {
         return try {
+            if (!connectivityRepository.isConnected.last()) {
+                return false
+            }
+
             when (val result = tokenRepository.token(jwtManager.getToken())) {
                 is Resource.Success -> {
                     !result.data

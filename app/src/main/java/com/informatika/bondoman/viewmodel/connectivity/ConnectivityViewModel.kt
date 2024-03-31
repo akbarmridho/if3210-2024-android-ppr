@@ -5,6 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 
-class ConnectivityViewModel(public val connectivityRepository: ConnectivityRepository) : ViewModel() {
+class ConnectivityViewModel(val connectivityRepository: ConnectivityRepository) : ViewModel() {
     val isOnline = connectivityRepository.isConnected.asLiveData()
 }
