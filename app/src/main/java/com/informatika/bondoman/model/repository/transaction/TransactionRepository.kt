@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.entity.transaction.Category
+import com.informatika.bondoman.model.local.entity.transaction.Location
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 
 interface TransactionRepository {
@@ -17,9 +18,9 @@ interface TransactionRepository {
 
     suspend fun getTransaction(id: Int)
     suspend fun getAllTransaction()
-    suspend fun insertTransaction(title: String, category: Category, amount: Int, location: String)
+    suspend fun insertTransaction(title: String, category: Category, amount: Int, location: Location)
     suspend fun insertTransaction(title: String, category: Category, amount: Int)
-    suspend fun updateTransaction(_id:Int, title: String, amount: Int, location: String)
+    suspend fun updateTransaction(_id:Int, title: String, amount: Int, location: Location)
     suspend fun updateTransaction(_id:Int, title: String, amount: Int)
     suspend fun deleteTransaction(transaction: Transaction)
 }

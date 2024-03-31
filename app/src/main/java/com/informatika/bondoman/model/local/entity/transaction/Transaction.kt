@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 import com.informatika.bondoman.model.local.DBConstants
 import kotlinx.parcelize.Parcelize
 
@@ -24,6 +25,10 @@ data class Transaction (
     val amount: Int,
 
     @ColumnInfo(defaultValue = "NULL")
-    val location: String?,
+    val locLatitude: Double?,
+    @ColumnInfo(defaultValue = "NULL")
+    val locLongitude: Double?,
+    @ColumnInfo(defaultValue = "NULL")
+    val locAdminArea: String?
 ) : Parcelable
 

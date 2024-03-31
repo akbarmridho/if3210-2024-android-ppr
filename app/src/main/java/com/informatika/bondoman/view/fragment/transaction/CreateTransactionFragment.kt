@@ -41,6 +41,7 @@ import java.util.Locale
 class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
+    private var location: com.informatika.bondoman.model.local.entity.transaction.Location? = null
 
     lateinit var randomizeTransactionReceiver: BroadcastReceiver
 
@@ -136,7 +137,7 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
                 etTransactionTitle.text.toString(),
                 Category.valueOf(spTransactionCategory.selectedItem.toString()),
                 etTransactionAmount.text.toString().toInt(),
-                if (tvTransactionLocation.visibility == View.VISIBLE) tvTransactionLocation.text.toString() else null
+                location
             )
             requireActivity().supportFragmentManager.popBackStack()
             Toast.makeText(context, "Transaction created", Toast.LENGTH_SHORT).show()
@@ -148,7 +149,7 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
         if (LocationUtil.checkLocationPermission(requireContext())) {
             if (LocationUtil.isLocationEnabled(requireContext())) {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
-                    val location: Location? = task.result
+                    val location = task.result
                     if(location == null) {
                         val locationRequest = LocationRequest.create().apply {
                             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -160,6 +161,7 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
                         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
                     } else {
                         getCityName(location.latitude, location.longitude)
+                        Timber.d("Location: ${location.latitude}, ${location.longitude}")
                     }
                 }
             } else {
@@ -176,18 +178,20 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
         requireActivity().unregisterReceiver(randomizeTransactionReceiver)
     }
 
-    fun getCityName(lat: Double, lon: Double) {
-        var cityName: String? = null
+    private fun getCityName(lat: Double, lon: Double) {
+        Timber.d("getCityName: $lat, $lon")
+        var adminArea: String? = null
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             geocoder.getFromLocation(lat, lon, 1) { list ->
                 if (list.size != 0) {
-                    cityName = list[0].adminArea
-                    Timber.d("getCityName: $cityName")
+                    adminArea = list[0].adminArea
+                    location = com.informatika.bondoman.model.local.entity.transaction.Location(lat, lon, adminArea!!)
+                    Timber.d("getAdminArea: $adminArea")
 
                     val mainHandler = Handler(Looper.getMainLooper())
                     val runnable = Runnable {
-                        mCreateTransactionFragmentBinding.tvTransactionLocation.text = cityName
+                        mCreateTransactionFragmentBinding.tvTransactionLocation.text = adminArea
                         mCreateTransactionFragmentBinding.tvTransactionLocation.visibility = View.VISIBLE
                     }
                     mainHandler.post(runnable)
@@ -197,12 +201,13 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
             try {
                 val list = geocoder.getFromLocation(lat, lon, 1)
                 if (list != null && list.size != 0) {
-                    cityName = list[0].adminArea
-                    Timber.d("getCityName: $cityName")
+                    adminArea = list[0].adminArea
+                    location = com.informatika.bondoman.model.local.entity.transaction.Location(lat, lon, adminArea!!)
+                    Timber.d("getAdminArea: $adminArea")
 
                     val mainHandler = Handler(Looper.getMainLooper())
                     val runnable = Runnable {
-                        mCreateTransactionFragmentBinding.tvTransactionLocation.text = cityName
+                        mCreateTransactionFragmentBinding.tvTransactionLocation.text = adminArea
                         mCreateTransactionFragmentBinding.tvTransactionLocation.visibility = View.VISIBLE
                     }
                     mainHandler.post(runnable)

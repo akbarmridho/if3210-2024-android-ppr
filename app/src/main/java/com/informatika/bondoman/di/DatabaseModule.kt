@@ -11,6 +11,7 @@ val databaseModule = module {
     // Dependency: AppDB
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, DBConstants.mName)
+            .fallbackToDestructiveMigration()
             .build()
     }
 

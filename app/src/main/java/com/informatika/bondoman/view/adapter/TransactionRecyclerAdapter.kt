@@ -84,7 +84,9 @@ class TransactionRecyclerAdapter(context: Context) :
             title ="",
             category = Category.LOADER,
             amount = 0,
-            location = ""
+            locLatitude = null,
+            locLongitude = null,
+            locAdminArea = null
         )
     }
 

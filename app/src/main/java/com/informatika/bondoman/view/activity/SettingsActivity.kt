@@ -49,7 +49,7 @@ class SettingsActivity: NetworkAwareActivity() {
         }
 
         btnBack.setOnClickListener {
-            back()
+            finish()
         }
 
     }
@@ -65,11 +65,6 @@ class SettingsActivity: NetworkAwareActivity() {
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(Intent.createChooser(intent, "Send Transaction Through Email"))
         }
-    }
-
-    fun back() {
-        val intent = Intent(this@SettingsActivity, MainActivity::class.java);
-        startActivity(intent);
     }
 
     fun logout() {

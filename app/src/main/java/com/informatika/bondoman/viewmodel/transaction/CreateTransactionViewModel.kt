@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.informatika.bondoman.R
 import com.informatika.bondoman.model.local.entity.transaction.Category
+import com.informatika.bondoman.model.local.entity.transaction.Location
 import com.informatika.bondoman.model.repository.transaction.TransactionRepository
 import com.informatika.bondoman.viewmodel.transaction.helper.TransactionFormState
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +20,7 @@ class CreateTransactionViewModel(private var transactionRepository: TransactionR
         title: String,
         category: Category,
         amount: Int,
-        location: String? = null
+        location: Location? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             if (location != null) {

@@ -37,8 +37,8 @@ object BindingUtils {
     }
 
     @JvmStatic
-    fun isLocationNotNull(location: String?): Boolean {
-        return location != null
+    fun isLocationNotNull(locAdminArea: String?): Boolean {
+        return locAdminArea != null
     }
 
     @JvmStatic

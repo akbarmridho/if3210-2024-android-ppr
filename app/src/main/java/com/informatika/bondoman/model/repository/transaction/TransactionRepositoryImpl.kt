@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.dao.TransactionDao
 import com.informatika.bondoman.model.local.entity.transaction.Category
+import com.informatika.bondoman.model.local.entity.transaction.Location
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 
 class TransactionRepositoryImpl(private var transactionDao: TransactionDao) : TransactionRepository {
+
     override var _listTransactionLiveData = MutableLiveData<Resource<List<Transaction>>>()
         private set
     override var listTransactionLiveData : LiveData<Resource<List<Transaction>>> = _listTransactionLiveData
@@ -40,16 +42,16 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao) : Tr
         }
     }
 
-    override suspend fun insertTransaction(title: String, category: Category, amount: Int, location: String) {
-        transactionDao.insert(title, category, amount, location)
+    override suspend fun insertTransaction(title: String, category: Category, amount: Int, location: Location) {
+        transactionDao.insert(title, category, amount, location.lat, location.lon, location.adminArea)
     }
 
     override suspend fun insertTransaction(title: String, category: Category, amount: Int) {
         transactionDao.insert(title, category, amount)
     }
 
-    override suspend fun updateTransaction(_id: Int, title: String, amount: Int, location: String) {
-        transactionDao.update(_id, title, amount, location)
+    override suspend fun updateTransaction(_id: Int, title: String, amount: Int, location: Location) {
+        transactionDao.update(_id, title, amount, location.lat, location.lon, location.adminArea)
     }
 
     override suspend fun updateTransaction(_id: Int, title: String, amount: Int) {

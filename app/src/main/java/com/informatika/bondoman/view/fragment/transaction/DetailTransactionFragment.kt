@@ -31,7 +31,7 @@ class DetailTransactionFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                (it.getParcelable(ARG_TRANSACTION, Transaction::class.java) as? Transaction)?.let {
+                it.getParcelable(ARG_TRANSACTION, Transaction::class.java)?.let {
                     transaction = it
                 }
             } else {

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.informatika.bondoman.R
 import com.informatika.bondoman.model.Resource
+import com.informatika.bondoman.model.local.entity.transaction.Location
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 import com.informatika.bondoman.model.repository.transaction.TransactionRepository
 import com.informatika.bondoman.viewmodel.transaction.helper.TransactionFormState
@@ -30,7 +31,7 @@ class UpdateTransactionViewModel(private var transactionRepository: TransactionR
     fun updateTransaction(
         title: String,
         amount: Int,
-        location: String? = null
+        location: Location? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             if (location != null) {

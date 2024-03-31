@@ -33,6 +33,7 @@ import java.util.Locale
 class UpdateTransactionFragment : Fragment() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
+    private var location: com.informatika.bondoman.model.local.entity.transaction.Location? = null
 
     lateinit var mUpdateTransactionActivityBinding: UpdateTransactionFragmentBinding
     private lateinit var transaction: Transaction;
@@ -46,11 +47,12 @@ class UpdateTransactionFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                (it.getParcelable(DetailTransactionFragment.ARG_TRANSACTION, Transaction::class.java) as? Transaction)?.let {
+                it.getParcelable(ARG_TRANSACTION, Transaction::class.java)
+                    ?.let {
                     transaction = it
                 }
             } else {
-                (it.getParcelable(DetailTransactionFragment.ARG_TRANSACTION) as? Transaction)?.let {
+                (it.getParcelable(ARG_TRANSACTION) as? Transaction)?.let {
                     transaction = it
                 }
             }
@@ -113,7 +115,7 @@ class UpdateTransactionFragment : Fragment() {
             updateTransactionViewModel.updateTransaction(
                 etTransactionTitle.text.toString(),
                 etTransactionAmount.text.toString().toInt(),
-                if (locationUpdated) tvTransactionLocation.text.toString() else null
+                if (locationUpdated) location else null
             )
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_activity_container, DetailTransactionFragment.newInstance(transaction))
@@ -150,19 +152,20 @@ class UpdateTransactionFragment : Fragment() {
 
     }
 
-    fun getCityName(lat: Double, lon: Double) {
-        var cityName: String? = null
+    private fun getCityName(lat: Double, lon: Double) {
+        var adminArea: String? = null
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             geocoder.getFromLocation(lat, lon, 1) { list ->
                 if (list.size != 0) {
-                    cityName = list[0].adminArea
+                    adminArea = list[0].adminArea
                     locationUpdated = true
-                    Timber.d("getCityName: $cityName")
+                    location = com.informatika.bondoman.model.local.entity.transaction.Location(lat, lon, adminArea!!)
+                    Timber.d("getAdminName: $adminArea")
 
                     val mainHandler = Handler(Looper.getMainLooper())
                     val runnable = Runnable {
-                        mUpdateTransactionActivityBinding.tvTransactionLocation.text = cityName
+                        mUpdateTransactionActivityBinding.tvTransactionLocation.text = adminArea
                         mUpdateTransactionActivityBinding.tvTransactionLocation.visibility = View.VISIBLE
                     }
                     mainHandler.post(runnable)
@@ -172,13 +175,14 @@ class UpdateTransactionFragment : Fragment() {
             try {
                 val list = geocoder.getFromLocation(lat, lon, 1)
                 if (list != null && list.size != 0) {
-                    cityName = list[0].adminArea
+                    adminArea = list[0].adminArea
                     locationUpdated = true
-                    Timber.d("getCityName: $cityName")
+                    location = com.informatika.bondoman.model.local.entity.transaction.Location(lat, lon, adminArea!!)
+                    Timber.d("getAdminName: $adminArea")
 
                     val mainHandler = Handler(Looper.getMainLooper())
                     val runnable = Runnable {
-                        mUpdateTransactionActivityBinding.tvTransactionLocation.text = cityName
+                        mUpdateTransactionActivityBinding.tvTransactionLocation.text = adminArea
                         mUpdateTransactionActivityBinding.tvTransactionLocation.visibility = View.VISIBLE
                     }
                     mainHandler.post(runnable)

@@ -13,7 +13,6 @@
             type="com.informatika.bondoman.model.local.entity.transaction.Transaction" />
     </data>
 
-<!--    make linear layout space between -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,14 +102,14 @@
                 android:id="@+id/tv_list_item_transaction_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{transaction.location}"
+                android:text="@{transaction.locAdminArea}"
                 android:textSize="12sp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="35dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:visibility="@{BindingUtils.isLocationNotNull(transaction.location) ? View.VISIBLE : View.GONE}"
+                android:visibility="@{BindingUtils.isLocationNotNull(transaction.locAdminArea) ? View.VISIBLE : View.GONE}"
                 tools:text="@tools:sample/cities"
                 />
 
