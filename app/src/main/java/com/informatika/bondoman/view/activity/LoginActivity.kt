@@ -43,10 +43,7 @@ class LoginActivity : NetworkAwareActivity() {
         val etLogin = binding.btnSignIn
         val pbLoading = binding.pbLoading
 
-
-
-
-        loginViewModel.loginFormState.asFlow().combine(this.connectivityViewModel.connectivityRepository.isConnected) {a: LoginFormState, b: Boolean ->  Pair(a, b)} .asLiveData().observe(this@LoginActivity, Observer {
+        loginViewModel.loginFormState.asFlow().combine(this.connectivityViewModel.getConnectivityFlow()) {a: LoginFormState, b: Boolean ->  Pair(a, b)} .asLiveData().observe(this@LoginActivity, Observer {
             val loginState = it.first ?: return@Observer
             val isOnline = it.second
 

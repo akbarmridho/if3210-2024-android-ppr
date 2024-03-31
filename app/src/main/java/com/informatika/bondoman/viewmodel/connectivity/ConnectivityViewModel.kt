@@ -4,7 +4,21 @@ import com.informatika.bondoman.model.repository.connectivity.ConnectivityReposi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
 
-class ConnectivityViewModel(val connectivityRepository: ConnectivityRepository) : ViewModel() {
+class ConnectivityViewModel(private val connectivityRepository: ConnectivityRepository) : ViewModel() {
     val isOnline = connectivityRepository.isConnected.asLiveData()
+
+
+    fun getConnectivityFlow(): Flow<Boolean> {
+        return this.connectivityRepository.isConnected
+    }
+
+    fun getIsToastSent(): MutableMap<Boolean, Boolean> {
+        return this.connectivityRepository.isToastSent
+    }
+
+    fun markToastSent(connectivityStatus : Boolean) {
+        this.connectivityRepository.markToastSent(connectivityStatus)
+    }
 }

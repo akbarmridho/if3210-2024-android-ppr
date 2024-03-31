@@ -15,10 +15,11 @@ open class NetworkAwareActivity : AppCompatActivity() {
 
         connectivityViewModel.isOnline.observe(this) {
             this.isOnline = it
-            if(!this.isOnline) {
+            if(!connectivityViewModel.getIsToastSent()[this.isOnline]!!) {
+                this.connectivityViewModel.markToastSent(this.isOnline)
                 Toast.makeText(
                     applicationContext,
-                    "You're not connected to the internet!",
+                    if(this.isOnline) "You're connected to the internet" else "You're not connected to the internet!",
                     Toast.LENGTH_LONG
                 ).show()
             }
