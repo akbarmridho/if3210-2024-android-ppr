@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.informatika.bondoman.R
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.informatika.bondoman.databinding.ItemLoadingBinding
@@ -16,7 +14,7 @@ import com.informatika.bondoman.util.TransactionDiffUtil
 import com.informatika.bondoman.view.viewholder.LoaderViewHolder
 import com.informatika.bondoman.view.viewholder.TransactionViewHolder
 
-class TransactionRecyclerAdapter(context: Context) :
+class TransactionRecyclerAdapter(private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val listTransaction: ArrayList<Transaction> = ArrayList()
@@ -41,8 +39,8 @@ class TransactionRecyclerAdapter(context: Context) :
                 LayoutInflater.from(parent.context), parent, false)
             TransactionViewHolder(mTransactionBinding)
         } else {
-            val mLoadingBinding: ItemLoadingBinding = DataBindingUtil
-                .inflate(LayoutInflater.from(parent.context), R.layout.list_item_loader, parent, false)
+            val mLoadingBinding: ItemLoadingBinding = ItemLoadingBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false)
             LoaderViewHolder(mLoadingBinding)
         }
     }

@@ -1,5 +1,7 @@
 package com.informatika.bondoman.view.fragment.transaction
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -9,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.informatika.bondoman.DetailTransactionFragmentBinding
 import com.informatika.bondoman.model.Resource
@@ -55,9 +57,23 @@ class DetailTransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mDetailTransactionFragmentBinding.transaction = transaction
 
+        val clTransactionLocation : ConstraintLayout = mDetailTransactionFragmentBinding.clTransactionLocation
+
         val ibClose: ImageButton = mDetailTransactionFragmentBinding.ibClose
         val ibDelete: ImageButton = mDetailTransactionFragmentBinding.ibDelete
         val ibEdit: ImageButton = mDetailTransactionFragmentBinding.ibEdit
+
+        clTransactionLocation.setOnClickListener {
+            if (transaction.location != null) {
+                val location = transaction.location
+                val uri = "http://maps.google.com/maps?q=loc:${location?.lat},${location?.lon}"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                intent.setPackage("com.google.android.apps.maps")
+                startActivity(intent)
+            } else {
+                Toast.makeText(requireContext(), "Location is not available", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         ibClose.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()

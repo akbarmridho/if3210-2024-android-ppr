@@ -93,7 +93,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
@@ -117,7 +116,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@{BindingUtils.getCategory(transaction.category)}"
@@ -140,7 +138,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@{BindingUtils.createAmount(transaction.amount)}"
@@ -161,18 +158,43 @@
             android:visibility="@{BindingUtils.isLocationNotNull(transaction.location) ? View.VISIBLE : View.GONE}"
             />
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clTransactionLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@{transaction.location.adminArea}"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             android:visibility="@{BindingUtils.isLocationNotNull(transaction.location) ? View.VISIBLE : View.GONE}"
-            tools:text="@tools:sample/cities"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/tvTransactionLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{transaction.location.adminArea}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:text="@tools:sample/cities"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnTransactionLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:src="@drawable/ic_location"
+                android:contentDescription="location"
+                app:layout_constraintStart_toEndOf="@id/tvTransactionLocation"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@color/white"
             />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </LinearLayout>
