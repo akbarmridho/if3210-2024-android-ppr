@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.DocumentsContract
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,7 +23,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlinx.coroutines.withContext
+import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
+import java.io.File
 import java.io.FileOutputStream
 import java.time.LocalDateTime
 import kotlin.random.Random
@@ -39,6 +43,8 @@ class SettingsActivity : NetworkAwareActivity() {
     private val exporterTransactionViewModel: ExporterTransactionViewModel by viewModel()
     private lateinit var exportXlsxLauncher: ActivityResultLauncher<Intent>
     private lateinit var exportXlsLauncher: ActivityResultLauncher<Intent>
+    private lateinit var exportXlsxLauncherAndSendEmail : ActivityResultLauncher<Intent>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +70,7 @@ class SettingsActivity : NetworkAwareActivity() {
         }
 
         btnSend.setOnClickListener {
-            sendEmail()
+            onBtnEmailClick()
         }
 
         btnBack.setOnClickListener {
@@ -93,6 +99,25 @@ class SettingsActivity : NetworkAwareActivity() {
                 }
             }
 
+        exportXlsxLauncherAndSendEmail =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    if (result.data != null) {
+                        val uri = result.data!!.data
+                        if (uri != null) {
+                            lifecycleScope.launch {
+                                val success = exportFile(uri, ExportType.XLSX)
+                                if (!success) {
+                                    return@launch;
+                                }
+
+                                sendEmail(uri)
+                            }
+                        }
+                    }
+                }
+            }
+
         exportXlsLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
@@ -108,19 +133,34 @@ class SettingsActivity : NetworkAwareActivity() {
             }
     }
 
-    private fun sendEmail() {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(loginViewModel.getEmail()))
-            putExtra(Intent.EXTRA_SUBJECT, "Spreadsheet of Transaction")
-            putExtra(
-                Intent.EXTRA_TEXT,
-                "Attached to this email is the spreadsheet of all of your transaction so far."
-            )
-        }
+    private fun onBtnEmailClick() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        val time = LocalDateTime.now().toString()
+        val filename = "transaction_$time.xlsx"
 
-        if (intent.resolveActivity(packageManager) != null) {
-            startActivity(Intent.createChooser(intent, "Send Transaction Through Email"))
+        intent.putExtra(Intent.EXTRA_TITLE, filename)
+        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, Uri.parse("/Download"))
+        exportXlsxLauncherAndSendEmail.launch(intent)
+    }
+
+    private fun sendEmail(uri : Uri) {
+        lifecycleScope.launch (Dispatchers.IO) {
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "mail/rfc822"
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(loginViewModel.getEmail()))
+                putExtra(Intent.EXTRA_SUBJECT, "Spreadsheet of Transaction")
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Attached to this email is the spreadsheet of all of your transaction so far."
+                )
+               putExtra(Intent.EXTRA_STREAM, uri)
+            }
+
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(Intent.createChooser(intent, "Send Transaction Through Email"))
+            }
         }
     }
 
@@ -135,8 +175,8 @@ class SettingsActivity : NetworkAwareActivity() {
         }
     }
 
-    private suspend fun exportFile(uri: Uri, exportType: ExportType) {
-        withContext(Dispatchers.IO) {
+    private suspend fun exportFile(uri: Uri, exportType: ExportType): Boolean {
+        return withContext(Dispatchers.IO) {
             val mainHandler = Handler(Looper.getMainLooper())
             val descriptor = contentResolver.openFileDescriptor(uri, "w")
 
@@ -151,7 +191,7 @@ class SettingsActivity : NetworkAwareActivity() {
                     )
                         .show()
                 }
-                return@withContext
+                return@withContext false;
             }
 
             if (descriptor != null) {
@@ -169,6 +209,8 @@ class SettingsActivity : NetworkAwareActivity() {
                     )
                         .show()
                 }
+
+                return@withContext true;
             } else {
                 mainHandler.post {
                     Toast.makeText(
@@ -178,6 +220,7 @@ class SettingsActivity : NetworkAwareActivity() {
                     )
                         .show()
                 }
+                return@withContext false;
             }
         }
     }
