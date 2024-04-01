@@ -13,7 +13,8 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -45,18 +46,8 @@ class UpdateTransactionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let { bundle ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(ARG_TRANSACTION, Transaction::class.java)
-                    ?.let {
-                        transaction = it
-                    }
-            } else {
-                (bundle.getParcelable(ARG_TRANSACTION) as? Transaction)?.let {
-                    transaction = it
-                }
-            }
-        }
+        val safeVarargs: UpdateTransactionFragmentArgs by navArgs()
+        transaction = safeVarargs.transaction
     }
 
 
@@ -116,8 +107,7 @@ class UpdateTransactionFragment : Fragment() {
                 etTransactionAmount.text.toString().toDouble(),
                 if (locationUpdated) location else null
             )
-            requireActivity().findNavController(com.informatika.bondoman.R.id.nav_host_fragment_activity_main)
-                .popBackStack()
+            findNavController().popBackStack()
             Toast.makeText(requireContext(), "Transaction updated", Toast.LENGTH_SHORT).show()
         }
     }

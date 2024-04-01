@@ -7,6 +7,9 @@
     <string name="title_settings">Settings</string>
     <string name="title_activity_login">Login</string>
     <string name="title_login">Login</string>
+    <string name="title_create_transaction">Create Transaction</string>
+    <string name="title_detail_transaction">Detail Transaction</string>
+    <string name="title_update_transaction">Update Transaction</string>
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

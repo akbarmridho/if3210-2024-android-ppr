@@ -1,6 +1,10 @@
 package com.informatika.bondoman.model.local.entity.transaction
 
-enum class Category(s: String) {
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+enum class Category(val s: String) : Parcelable {
     INCOME("Income"),
     EXPENSE("Expense"),
     LOADER("")

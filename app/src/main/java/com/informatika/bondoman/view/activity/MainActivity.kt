@@ -8,9 +8,13 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,6 +26,7 @@ import com.informatika.bondoman.util.LocationUtil
 import com.informatika.bondoman.view.adapter.TransactionRecyclerAdapter
 import com.informatika.bondoman.view.fragment.transaction.DetailTransactionFragment
 import com.informatika.bondoman.view.fragment.transaction.DetailTransactionFragment.Companion.ARG_TRANSACTION
+import com.informatika.bondoman.view.fragment.transaction.ListTransactionFragmentDirections
 import com.informatika.bondoman.viewmodel.JWTViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -37,12 +42,8 @@ class MainActivity : NetworkAwareActivity(), TransactionRecyclerAdapter.ItemTouc
     private lateinit var randomizeTransactionReceiver: BroadcastReceiver
 
     override fun onItemClick(transaction: Transaction) {
-        val bundle = Bundle()
-        bundle.putParcelable(ARG_TRANSACTION, transaction)
-        findNavController(R.id.nav_host_fragment_activity_main).navigate(
-            R.id.navigation_detail_transaction,
-            bundle
-        )
+        val action = ListTransactionFragmentDirections.actionNavigationTransactionToNavigationDetailTransaction(transaction)
+        findNavController(R.id.nav_host_fragment_activity_main).navigate(action)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +82,11 @@ class MainActivity : NetworkAwareActivity(), TransactionRecyclerAdapter.ItemTouc
 
 
         val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        val navController = navHostFragment.findNavController()
+
+        NavigationUI.setupActionBarWithNavController(this, navController)
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_transaction,
@@ -117,6 +122,11 @@ class MainActivity : NetworkAwareActivity(), TransactionRecyclerAdapter.ItemTouc
             }
 
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        return navHostFragment.findNavController().navigateUp() || super.onSupportNavigateUp()
     }
 
     override fun onDestroy() {

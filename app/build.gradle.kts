@@ -1,8 +1,10 @@
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.parcelize")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -64,7 +66,7 @@ dependencies {
     implementation("androidx.test:runner:1.5.2")
     implementation("org.apache.poi:poi:5.2.5")
     implementation("org.apache.poi:poi-ooxml:5.2.5")
-    implementation("androidx.fragment:fragment:1.6.2")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     // LifeCycle
     val lifecycleVersion = "2.7.0"
@@ -134,7 +136,6 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:$cameraVersion")
     implementation("androidx.camera:camera-view:1.1.0-alpha07")
     implementation("androidx.camera:camera-extensions:1.0.0-alpha30")
-
 
     // Unit Test
     testImplementation("junit:junit:4.13.2")

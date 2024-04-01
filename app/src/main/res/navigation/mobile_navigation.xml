@@ -24,34 +24,46 @@
         android:id="@+id/navigation_transaction"
         android:name="com.informatika.bondoman.view.fragment.transaction.ListTransactionFragment"
         android:label="@string/title_transaction"
-        tools:layout="@layout/fragment_list_transaction"/>
+        tools:layout="@layout/fragment_list_transaction">
+        <action
+            android:id="@+id/action_navigation_transaction_to_navigation_create_transaction"
+            app:destination="@id/navigation_create_transaction" />
+        <action
+            android:id="@+id/action_navigation_transaction_to_navigation_detail_transaction"
+            app:destination="@id/navigation_detail_transaction" >
+            <argument
+                android:name="transaction"
+                app:argType="com.informatika.bondoman.model.local.entity.transaction.Transaction" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_create_transaction"
         android:name="com.informatika.bondoman.view.fragment.transaction.CreateTransactionFragment"
+        android:label="@string/title_create_transaction"
         tools:layout="@layout/fragment_create_transaction">
-        <action
-            android:id="@+id/action_navigation_transaction_to_navigation_create_transaction"
-            app:destination="@id/create_transaction_fragment_container" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_detail_transaction"
         android:name="com.informatika.bondoman.view.fragment.transaction.DetailTransactionFragment"
+        android:label="@string/title_detail_transaction"
         tools:layout="@layout/fragment_detail_transaction" >
-        <action
-            android:id="@+id/action_navigation_transaction_to_navigation_detail_transaction"
-            app:destination="@+id/detail_transaction_fragment_container"
-            />
+        <argument
+            android:name="transaction"
+            app:argType="com.informatika.bondoman.model.local.entity.transaction.Transaction" />
+
+        <action android:id="@+id/action_navigation_detail_transaction_to_navigation_update_transaction"
+            app:destination="@id/navigation_update_transaction" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_update_transaction"
         android:name="com.informatika.bondoman.view.fragment.transaction.UpdateTransactionFragment"
+        android:label="@string/title_update_transaction"
         tools:layout="@layout/fragment_update_transaction">
-        <action
-            android:id="@+id/action_navigation_detail_transaction_to_navigation_update_transaction"
-            app:destination="@+id/update_transaction_fragment_container"
-            />
+        <argument
+            android:name="transaction"
+            app:argType="com.informatika.bondoman.model.local.entity.transaction.Transaction" />
     </fragment>
 </navigation>

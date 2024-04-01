@@ -11,9 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import com.informatika.bondoman.DetailTransactionFragmentBinding
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
@@ -32,17 +37,9 @@ class DetailTransactionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let { bundle ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(ARG_TRANSACTION, Transaction::class.java)?.let {
-                    transaction = it
-                }
-            } else {
-                (bundle.getParcelable(ARG_TRANSACTION) as? Transaction)?.let {
-                    transaction = it
-                }
-            }
-        }
+
+        val safeArgs: DetailTransactionFragmentArgs by navArgs()
+        transaction = safeArgs.transaction
     }
 
     override fun onCreateView(
@@ -61,7 +58,6 @@ class DetailTransactionFragment : Fragment() {
         val clTransactionLocation: ConstraintLayout =
             mDetailTransactionFragmentBinding.clTransactionLocation
 
-        val ibClose: ImageButton = mDetailTransactionFragmentBinding.ibClose
         val ibDelete: ImageButton = mDetailTransactionFragmentBinding.ibDelete
         val ibEdit: ImageButton = mDetailTransactionFragmentBinding.ibEdit
 
@@ -78,23 +74,15 @@ class DetailTransactionFragment : Fragment() {
             }
         }
 
-        ibClose.setOnClickListener {
-            requireActivity().findNavController(com.informatika.bondoman.R.id.nav_host_fragment_activity_main)
-                .popBackStack()
-        }
-
         ibDelete.setOnClickListener {
             detailTransactionViewModel.deleteTransaction(transaction)
-            requireActivity().findNavController(com.informatika.bondoman.R.id.nav_host_fragment_activity_main)
-                .navigate(com.informatika.bondoman.R.id.navigation_transaction)
+            findNavController().navigate(com.informatika.bondoman.R.id.navigation_transaction)
             Toast.makeText(requireContext(), "Transaction Deleted", Toast.LENGTH_SHORT).show()
         }
 
         ibEdit.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable(ARG_TRANSACTION, transaction)
-            requireActivity().findNavController(com.informatika.bondoman.R.id.nav_host_fragment_activity_main)
-                .navigate(com.informatika.bondoman.R.id.navigation_update_transaction, bundle)
+            val action = DetailTransactionFragmentDirections.actionNavigationDetailTransactionToNavigationUpdateTransaction(transaction)
+            findNavController().navigate(action)
         }
     }
 
