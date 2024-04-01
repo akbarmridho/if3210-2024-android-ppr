@@ -23,21 +23,21 @@ import org.koin.core.parameter.parametersOf
 
 class DetailTransactionFragment : Fragment() {
 
-    lateinit var mDetailTransactionFragmentBinding: DetailTransactionFragmentBinding
-    private lateinit var transaction: Transaction;
+    private lateinit var mDetailTransactionFragmentBinding: DetailTransactionFragmentBinding
+    private lateinit var transaction: Transaction
     private val detailTransactionViewModel: DetailTransactionViewModel by viewModel {
         parametersOf(transaction)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
+        arguments?.let { bundle ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.getParcelable(ARG_TRANSACTION, Transaction::class.java)?.let {
+                bundle.getParcelable(ARG_TRANSACTION, Transaction::class.java)?.let {
                     transaction = it
                 }
             } else {
-                (it.getParcelable(ARG_TRANSACTION) as? Transaction)?.let {
+                (bundle.getParcelable(ARG_TRANSACTION) as? Transaction)?.let {
                     transaction = it
                 }
             }
@@ -48,7 +48,7 @@ class DetailTransactionFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mDetailTransactionFragmentBinding =
             DetailTransactionFragmentBinding.inflate(inflater, container, false)
         return mDetailTransactionFragmentBinding.root
@@ -57,7 +57,8 @@ class DetailTransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mDetailTransactionFragmentBinding.transaction = transaction
 
-        val clTransactionLocation : ConstraintLayout = mDetailTransactionFragmentBinding.clTransactionLocation
+        val clTransactionLocation: ConstraintLayout =
+            mDetailTransactionFragmentBinding.clTransactionLocation
 
         val ibClose: ImageButton = mDetailTransactionFragmentBinding.ibClose
         val ibDelete: ImageButton = mDetailTransactionFragmentBinding.ibDelete
@@ -71,7 +72,8 @@ class DetailTransactionFragment : Fragment() {
                 intent.setPackage("com.google.android.apps.maps")
                 startActivity(intent)
             } else {
-                Toast.makeText(requireContext(), "Location is not available", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Location is not available", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -82,14 +84,20 @@ class DetailTransactionFragment : Fragment() {
         ibDelete.setOnClickListener {
             detailTransactionViewModel.deleteTransaction(transaction)
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(com.informatika.bondoman.R.id.main_activity_container, ListTransactionFragment())
+                .replace(
+                    com.informatika.bondoman.R.id.main_activity_container,
+                    ListTransactionFragment()
+                )
                 .commit()
             Toast.makeText(requireContext(), "Transaction Deleted", Toast.LENGTH_SHORT).show()
         }
 
         ibEdit.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(com.informatika.bondoman.R.id.main_activity_container, UpdateTransactionFragment.newInstance(transaction))
+                .replace(
+                    com.informatika.bondoman.R.id.main_activity_container,
+                    UpdateTransactionFragment.newInstance(transaction)
+                )
                 .addToBackStack(updateTransactionFragmentTag)
                 .commit()
         }
@@ -109,6 +117,7 @@ class DetailTransactionFragment : Fragment() {
                     }
                     mainHandler.post(runnable)
                 }
+
                 else -> {
                     // Do nothing
                 }

@@ -14,7 +14,7 @@ import com.informatika.bondoman.util.TransactionDiffUtil
 import com.informatika.bondoman.view.viewholder.LoaderViewHolder
 import com.informatika.bondoman.view.viewholder.TransactionViewHolder
 
-class TransactionRecyclerAdapter(private val context: Context) :
+class TransactionRecyclerAdapter(context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val listTransaction: ArrayList<Transaction> = ArrayList()
@@ -33,14 +33,17 @@ class TransactionRecyclerAdapter(private val context: Context) :
             ITEM_TYPE_NORMAL
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ITEM_TYPE_NORMAL) {
             val mTransactionBinding = ItemTransactionBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false)
+                LayoutInflater.from(parent.context), parent, false
+            )
             TransactionViewHolder(mTransactionBinding)
         } else {
             val mLoadingBinding: ItemLoadingBinding = ItemLoadingBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false)
+                LayoutInflater.from(parent.context), parent, false
+            )
             LoaderViewHolder(mLoadingBinding)
         }
     }
@@ -50,7 +53,7 @@ class TransactionRecyclerAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var clickListener: View.OnClickListener = View.OnClickListener {
+        val clickListener: View.OnClickListener = View.OnClickListener {
             listener.onItemClick(listTransaction[position])
         }
 
@@ -60,6 +63,7 @@ class TransactionRecyclerAdapter(private val context: Context) :
                 holder.setTransaction(listTransaction[position])
                 holder.setClickListener(clickListener)
             }
+
             ITEM_TYPE_LOADER -> {
                 // do nothing
             }
@@ -68,7 +72,8 @@ class TransactionRecyclerAdapter(private val context: Context) :
 
     fun setTransactionList(newList: ArrayList<Transaction>) {
         val diffResult = DiffUtil.calculateDiff(
-            TransactionDiffUtil(newList, listTransaction))
+            TransactionDiffUtil(newList, listTransaction)
+        )
         diffResult.dispatchUpdatesTo(this)
         listTransaction.clear()
         listTransaction.addAll(newList)
@@ -78,8 +83,8 @@ class TransactionRecyclerAdapter(private val context: Context) :
     private fun getLoaderItem(): Transaction {
         return Transaction(
             _id = 0,
-            createdAt ="",
-            title ="",
+            createdAt = "",
+            title = "",
             category = Category.LOADER,
             amount = 0.0,
             location = null,
@@ -109,10 +114,6 @@ class TransactionRecyclerAdapter(private val context: Context) :
 
     fun isLoading(): Boolean {
         return listTransaction.isEmpty() || listTransaction[listTransaction.size - 1]._id == 0
-    }
-
-    fun getItem(position: Int): Transaction {
-        return listTransaction[position]
     }
 
     interface ItemTouchListener {

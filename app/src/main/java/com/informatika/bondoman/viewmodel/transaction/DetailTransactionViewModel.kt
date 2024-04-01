@@ -10,8 +10,11 @@ import com.informatika.bondoman.model.repository.transaction.TransactionReposito
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailTransactionViewModel(private var transactionRepository: TransactionRepository, val transaction: Transaction) : ViewModel() {
-    val transactionLiveData = MutableLiveData<Resource<Transaction>>()
+class DetailTransactionViewModel(
+    private var transactionRepository: TransactionRepository,
+    val transaction: Transaction
+) : ViewModel() {
+    private val transactionLiveData = MutableLiveData<Resource<Transaction>>()
     private val observer = androidx.lifecycle.Observer<Resource<Transaction>> {
         transactionLiveData.postValue(it)
     }

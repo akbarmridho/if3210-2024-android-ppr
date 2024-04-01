@@ -2,7 +2,6 @@ package com.informatika.bondoman.view.fragment
 
 import android.Manifest
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,27 +12,21 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.FragmentTwibbonBinding
-import com.informatika.bondoman.viewmodel.TwibbonViewModel
 import timber.log.Timber
 
 class TwibbonFragment : Fragment() {
-    lateinit var mTwibbonFragmentBinding: FragmentTwibbonBinding
-    private val viewModel: TwibbonViewModel by viewModels()
+    private lateinit var mTwibbonFragmentBinding: FragmentTwibbonBinding
     private var imageCapture: ImageCapture? = null
     private var cameraProvider: ProcessCameraProvider? = null
     private var previewTaken: Boolean = false
 
-    companion object {
-        fun newInstance() = TwibbonFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mTwibbonFragmentBinding = FragmentTwibbonBinding.inflate(inflater, container, false)
 
         val cameraPermission = registerForActivityResult(

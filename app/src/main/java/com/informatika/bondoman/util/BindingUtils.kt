@@ -42,7 +42,7 @@ object BindingUtils {
     }
 
     @JvmStatic
-    fun getDate(s: String): String? {
+    fun getDate(s: String): String {
         return s.split("T")[0]
     }
 }

@@ -1,6 +1,5 @@
 package com.informatika.bondoman.view.fragment.transaction
 
-import android.R
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Context.RECEIVER_EXPORTED
@@ -39,11 +38,10 @@ import java.util.Locale
 
 
 class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var location: com.informatika.bondoman.model.local.entity.transaction.Location? = null
 
-    lateinit var randomizeTransactionReceiver: BroadcastReceiver
+    private lateinit var randomizeTransactionReceiver: BroadcastReceiver
 
     private val createTransactionViewModel: CreateTransactionViewModel by viewModel()
     private lateinit var mCreateTransactionFragmentBinding: FragmentCreateTransactionBinding
@@ -52,7 +50,7 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         mCreateTransactionFragmentBinding =
             FragmentCreateTransactionBinding.inflate(inflater, container, false)
@@ -67,7 +65,6 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
         val etTransactionTitle = mCreateTransactionFragmentBinding.etTransactionTitle
         val spTransactionCategory = mCreateTransactionFragmentBinding.spTransactionCategory
         val etTransactionAmount = mCreateTransactionFragmentBinding.etTransactionAmount
-        val tvTransactionLocation = mCreateTransactionFragmentBinding.tvTransactionLocation
         val btnCreateTransaction = mCreateTransactionFragmentBinding.btnCreateTransaction
 
         randomizeTransactionReceiver = object : BroadcastReceiver() {
@@ -95,8 +92,9 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
                 categories.add(category.name)
             }
         }
-        val dataAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, categories)
-        dataAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        val dataAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spTransactionCategory.adapter = dataAdapter
 
         createTransactionViewModel.createTransactionFormState.observe(viewLifecycleOwner, Observer {
@@ -168,7 +166,7 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
                         fusedLocationProviderClient.requestLocationUpdates(
                             locationRequest,
                             locationCallback,
-                            Looper.myLooper()
+                            Looper.myLooper() ?: Looper.getMainLooper()
                         )
                     } else {
                         getCityName(location.latitude, location.longitude)
@@ -191,7 +189,7 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
 
     private fun getCityName(lat: Double, lon: Double) {
         Timber.d("getCityName: $lat, $lon")
-        var adminArea: String? = null
+        var adminArea: String?
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             geocoder.getFromLocation(lat, lon, 1) { list ->

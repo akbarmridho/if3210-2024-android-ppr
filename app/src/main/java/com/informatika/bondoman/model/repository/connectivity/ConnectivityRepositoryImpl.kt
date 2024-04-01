@@ -1,6 +1,7 @@
+package com.informatika.bondoman.model.repository.connectivity
+
 import android.content.Context
 import android.net.ConnectivityManager
-import com.informatika.bondoman.model.repository.connectivity.ConnectivityRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -20,11 +21,11 @@ class ConnectivityRepositoryImpl(context: Context) : ConnectivityRepository {
         mutableMapOf(true to false, false to false)
 
     override fun markToastSent(connectivityStatus: Boolean) {
-        isToastSent.put(connectivityStatus, true)
+        isToastSent[connectivityStatus] = true
     }
 
     fun markToastNotSent(connectivityStatus: Boolean) {
-        isToastSent.put(connectivityStatus, false)
+        isToastSent[connectivityStatus] = false
     }
 
     init {

@@ -45,21 +45,21 @@ class LoginActivity : NetworkAwareActivity() {
                     a,
                     b
                 )
-            }.asLiveData().observe(this@LoginActivity, Observer {
-            val loginState = it.first ?: return@Observer
-            val isOnline = it.second
+            }.asLiveData().observe(this@LoginActivity) {
+                val loginState = it.first
+                val isOnline = it.second
 
-            // disable login button unless both username / password is valid
-            etLogin.isEnabled = loginState.isDataValid && isOnline
+                // disable login button unless both username / password is valid
+                etLogin.isEnabled = loginState.isDataValid && isOnline
 
-            if (loginState.usernameError != null) {
-                etUsername.error = getString(loginState.usernameError)
+                if (loginState.usernameError != null) {
+                    etUsername.error = getString(loginState.usernameError)
+                }
+
+                if (loginState.passwordError != null) {
+                    etPassword.error = getString(loginState.passwordError)
+                }
             }
-
-            if (loginState.passwordError != null) {
-                etPassword.error = getString(loginState.passwordError)
-            }
-        })
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
@@ -129,7 +129,7 @@ class LoginActivity : NetworkAwareActivity() {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 
-    fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+    private fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         this.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
                 afterTextChanged.invoke(editable.toString())

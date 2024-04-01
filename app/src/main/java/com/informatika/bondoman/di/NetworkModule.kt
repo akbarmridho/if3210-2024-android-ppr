@@ -3,7 +3,6 @@ package com.informatika.bondoman.di
 import com.informatika.bondoman.BuildConfig
 import com.informatika.bondoman.model.remote.service.AuthService
 import com.informatika.bondoman.model.remote.service.TransactionService
-import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,11 +14,7 @@ import timber.log.Timber
 val networkModule = module {
     // Dependency: HttpLoggingInterceptor
     single<Interceptor> {
-        HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-                Timber.tag("OkHttp").d(message)
-            }
-        }).apply {
+        HttpLoggingInterceptor { message -> Timber.tag("OkHttp").d(message) }.apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }
@@ -36,13 +31,13 @@ val networkModule = module {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .client(get())
-            .addConverterFactory(MoshiConverterFactory.create(get<Moshi>()))
+            .addConverterFactory(MoshiConverterFactory.create(get()))
             .build()
     }
 
     // Dependency: ApiService
-    single<AuthService> {get<Retrofit>().create(AuthService::class.java)}
+    single<AuthService> { get<Retrofit>().create(AuthService::class.java) }
 
     // Dependency: TransactionService
-    single<TransactionService> {get<Retrofit>().create(TransactionService::class.java)}
+    single<TransactionService> { get<Retrofit>().create(TransactionService::class.java) }
 }

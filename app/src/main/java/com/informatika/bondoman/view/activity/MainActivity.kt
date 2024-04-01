@@ -92,8 +92,5 @@ class MainActivity : NetworkAwareActivity(), TransactionRecyclerAdapter.ItemTouc
         const val listTransactionFragmentTag = "list_transaction_fragment"
         const val createTransactionFragmentTag = "create_transaction_fragment"
         const val updateTransactionFragmentTag = "update_transaction_fragment"
-        const val settingFragmentTag = "settings_fragment"
-
     }
-
 }

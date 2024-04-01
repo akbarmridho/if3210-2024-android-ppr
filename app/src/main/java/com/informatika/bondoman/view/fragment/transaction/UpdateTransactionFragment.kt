@@ -18,7 +18,6 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.UpdateTransactionFragmentBinding
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 import com.informatika.bondoman.util.LocationUtil
@@ -31,28 +30,28 @@ import java.io.IOException
 import java.util.Locale
 
 class UpdateTransactionFragment : Fragment() {
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var location: com.informatika.bondoman.model.local.entity.transaction.Location? = null
 
-    lateinit var mUpdateTransactionActivityBinding: UpdateTransactionFragmentBinding
-    private lateinit var transaction: Transaction;
+    private lateinit var mUpdateTransactionActivityBinding: UpdateTransactionFragmentBinding
+    private lateinit var transaction: Transaction
     private val updateTransactionViewModel: UpdateTransactionViewModel by viewModel {
         parametersOf(transaction)
     }
+
 
     private var locationUpdated: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
+        arguments?.let { bundle ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.getParcelable(ARG_TRANSACTION, Transaction::class.java)
+                bundle.getParcelable(ARG_TRANSACTION, Transaction::class.java)
                     ?.let {
-                    transaction = it
-                }
+                        transaction = it
+                    }
             } else {
-                (it.getParcelable(ARG_TRANSACTION) as? Transaction)?.let {
+                (bundle.getParcelable(ARG_TRANSACTION) as? Transaction)?.let {
                     transaction = it
                 }
             }
@@ -64,7 +63,7 @@ class UpdateTransactionFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mUpdateTransactionActivityBinding =
             UpdateTransactionFragmentBinding.inflate(inflater, container, false)
         return mUpdateTransactionActivityBinding.root
@@ -73,12 +72,11 @@ class UpdateTransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mUpdateTransactionActivityBinding.transaction = transaction
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
 
         val etTransactionTitle = mUpdateTransactionActivityBinding.etTransactionTitle
-        val tvTransactionCategory = mUpdateTransactionActivityBinding.tvTransactionCategory
         val etTransactionAmount = mUpdateTransactionActivityBinding.etTransactionAmount
-        val tvTransactionLocation = mUpdateTransactionActivityBinding.tvTransactionLocation
         val btnUpdateTransaction = mUpdateTransactionActivityBinding.btnUpdateTransaction
 
         updateTransactionViewModel.updateTransactionFormState.observe(viewLifecycleOwner, Observer {
@@ -128,15 +126,20 @@ class UpdateTransactionFragment : Fragment() {
             if (LocationUtil.isLocationEnabled(requireContext())) {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     val location: Location? = task.result
-                    if(location == null) {
+                    if (location == null) {
                         val locationRequest = LocationRequest.create().apply {
                             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
                             interval = 0
                             fastestInterval = 0
                             numUpdates = 1
                         }
-                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-                        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+                        fusedLocationProviderClient =
+                            LocationServices.getFusedLocationProviderClient(requireContext())
+                        fusedLocationProviderClient.requestLocationUpdates(
+                            locationRequest,
+                            locationCallback,
+                            Looper.myLooper() ?: Looper.getMainLooper()
+                        )
                     } else {
                         getCityName(location.latitude, location.longitude)
                     }
@@ -158,13 +161,18 @@ class UpdateTransactionFragment : Fragment() {
                 if (list.size != 0) {
                     adminArea = list[0].adminArea
                     locationUpdated = true
-                    location = com.informatika.bondoman.model.local.entity.transaction.Location(lat, lon, adminArea!!)
+                    location = com.informatika.bondoman.model.local.entity.transaction.Location(
+                        lat,
+                        lon,
+                        adminArea!!
+                    )
                     Timber.d("getAdminName: $adminArea")
 
                     val mainHandler = Handler(Looper.getMainLooper())
                     val runnable = Runnable {
                         mUpdateTransactionActivityBinding.tvTransactionLocation.text = adminArea
-                        mUpdateTransactionActivityBinding.tvTransactionLocation.visibility = View.VISIBLE
+                        mUpdateTransactionActivityBinding.tvTransactionLocation.visibility =
+                            View.VISIBLE
                     }
                     mainHandler.post(runnable)
                 }
@@ -175,13 +183,18 @@ class UpdateTransactionFragment : Fragment() {
                 if (list != null && list.size != 0) {
                     adminArea = list[0].adminArea
                     locationUpdated = true
-                    location = com.informatika.bondoman.model.local.entity.transaction.Location(lat, lon, adminArea!!)
+                    location = com.informatika.bondoman.model.local.entity.transaction.Location(
+                        lat,
+                        lon,
+                        adminArea!!
+                    )
                     Timber.d("getAdminName: $adminArea")
 
                     val mainHandler = Handler(Looper.getMainLooper())
                     val runnable = Runnable {
                         mUpdateTransactionActivityBinding.tvTransactionLocation.text = adminArea
-                        mUpdateTransactionActivityBinding.tvTransactionLocation.visibility = View.VISIBLE
+                        mUpdateTransactionActivityBinding.tvTransactionLocation.visibility =
+                            View.VISIBLE
                     }
                     mainHandler.post(runnable)
 
@@ -201,7 +214,7 @@ class UpdateTransactionFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(transaction: Transaction) : UpdateTransactionFragment {
+        fun newInstance(transaction: Transaction): UpdateTransactionFragment {
             val updateTransactionFragment = UpdateTransactionFragment()
             val bundle = Bundle()
             bundle.putParcelable(ARG_TRANSACTION, transaction)

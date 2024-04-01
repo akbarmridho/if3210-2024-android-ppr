@@ -7,26 +7,20 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.DocumentsContract
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.informatika.bondoman.databinding.ActivitySettingsBinding
-import com.informatika.bondoman.prefdatastore.jwt.JWTManager
 import com.informatika.bondoman.model.local.ExportType
-import com.informatika.bondoman.viewmodel.SettingsViewModel
+import com.informatika.bondoman.prefdatastore.jwt.JWTManager
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import com.informatika.bondoman.viewmodel.transaction.ExporterTransactionViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import kotlinx.coroutines.withContext
-import okhttp3.internal.wait
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
-import java.io.File
 import java.io.FileOutputStream
 import java.time.LocalDateTime
 import kotlin.random.Random
@@ -37,13 +31,12 @@ const val BROADCAST_TRANSACTION =
 
 class SettingsActivity : NetworkAwareActivity() {
     private lateinit var mSettingsActivityBinding: ActivitySettingsBinding
-    private val settingsViewModel: SettingsViewModel by viewModels()
     private val jwtManager: JWTManager by inject()
     private val loginViewModel: LoginViewModel by viewModel()
     private val exporterTransactionViewModel: ExporterTransactionViewModel by viewModel()
     private lateinit var exportXlsxLauncher: ActivityResultLauncher<Intent>
     private lateinit var exportXlsLauncher: ActivityResultLauncher<Intent>
-    private lateinit var exportXlsxLauncherAndSendEmail : ActivityResultLauncher<Intent>
+    private lateinit var exportXlsxLauncherAndSendEmail: ActivityResultLauncher<Intent>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,7 +101,7 @@ class SettingsActivity : NetworkAwareActivity() {
                             lifecycleScope.launch {
                                 val success = exportFile(uri, ExportType.XLSX)
                                 if (!success) {
-                                    return@launch;
+                                    return@launch
                                 }
 
                                 sendEmail(uri)
@@ -145,8 +138,8 @@ class SettingsActivity : NetworkAwareActivity() {
         exportXlsxLauncherAndSendEmail.launch(intent)
     }
 
-    private fun sendEmail(uri : Uri) {
-        lifecycleScope.launch (Dispatchers.IO) {
+    private fun sendEmail(uri: Uri) {
+        lifecycleScope.launch(Dispatchers.IO) {
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "mail/rfc822"
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(loginViewModel.getEmail()))
@@ -155,7 +148,7 @@ class SettingsActivity : NetworkAwareActivity() {
                     Intent.EXTRA_TEXT,
                     "Attached to this email is the spreadsheet of all of your transaction so far."
                 )
-               putExtra(Intent.EXTRA_STREAM, uri)
+                putExtra(Intent.EXTRA_STREAM, uri)
             }
 
             if (intent.resolveActivity(packageManager) != null) {
@@ -164,13 +157,13 @@ class SettingsActivity : NetworkAwareActivity() {
         }
     }
 
-    fun logout() {
+    private fun logout() {
         lifecycleScope.launch {
-            jwtManager.onLogout();
-            loginViewModel.logout();
-            val intent = Intent(this@SettingsActivity, LoginActivity::class.java);
+            jwtManager.onLogout()
+            loginViewModel.logout()
+            val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
             Toast.makeText(this@SettingsActivity, "Logout Succesful", Toast.LENGTH_SHORT).show()
-            startActivity(intent);
+            startActivity(intent)
             finishAffinity()
         }
     }
@@ -191,7 +184,7 @@ class SettingsActivity : NetworkAwareActivity() {
                     )
                         .show()
                 }
-                return@withContext false;
+                return@withContext false
             }
 
             if (descriptor != null) {
@@ -210,7 +203,7 @@ class SettingsActivity : NetworkAwareActivity() {
                         .show()
                 }
 
-                return@withContext true;
+                return@withContext true
             } else {
                 mainHandler.post {
                     Toast.makeText(
@@ -220,7 +213,7 @@ class SettingsActivity : NetworkAwareActivity() {
                     )
                         .show()
                 }
-                return@withContext false;
+                return@withContext false
             }
         }
     }

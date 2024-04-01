@@ -13,11 +13,14 @@ import com.informatika.bondoman.viewmodel.transaction.helper.TransactionFormStat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UpdateTransactionViewModel(private var transactionRepository: TransactionRepository, val transaction: Transaction) : ViewModel() {
+class UpdateTransactionViewModel(
+    private var transactionRepository: TransactionRepository,
+    val transaction: Transaction
+) : ViewModel() {
     private val _updateTransactionForm = MutableLiveData<TransactionFormState>()
     val updateTransactionFormState: LiveData<TransactionFormState> = _updateTransactionForm
 
-    val transactionLiveData = MutableLiveData<Resource<Transaction>>()
+    private val transactionLiveData = MutableLiveData<Resource<Transaction>>()
 
     private val observer = androidx.lifecycle.Observer<Resource<Transaction>> {
         transactionLiveData.postValue(it)

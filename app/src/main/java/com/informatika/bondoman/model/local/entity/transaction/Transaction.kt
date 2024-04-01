@@ -5,13 +5,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.Relation
 import com.informatika.bondoman.model.local.DBConstants
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = DBConstants.mTableTransaction)
 @Parcelize
-data class Transaction (
+data class Transaction(
     @PrimaryKey(autoGenerate = true)
     val _id: Int = 0,
 

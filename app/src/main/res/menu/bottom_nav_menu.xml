@@ -5,11 +5,7 @@
         android:id="@+id/navigation_transaction"
         android:icon="@drawable/ic_transaction"
         android:title="@string/title_transaction" />
-
-    <item
-        android:id="@+id/navigation_scanner"
-        android:icon="@drawable/ic_scan"
-        android:title="@string/title_scanner" />
+    
     <item
         android:id="@+id/navigation_twibbon"
         android:icon="@drawable/ic_twibbon"

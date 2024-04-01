@@ -21,6 +21,7 @@ import java.util.Timer
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.timer
 
+
 class AuthService : Service() {
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + job)
@@ -49,9 +50,7 @@ class AuthService : Service() {
             period = TimeUnit.MINUTES.toMillis(1)
         ) {
             scope.launch {
-                Timber.tag("JWT").d("IM RUNNNINGGGGGG WOHO")
                 val expire = isExpired()
-                Timber.tag("JWT").d("got result $expire")
 
                 if (expire) {
                     jwtManager.onLogout()
@@ -71,10 +70,10 @@ class AuthService : Service() {
     }
 
     private suspend fun isExpired(): Boolean {
-        val isConnectedLiveData = connectivityRepository.lastStatus()
-
         return try {
-            if (isConnectedLiveData == null || !isConnectedLiveData) {
+            val isConnectedLiveData = connectivityRepository.lastStatus()
+
+            if (!isConnectedLiveData) {
                 return false
             }
 

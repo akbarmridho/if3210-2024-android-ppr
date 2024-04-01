@@ -41,7 +41,7 @@ class ListTransactionFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mListTransactionFragmentBinding =
             ListTransactionFragmentBinding.inflate(inflater, container, false)
         return mListTransactionFragmentBinding.root
@@ -229,7 +229,4 @@ class ListTransactionFragment : Fragment() {
         return if (isCamera) getCaptureImageOutputUri() else data!!.data
     }
 
-    companion object {
-        fun newInstance() = ListTransactionFragment()
-    }
 }

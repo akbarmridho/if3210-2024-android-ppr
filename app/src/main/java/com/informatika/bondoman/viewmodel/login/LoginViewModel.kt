@@ -1,14 +1,12 @@
 package com.informatika.bondoman.viewmodel.login
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
 import androidx.lifecycle.viewModelScope
-import com.informatika.bondoman.model.repository.login.LoginRepositoryImpl
-import com.informatika.bondoman.model.Resource
-
 import com.informatika.bondoman.R
+import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.repository.login.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +27,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                 is Resource.Success -> {
                     _loginResult.postValue(LoginResult(jwtToken = result.data))
                 }
+
                 is Resource.Error -> {
                     _loginResult.postValue(LoginResult(error = R.string.login_failed))
                 }
@@ -38,12 +37,12 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    fun getEmail() : String {
-        return loginRepository.getEmail();
+    fun getEmail(): String {
+        return loginRepository.getEmail()
     }
 
     suspend fun logout() {
-        loginRepository.logout();
+        loginRepository.logout()
     }
 
     fun loginDataChanged(username: String, password: String) {

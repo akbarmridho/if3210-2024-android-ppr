@@ -16,11 +16,6 @@
         android:label="@string/title_report"
         tools:layout="@layout/fragment_report" />
     <fragment
-        android:id="@+id/navigation_scanner"
-        android:name="com.informatika.bondoman.view.fragment.ScannerFragment"
-        android:label="@string/title_scanner"
-        tools:layout="@layout/fragment_scanner" />
-    <fragment
         android:id="@+id/navigation_twibbon"
         android:name="com.informatika.bondoman.view.fragment.TwibbonFragment"
         android:label="@string/title_twibbon"

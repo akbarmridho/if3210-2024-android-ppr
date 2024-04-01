@@ -28,7 +28,7 @@ import java.util.Locale
 
 class ScanPreviewActivity : AppCompatActivity() {
     private lateinit var mScanPreviewBinding: ActivityScanPreviewBinding
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var location: Location? = null
     private val scanPreviewViewModel: ScanPreviewViewModel by viewModel()
 
@@ -40,7 +40,7 @@ class ScanPreviewActivity : AppCompatActivity() {
 
         setContentView(mScanPreviewBinding.root)
         setSupportActionBar(findViewById(R.id.scan_toolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val image: Uri? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("image", Uri::class.java)
@@ -60,6 +60,7 @@ class ScanPreviewActivity : AppCompatActivity() {
 
                 if (stream != null) {
                     scanPreviewViewModel.scanImage(stream.readBytes(), location)
+                    stream.close()
                 }
             }
         }
@@ -104,7 +105,7 @@ class ScanPreviewActivity : AppCompatActivity() {
                                     getCityName(lastLocation.latitude, lastLocation.longitude)
                                 }
                             },
-                            Looper.myLooper()
+                            Looper.myLooper() ?: Looper.getMainLooper()
                         )
                     } else {
                         getCityName(location.latitude, location.longitude)
@@ -121,7 +122,7 @@ class ScanPreviewActivity : AppCompatActivity() {
 
     private fun getCityName(lat: Double, lon: Double) {
         Timber.d("getCityName: $lat, $lon")
-        var adminArea: String? = null
+        var adminArea: String?
         val geocoder = Geocoder(this@ScanPreviewActivity, Locale.getDefault())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             geocoder.getFromLocation(lat, lon, 1) { list ->
