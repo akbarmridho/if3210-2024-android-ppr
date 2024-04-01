@@ -81,7 +81,7 @@ class TransactionRecyclerAdapter(private val context: Context) :
             createdAt ="",
             title ="",
             category = Category.LOADER,
-            amount = 0,
+            amount = 0.0,
             location = null,
         )
     }

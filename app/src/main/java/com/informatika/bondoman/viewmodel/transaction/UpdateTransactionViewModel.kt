@@ -30,7 +30,7 @@ class UpdateTransactionViewModel(private var transactionRepository: TransactionR
 
     fun updateTransaction(
         title: String,
-        amount: Int,
+        amount: Double,
         location: Location? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {

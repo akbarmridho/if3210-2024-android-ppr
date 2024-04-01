@@ -61,7 +61,7 @@ class SettingsActivity : NetworkAwareActivity() {
 
         btnBroadcastTransaction.setOnClickListener {
             val intent = Intent(BROADCAST_TRANSACTION)
-                .putExtra("amount", Random.nextInt(0, Int.MAX_VALUE))
+                .putExtra("amount", Random.nextDouble(0.0, Double.MAX_VALUE))
             sendBroadcast(intent)
         }
 

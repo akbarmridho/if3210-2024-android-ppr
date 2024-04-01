@@ -22,7 +22,7 @@ data class Transaction (
 
     val category: Category,
 
-    val amount: Int,
+    val amount: Double,
 
     @Embedded(prefix = "location_")
     val location: Location? = null

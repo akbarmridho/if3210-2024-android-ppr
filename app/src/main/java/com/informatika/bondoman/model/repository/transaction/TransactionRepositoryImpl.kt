@@ -65,7 +65,7 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao, priv
     override suspend fun insertTransaction(
         title: String,
         category: Category,
-        amount: Int,
+        amount: Double,
         location: Location
     ) {
         transactionDao.insert(
@@ -88,20 +88,20 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao, priv
         }
     }
 
-    override suspend fun insertTransaction(title: String, category: Category, amount: Int) {
+    override suspend fun insertTransaction(title: String, category: Category, amount: Double) {
         transactionDao.insert(title, category, amount)
     }
 
     override suspend fun updateTransaction(
         _id: Int,
         title: String,
-        amount: Int,
+        amount: Double,
         location: Location
     ) {
         transactionDao.update(_id, title, amount, location.lat, location.lon, location.adminArea)
     }
 
-    override suspend fun updateTransaction(_id: Int, title: String, amount: Int) {
+    override suspend fun updateTransaction(_id: Int, title: String, amount: Double) {
         transactionDao.update(_id, title, amount)
     }
 

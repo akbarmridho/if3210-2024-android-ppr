@@ -40,8 +40,8 @@ class TransactionTest {
     @Throws(Exception::class)
     fun insertAndRetrieve() {
         val location: Location = Location(1.0,1.0, "Jakarta")
-        transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000, location_lat = location.lat, location_lon = location.lon, location_adminArea = location.adminArea)
-        transactionDao.insert(title = "Test2", category = Category.EXPENSE, amount = 2000,)
+        transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000.0, location_lat = location.lat, location_lon = location.lon, location_adminArea = location.adminArea)
+        transactionDao.insert(title = "Test2", category = Category.EXPENSE, amount = 2000.0,)
         val transactions = transactionDao.getAll()
         assert(transactions.size == 2)
 
@@ -54,14 +54,14 @@ class TransactionTest {
     @Throws(Exception::class)
     fun update() {
         val location1: Location = Location(1.0,1.0, "Jakarta")
-        transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000, location_lat = location1.lat, location_lon = location1.lon, location_adminArea = location1.adminArea)
+        transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000.0, location_lat = location1.lat, location_lon = location1.lon, location_adminArea = location1.adminArea)
         val transactions = transactionDao.getAll()
         val lastId = transactions.last()._id
         val location2 = Location(2.0,2.0, "Bandung")
-        transactionDao.update(lastId,"Test2", 2000, location2.lat, location2.lon, location2.adminArea)
+        transactionDao.update(lastId,"Test2", 2000.0, location2.lat, location2.lon, location2.adminArea)
         val transaction = transactionDao.get(lastId)
         assert(transaction.title == "Test2")
-        assert(transaction.amount == 2000)
+        assert(transaction.amount == 2000.0)
         assert(transaction.location == location2)
     }
 
@@ -69,7 +69,7 @@ class TransactionTest {
     @Throws(Exception::class)
     fun delete() {
         val location: Location = Location(1.0,1.0, "Jakarta")
-        transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000, location_lat = location.lat, location_lon = location.lon, location_adminArea = location.adminArea)
+        transactionDao.insert(title = "Test1", category = Category.INCOME, amount = 1000.0, location_lat = location.lat, location_lon = location.lon, location_adminArea = location.adminArea)
         val transactions = transactionDao.getAll()
         val lastId = transactions.last()._id
         transactionDao.delete(transactions.last())

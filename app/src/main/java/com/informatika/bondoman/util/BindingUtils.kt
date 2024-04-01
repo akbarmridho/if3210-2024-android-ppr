@@ -26,12 +26,12 @@ object BindingUtils {
     }
 
     @JvmStatic
-    fun getAmountString(amount: Int): String {
+    fun getAmountString(amount: Double): String {
         return "$amount"
     }
 
     @JvmStatic
-    fun createAmount(amount: Int): String {
+    fun createAmount(amount: Double): String {
         val formatter: NumberFormat = DecimalFormat("#,###")
         return formatter.format(amount)
     }

@@ -22,16 +22,16 @@ interface TransactionDao {
     fun getCategoryPercentages(): List<CategoryPercentage>
 
     @Query("INSERT INTO `" + DBConstants.mTableTransaction + "` (title, category, amount, location_lat, location_lon, location_adminArea) VALUES(:title, :category, :amount, :location_lat, :location_lon, :location_adminArea)")
-    fun insert(title: String, category: Category, amount: Int, location_lat: Double, location_lon: Double, location_adminArea: String)
+    fun insert(title: String, category: Category, amount: Double, location_lat: Double, location_lon: Double, location_adminArea: String)
 
     @Query("INSERT INTO `" + DBConstants.mTableTransaction + "` (title, category, amount) VALUES(:title, :category, :amount)")
-    fun insert(title: String, category: Category, amount: Int)
+    fun insert(title: String, category: Category, amount: Double)
 
     @Query("UPDATE `" + DBConstants.mTableTransaction + "` SET title = :title, amount = :amount, location_lat = :location_lat, location_lon = :location_lon, location_adminArea = :location_adminArea WHERE _id = :id")
-    fun update(id: Int, title: String, amount: Int, location_lat: Double, location_lon: Double, location_adminArea: String)
+    fun update(id: Int, title: String, amount: Double, location_lat: Double, location_lon: Double, location_adminArea: String)
 
     @Query("UPDATE `" + DBConstants.mTableTransaction + "` SET title = :title, amount = :amount WHERE _id = :id")
-    fun update(id: Int, title: String, amount: Int)
+    fun update(id: Int, title: String, amount: Double)
 
     @Delete
     fun delete(transaction: Transaction)

@@ -70,7 +70,7 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
 
         randomizeTransactionReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                val amount = intent?.getIntExtra("amount", 0)
+                val amount = intent?.getDoubleExtra("amount", 0.0)
                 etTransactionAmount.setText(amount.toString())
             }
         }
@@ -136,7 +136,7 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
             createTransactionViewModel.createTransaction(
                 etTransactionTitle.text.toString(),
                 Category.valueOf(spTransactionCategory.selectedItem.toString()),
-                etTransactionAmount.text.toString().toInt(),
+                etTransactionAmount.text.toString().toDouble(),
                 location
             )
             requireActivity().supportFragmentManager.popBackStack()

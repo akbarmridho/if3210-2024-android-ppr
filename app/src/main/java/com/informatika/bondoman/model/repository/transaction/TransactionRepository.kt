@@ -27,10 +27,10 @@ interface TransactionRepository {
     suspend fun getTransaction(id: Int)
     suspend fun getAllTransaction()
     suspend fun getCategoryPercentage()
-    suspend fun insertTransaction(title: String, category: Category, amount: Int, location: Location)
-    suspend fun insertTransaction(title: String, category: Category, amount: Int)
-    suspend fun updateTransaction(_id:Int, title: String, amount: Int, location: Location)
-    suspend fun updateTransaction(_id:Int, title: String, amount: Int)
+    suspend fun insertTransaction(title: String, category: Category, amount: Double, location: Location)
+    suspend fun insertTransaction(title: String, category: Category, amount: Double)
+    suspend fun updateTransaction(_id:Int, title: String, amount: Double, location: Location)
+    suspend fun updateTransaction(_id:Int, title: String, amount: Double)
     suspend fun deleteTransaction(transaction: Transaction)
     suspend fun uploadBill(token: String, imageUri: File): Resource<List<Item>>
 }

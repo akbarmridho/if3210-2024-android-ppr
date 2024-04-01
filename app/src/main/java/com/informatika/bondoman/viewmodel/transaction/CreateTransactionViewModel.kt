@@ -19,7 +19,7 @@ class CreateTransactionViewModel(private var transactionRepository: TransactionR
     fun createTransaction(
         title: String,
         category: Category,
-        amount: Int,
+        amount: Double,
         location: Location? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -59,7 +59,7 @@ class CreateTransactionViewModel(private var transactionRepository: TransactionR
     private fun isAmountValid(amount: String): Int {
         return if (amount.isBlank()) {
             1
-        } else if (amount.toInt() <= 0) {
+        } else if (amount.toDouble() <= 0.0) {
             2
         } else {
             0

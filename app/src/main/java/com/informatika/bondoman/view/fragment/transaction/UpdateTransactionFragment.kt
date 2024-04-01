@@ -114,7 +114,7 @@ class UpdateTransactionFragment : Fragment() {
         btnUpdateTransaction.setOnClickListener {
             updateTransactionViewModel.updateTransaction(
                 etTransactionTitle.text.toString(),
-                etTransactionAmount.text.toString().toInt(),
+                etTransactionAmount.text.toString().toDouble(),
                 if (locationUpdated) location else null
             )
             requireActivity().supportFragmentManager.popBackStack()
