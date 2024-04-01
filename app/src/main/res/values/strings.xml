@@ -17,11 +17,14 @@
     <string name="invalid_password">Password must be >8 characters</string>
     <string name="welcome">"Welcome!"</string>
     <string name="login_failed">"Login failed"</string>
-
+    <string name="preview_scan">"Scan Preview"</string>
+    <string name="scan_failed">"Scan Failed"</string>
+    <string name="scan_success">"Scan Success"</string>
     <string name="prompt_title">"Title"</string>
     <string name="prompt_category">"Category"</string>
     <string name="prompt_amount">"Amount"</string>
     <string name="action_save">"Save"</string>
+    <string name="action_continue">"Continue"</string>
     <string name="action_scan">"Scan"</string>
     <string name="action_cancel">"Cancel"</string>
     <string name="action_delete">"Delete"</string>

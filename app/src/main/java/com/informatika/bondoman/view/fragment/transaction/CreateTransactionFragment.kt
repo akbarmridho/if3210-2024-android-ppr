@@ -54,13 +54,15 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mCreateTransactionFragmentBinding = FragmentCreateTransactionBinding.inflate(inflater, container, false)
+        mCreateTransactionFragmentBinding =
+            FragmentCreateTransactionBinding.inflate(inflater, container, false)
         return mCreateTransactionFragmentBinding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
 
         val etTransactionTitle = mCreateTransactionFragmentBinding.etTransactionTitle
         val spTransactionCategory = mCreateTransactionFragmentBinding.spTransactionCategory
@@ -75,8 +77,12 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
             }
         }
         IntentFilter(BROADCAST_TRANSACTION).also {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requireActivity().registerReceiver(randomizeTransactionReceiver, it, RECEIVER_EXPORTED)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requireActivity().registerReceiver(
+                    randomizeTransactionReceiver,
+                    it,
+                    RECEIVER_EXPORTED
+                )
             } else {
                 requireActivity().registerReceiver(randomizeTransactionReceiver, it)
             }
@@ -150,15 +156,20 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
             if (LocationUtil.isLocationEnabled(requireContext())) {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     val location = task.result
-                    if(location == null) {
+                    if (location == null) {
                         val locationRequest = LocationRequest.create().apply {
                             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
                             interval = 0
                             fastestInterval = 0
                             numUpdates = 1
                         }
-                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-                        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+                        fusedLocationProviderClient =
+                            LocationServices.getFusedLocationProviderClient(requireContext())
+                        fusedLocationProviderClient.requestLocationUpdates(
+                            locationRequest,
+                            locationCallback,
+                            Looper.myLooper()
+                        )
                     } else {
                         getCityName(location.latitude, location.longitude)
                         Timber.d("Location: ${location.latitude}, ${location.longitude}")
@@ -186,13 +197,18 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
             geocoder.getFromLocation(lat, lon, 1) { list ->
                 if (list.size != 0) {
                     adminArea = list[0].adminArea
-                    location = com.informatika.bondoman.model.local.entity.transaction.Location(lat, lon, adminArea!!)
+                    location = com.informatika.bondoman.model.local.entity.transaction.Location(
+                        lat,
+                        lon,
+                        adminArea!!
+                    )
                     Timber.d("getAdminArea: $adminArea")
 
                     val mainHandler = Handler(Looper.getMainLooper())
                     val runnable = Runnable {
                         mCreateTransactionFragmentBinding.tvTransactionLocation.text = adminArea
-                        mCreateTransactionFragmentBinding.tvTransactionLocation.visibility = View.VISIBLE
+                        mCreateTransactionFragmentBinding.tvTransactionLocation.visibility =
+                            View.VISIBLE
                     }
                     mainHandler.post(runnable)
                 }
@@ -202,16 +218,20 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
                 val list = geocoder.getFromLocation(lat, lon, 1)
                 if (list != null && list.size != 0) {
                     adminArea = list[0].adminArea
-                    location = com.informatika.bondoman.model.local.entity.transaction.Location(lat, lon, adminArea!!)
+                    location = com.informatika.bondoman.model.local.entity.transaction.Location(
+                        lat,
+                        lon,
+                        adminArea!!
+                    )
                     Timber.d("getAdminArea: $adminArea")
 
                     val mainHandler = Handler(Looper.getMainLooper())
                     val runnable = Runnable {
                         mCreateTransactionFragmentBinding.tvTransactionLocation.text = adminArea
-                        mCreateTransactionFragmentBinding.tvTransactionLocation.visibility = View.VISIBLE
+                        mCreateTransactionFragmentBinding.tvTransactionLocation.visibility =
+                            View.VISIBLE
                     }
                     mainHandler.post(runnable)
-
                 }
             } catch (e: IOException) {
                 e.printStackTrace()

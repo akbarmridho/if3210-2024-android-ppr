@@ -21,6 +21,7 @@ import com.informatika.bondoman.databinding.ListTransactionFragmentBinding
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.util.CameraUtil
 import com.informatika.bondoman.view.activity.MainActivity.Companion.createTransactionFragmentTag
+import com.informatika.bondoman.view.activity.ScanPreviewActivity
 import com.informatika.bondoman.view.adapter.TransactionRecyclerAdapter
 import com.informatika.bondoman.viewmodel.transaction.ListTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -121,6 +122,13 @@ class ListTransactionFragment : Fragment() {
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageResult = getPickImageResultUri(result.data)
+
+                if (imageResult != null) {
+                    val intent = Intent(requireContext(), ScanPreviewActivity::class.java)
+
+                    intent.putExtra("image", imageResult)
+                    startActivity(intent)
+                }
 
                 Timber.tag("Scanner").d(imageResult.toString())
             }

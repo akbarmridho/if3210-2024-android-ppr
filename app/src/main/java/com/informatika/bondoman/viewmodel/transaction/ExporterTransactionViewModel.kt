@@ -47,7 +47,7 @@ class ExporterTransactionViewModel(private var transactionRepository: Transactio
             dataRow.createCell(0).setCellValue(data.createdAt)
             dataRow.createCell(1).setCellValue(data.title)
             dataRow.createCell(2).setCellValue(data.category.toString())
-            dataRow.createCell(3).setCellValue(data.amount.toDouble())
+            dataRow.createCell(3).setCellValue(data.amount)
             dataRow.createCell(4).setCellValue(data.location?.adminArea)
         }
 

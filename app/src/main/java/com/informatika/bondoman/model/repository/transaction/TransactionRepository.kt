@@ -1,6 +1,5 @@
 package com.informatika.bondoman.model.repository.transaction
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.informatika.bondoman.model.Resource
@@ -9,7 +8,6 @@ import com.informatika.bondoman.model.local.entity.transaction.CategoryPercentag
 import com.informatika.bondoman.model.local.entity.transaction.Location
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
 import com.informatika.bondoman.model.remote.response.Item
-import java.io.File
 
 interface TransactionRepository {
     val _listTransactionLiveData: MutableLiveData<Resource<List<Transaction>>>
@@ -27,10 +25,16 @@ interface TransactionRepository {
     suspend fun getTransaction(id: Int)
     suspend fun getAllTransaction()
     suspend fun getCategoryPercentage()
-    suspend fun insertTransaction(title: String, category: Category, amount: Double, location: Location)
+    suspend fun insertTransaction(
+        title: String,
+        category: Category,
+        amount: Double,
+        location: Location
+    )
+
     suspend fun insertTransaction(title: String, category: Category, amount: Double)
-    suspend fun updateTransaction(_id:Int, title: String, amount: Double, location: Location)
-    suspend fun updateTransaction(_id:Int, title: String, amount: Double)
+    suspend fun updateTransaction(_id: Int, title: String, amount: Double, location: Location)
+    suspend fun updateTransaction(_id: Int, title: String, amount: Double)
     suspend fun deleteTransaction(transaction: Transaction)
-    suspend fun uploadBill(token: String, imageUri: File): Resource<List<Item>>
+    suspend fun uploadBill(token: String, buffer: ByteArray): Resource<List<Item>>
 }

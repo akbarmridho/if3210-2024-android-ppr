@@ -3,6 +3,7 @@ package com.informatika.bondoman.di
 import com.informatika.bondoman.viewmodel.JWTViewModel
 import com.informatika.bondoman.viewmodel.connectivity.ConnectivityViewModel
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
+import com.informatika.bondoman.viewmodel.scanner.ScanPreviewViewModel
 import com.informatika.bondoman.viewmodel.transaction.CreateTransactionViewModel
 import com.informatika.bondoman.viewmodel.transaction.DetailTransactionViewModel
 import com.informatika.bondoman.viewmodel.transaction.ExporterTransactionViewModel
@@ -23,7 +24,7 @@ val viewModelModule = module {
     }
 
     // Dependency: LoginViewModel
-    viewModel<LoginViewModel> {
+    viewModel {
         LoginViewModel(get())
     }
 
@@ -50,5 +51,10 @@ val viewModelModule = module {
     // Dependency: ExporterTransactionViewModel
     viewModel {
         ExporterTransactionViewModel(get())
+    }
+
+    // Dependency: ScanPreviewViewModel
+    viewModel {
+        ScanPreviewViewModel(get(), get())
     }
 }

@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class Item(
     @Json(name = "name")
     val name: String,
-    @Json(name = "price")
+    @Json(name = "qty")
     val qty: Int,
     @Json(name = "price")
     val price: Double

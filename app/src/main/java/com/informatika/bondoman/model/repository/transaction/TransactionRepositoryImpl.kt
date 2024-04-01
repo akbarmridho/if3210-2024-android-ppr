@@ -1,6 +1,5 @@
 package com.informatika.bondoman.model.repository.transaction
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.informatika.bondoman.model.Resource
@@ -15,12 +14,14 @@ import com.informatika.bondoman.model.remote.service.TransactionService
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.awaitResponse
 import timber.log.Timber
-import java.io.File
 
-class TransactionRepositoryImpl(private var transactionDao: TransactionDao, private var transactionService: TransactionService) :
+class TransactionRepositoryImpl(
+    private var transactionDao: TransactionDao,
+    private var transactionService: TransactionService
+) :
     TransactionRepository {
 
     override var _listTransactionLiveData = MutableLiveData<Resource<List<Transaction>>>()
@@ -38,7 +39,8 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao, priv
 
     override var _categoryPercentageLiveData = MutableLiveData<Resource<List<CategoryPercentage>>>()
         private set
-    override var categoryPercentageLiveData : LiveData<Resource<List<CategoryPercentage>>> = _categoryPercentageLiveData
+    override var categoryPercentageLiveData: LiveData<Resource<List<CategoryPercentage>>> =
+        _categoryPercentageLiveData
         private set
         get() = _categoryPercentageLiveData
 
@@ -109,11 +111,12 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao, priv
         transactionDao.delete(transaction)
     }
 
-    override suspend fun uploadBill(token: String, image: File): Resource<List<Item>> {
+    override suspend fun uploadBill(token: String, buffer: ByteArray): Resource<List<Item>> {
         try {
-            val requestFile: RequestBody = image.asRequestBody("image/*".toMediaTypeOrNull())
-            val body: MultipartBody.Part = MultipartBody.Part.createFormData("file", image.name, requestFile)
-            val call = transactionService.uploadBill(token, body)
+            val requestFile: RequestBody = buffer.toRequestBody("image/*".toMediaTypeOrNull())
+            val body: MultipartBody.Part =
+                MultipartBody.Part.createFormData("file", "image.png", requestFile)
+            val call = transactionService.uploadBill("Bearer $token", body)
             val response = call.awaitResponse()
 
             return if (response.isSuccessful) {

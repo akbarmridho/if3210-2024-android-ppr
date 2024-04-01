@@ -13,6 +13,6 @@ interface TransactionService {
     @POST("bill/upload")
     fun uploadBill(
         @Header("Authorization") token: String,
-        @Part image: MultipartBody.Part
+        @Part file: MultipartBody.Part
     ): Call<UploadBillResponse>
 }
