@@ -23,7 +23,7 @@ val repositoryModule = module {
 
     // Dependency: TransactionRepository
     single<TransactionRepository> {
-        TransactionRepositoryImpl(get())
+        TransactionRepositoryImpl(get(), get())
     }
 
     // Dependency: ConnectivityRepository
