@@ -127,7 +127,7 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:v$MPAndroidChartVersion")
 
     // Camera
-    val cameraVersion = "1.1.0"
+    val cameraVersion = "1.3.2"
     implementation("androidx.camera:camera-core:$cameraVersion")
     implementation("androidx.camera:camera-camera2:$cameraVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraVersion")
