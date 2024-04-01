@@ -84,6 +84,7 @@ class ListTransactionFragment : Fragment() {
                     is Resource.Success -> {
                         transactionRecyclerAdapter.removeLoader()
                         transactionRecyclerAdapter.setTransactionList(ArrayList(it.data))
+                        mListTransactionFragmentBinding.rvTransactions.scrollToPosition(0)
                     }
 
                     is Resource.Error ->
