@@ -56,8 +56,9 @@ class SettingsActivity : NetworkAwareActivity() {
 
         btnBroadcastTransaction.setOnClickListener {
             val intent = Intent(BROADCAST_TRANSACTION)
-                .putExtra("amount", Random.nextDouble(0.0, Double.MAX_VALUE))
+                .putExtra("amount", Random.nextInt(0, 1000000).toDouble())
             sendBroadcast(intent)
+            finish()
         }
 
         btnLogout.setOnClickListener {

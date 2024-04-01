@@ -21,15 +21,18 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.FragmentCreateTransactionBinding
 import com.informatika.bondoman.model.local.entity.transaction.Category
 import com.informatika.bondoman.util.LocationUtil
 import com.informatika.bondoman.view.activity.BROADCAST_TRANSACTION
+import com.informatika.bondoman.view.activity.MainActivity.Companion.listTransactionFragmentTag
 import com.informatika.bondoman.viewmodel.transaction.CreateTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -40,8 +43,6 @@ import java.util.Locale
 class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var location: com.informatika.bondoman.model.local.entity.transaction.Location? = null
-
-    private lateinit var randomizeTransactionReceiver: BroadcastReceiver
 
     private val createTransactionViewModel: CreateTransactionViewModel by viewModel()
     private lateinit var mCreateTransactionFragmentBinding: FragmentCreateTransactionBinding
@@ -67,22 +68,9 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
         val etTransactionAmount = mCreateTransactionFragmentBinding.etTransactionAmount
         val btnCreateTransaction = mCreateTransactionFragmentBinding.btnCreateTransaction
 
-        randomizeTransactionReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                val amount = intent?.getDoubleExtra("amount", 0.0)
-                etTransactionAmount.setText(amount.toString())
-            }
-        }
-        IntentFilter(BROADCAST_TRANSACTION).also {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requireActivity().registerReceiver(
-                    randomizeTransactionReceiver,
-                    it,
-                    RECEIVER_EXPORTED
-                )
-            } else {
-                requireActivity().registerReceiver(randomizeTransactionReceiver, it)
-            }
+        arguments?.let {
+            val amount = it.getDouble("amount")
+            etTransactionAmount.setText(amount.toString())
         }
 
         // add category to spinner
@@ -143,7 +131,8 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
                 etTransactionAmount.text.toString().toDouble(),
                 location
             )
-            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
+                .popBackStack()
             Toast.makeText(context, "Transaction created", Toast.LENGTH_SHORT).show()
         }
     }
@@ -182,10 +171,6 @@ class CreateTransactionFragment : Fragment(), AdapterView.OnItemClickListener {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        requireActivity().unregisterReceiver(randomizeTransactionReceiver)
-    }
 
     private fun getCityName(lat: Double, lon: Double) {
         Timber.d("getCityName: $lat, $lon")

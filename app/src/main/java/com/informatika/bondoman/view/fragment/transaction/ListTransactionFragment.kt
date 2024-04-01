@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.informatika.bondoman.BuildConfig
 import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.ListTransactionFragmentBinding
@@ -51,10 +52,9 @@ class ListTransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mListTransactionFragmentBinding.fabAddTransaction.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_activity_container, CreateTransactionFragment.newInstance())
-                .addToBackStack(createTransactionFragmentTag)
-                .commit()
+            requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
+                .navigate(R.id.navigation_create_transaction)
+
         }
 
         mListTransactionFragmentBinding.fabScanTransaction.setOnClickListener {

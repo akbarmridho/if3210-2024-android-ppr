@@ -13,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.informatika.bondoman.DetailTransactionFragmentBinding
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
@@ -78,28 +79,22 @@ class DetailTransactionFragment : Fragment() {
         }
 
         ibClose.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().findNavController(com.informatika.bondoman.R.id.nav_host_fragment_activity_main)
+                .popBackStack()
         }
 
         ibDelete.setOnClickListener {
             detailTransactionViewModel.deleteTransaction(transaction)
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(
-                    com.informatika.bondoman.R.id.main_activity_container,
-                    ListTransactionFragment()
-                )
-                .commit()
+            requireActivity().findNavController(com.informatika.bondoman.R.id.nav_host_fragment_activity_main)
+                .navigate(com.informatika.bondoman.R.id.navigation_transaction)
             Toast.makeText(requireContext(), "Transaction Deleted", Toast.LENGTH_SHORT).show()
         }
 
         ibEdit.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(
-                    com.informatika.bondoman.R.id.main_activity_container,
-                    UpdateTransactionFragment.newInstance(transaction)
-                )
-                .addToBackStack(updateTransactionFragmentTag)
-                .commit()
+            val bundle = Bundle()
+            bundle.putParcelable(ARG_TRANSACTION, transaction)
+            requireActivity().findNavController(com.informatika.bondoman.R.id.nav_host_fragment_activity_main)
+                .navigate(com.informatika.bondoman.R.id.navigation_update_transaction, bundle)
         }
     }
 

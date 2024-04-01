@@ -70,7 +70,7 @@ class UpdateTransactionViewModel(
     private fun isAmountValid(amount: String): Int {
         return if (amount.isBlank()) {
             1
-        } else if (amount.toInt() <= 0) {
+        } else if (amount.toDouble() <= 0) {
             2
         } else {
             0

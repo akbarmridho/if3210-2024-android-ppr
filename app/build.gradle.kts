@@ -64,6 +64,7 @@ dependencies {
     implementation("androidx.test:runner:1.5.2")
     implementation("org.apache.poi:poi:5.2.5")
     implementation("org.apache.poi:poi-ooxml:5.2.5")
+    implementation("androidx.fragment:fragment:1.6.2")
 
     // LifeCycle
     val lifecycleVersion = "2.7.0"

@@ -24,6 +24,34 @@
         android:id="@+id/navigation_transaction"
         android:name="com.informatika.bondoman.view.fragment.transaction.ListTransactionFragment"
         android:label="@string/title_transaction"
-        tools:layout="@layout/fragment_list_transaction" />
+        tools:layout="@layout/fragment_list_transaction"/>
 
+    <fragment
+        android:id="@+id/navigation_create_transaction"
+        android:name="com.informatika.bondoman.view.fragment.transaction.CreateTransactionFragment"
+        tools:layout="@layout/fragment_create_transaction">
+        <action
+            android:id="@+id/action_navigation_transaction_to_navigation_create_transaction"
+            app:destination="@id/create_transaction_fragment_container" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_detail_transaction"
+        android:name="com.informatika.bondoman.view.fragment.transaction.DetailTransactionFragment"
+        tools:layout="@layout/fragment_detail_transaction" >
+        <action
+            android:id="@+id/action_navigation_transaction_to_navigation_detail_transaction"
+            app:destination="@+id/detail_transaction_fragment_container"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_update_transaction"
+        android:name="com.informatika.bondoman.view.fragment.transaction.UpdateTransactionFragment"
+        tools:layout="@layout/fragment_update_transaction">
+        <action
+            android:id="@+id/action_navigation_detail_transaction_to_navigation_update_transaction"
+            app:destination="@+id/update_transaction_fragment_container"
+            />
+    </fragment>
 </navigation>
