@@ -49,6 +49,9 @@
 
     <string name="expense">"Expense"</string>
     <string name="income">"Income"</string>
+    <string name="report_loading">"Loading Reports"</string>
+    <string name="report_error">"Error Making Reports"</string>
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
