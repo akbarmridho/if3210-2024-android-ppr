@@ -7,11 +7,10 @@
     android:textAlignment="center"
     tools:context=".view.activity.SettingsActivity">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settingsFragmentLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/setting_toolbar"
@@ -22,56 +21,98 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBroadcastTransaction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/action_broadast_transaction"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/setting_toolbar" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/settingsFragmentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/action_send_transaction"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnBroadcastTransaction" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBroadcastTransaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_broadast_transaction"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                app:icon="@drawable/ic_broadcast"
+                app:iconTint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="?android:attr/borderlessButtonStyle" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnExportXlsx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/action_export_transaction"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnSend" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                app:icon="@drawable/ic_share"
+                app:iconTint="@color/black"
+                android:text="@string/action_send_transaction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="?android:attr/borderlessButtonStyle"
+                app:layout_constraintTop_toBottomOf="@+id/btnBroadcastTransaction" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnExportXls"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/action_export_transaction_xls"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnExportXlsx" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExportXlsx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                app:icon="@drawable/ic_export"
+                app:iconTint="@color/black"
+                android:text="@string/action_export_transaction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="?android:attr/borderlessButtonStyle"
+                app:layout_constraintTop_toBottomOf="@+id/btnSend" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/action_logout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnExportXls" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExportXls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                app:icon="@drawable/ic_export"
+                app:iconTint="@color/black"
+                android:text="@string/action_export_transaction_xls"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="?android:attr/borderlessButtonStyle"
+                app:layout_constraintTop_toBottomOf="@+id/btnExportXlsx" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                app:icon="@drawable/ic_logout"
+                app:iconTint="@color/black"
+                android:text="@string/action_logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="?android:attr/borderlessButtonStyle"
+                app:layout_constraintTop_toBottomOf="@+id/btnExportXls" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
