@@ -1,5 +1,6 @@
 package com.informatika.bondoman.model.repository.transaction
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.informatika.bondoman.model.Resource
@@ -8,9 +9,18 @@ import com.informatika.bondoman.model.local.entity.transaction.Category
 import com.informatika.bondoman.model.local.entity.transaction.CategoryPercentage
 import com.informatika.bondoman.model.local.entity.transaction.Location
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
+import com.informatika.bondoman.model.remote.response.Item
+import com.informatika.bondoman.model.remote.response.Items
+import com.informatika.bondoman.model.remote.service.TransactionService
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.awaitResponse
 import timber.log.Timber
+import java.io.File
 
-class TransactionRepositoryImpl(private var transactionDao: TransactionDao) :
+class TransactionRepositoryImpl(private var transactionDao: TransactionDao, private var transactionService: TransactionService) :
     TransactionRepository {
 
     override var _listTransactionLiveData = MutableLiveData<Resource<List<Transaction>>>()
@@ -97,5 +107,24 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao) :
 
     override suspend fun deleteTransaction(transaction: Transaction) {
         transactionDao.delete(transaction)
+    }
+
+    override suspend fun uploadBill(token: String, image: File): Resource<List<Item>> {
+        try {
+            val requestFile: RequestBody = image.asRequestBody("image/*".toMediaTypeOrNull())
+            val body: MultipartBody.Part = MultipartBody.Part.createFormData("file", image.name, requestFile)
+            val call = transactionService.uploadBill(token, body)
+            val response = call.awaitResponse()
+
+            return if (response.isSuccessful) {
+                val items: Items = response.body()!!.items
+                Resource.Success(items.items)
+            } else {
+                throw Exception("Error upload bill")
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
+            return Resource.Error(e)
+        }
     }
 }

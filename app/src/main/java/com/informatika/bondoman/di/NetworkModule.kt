@@ -2,6 +2,7 @@ package com.informatika.bondoman.di
 
 import com.informatika.bondoman.BuildConfig
 import com.informatika.bondoman.model.remote.service.AuthService
+import com.informatika.bondoman.model.remote.service.TransactionService
 import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -41,4 +42,7 @@ val networkModule = module {
 
     // Dependency: ApiService
     single<AuthService> {get<Retrofit>().create(AuthService::class.java)}
+
+    // Dependency: TransactionService
+    single<TransactionService> {get<Retrofit>().create(TransactionService::class.java)}
 }
