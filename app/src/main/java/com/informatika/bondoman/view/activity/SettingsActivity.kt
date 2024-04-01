@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
+import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.ActivitySettingsBinding
 import com.informatika.bondoman.model.local.ExportType
 import com.informatika.bondoman.prefdatastore.jwt.JWTManager
@@ -44,11 +45,12 @@ class SettingsActivity : NetworkAwareActivity() {
 
         mSettingsActivityBinding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(mSettingsActivityBinding.root)
+        setSupportActionBar(findViewById(R.id.setting_toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val btnBroadcastTransaction = mSettingsActivityBinding.btnBroadcastTransaction
         val btnLogout = mSettingsActivityBinding.btnLogout
         val btnSend = mSettingsActivityBinding.btnSend
-        val btnBack = mSettingsActivityBinding.btnBack
         val btnExportXlsx = mSettingsActivityBinding.btnExportXlsx
         val btnExportXls = mSettingsActivityBinding.btnExportXls
 
@@ -64,10 +66,6 @@ class SettingsActivity : NetworkAwareActivity() {
 
         btnSend.setOnClickListener {
             onBtnEmailClick()
-        }
-
-        btnBack.setOnClickListener {
-            finish()
         }
 
         btnExportXlsx.setOnClickListener {

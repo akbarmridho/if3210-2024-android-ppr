@@ -83,7 +83,9 @@
         <activity
             android:name=".view.activity.SettingsActivity"
             android:exported="true"
-            android:theme="@style/Theme.BondoMan" />
+            android:theme="@style/Theme.BondoMan"
+            android:label="Settings"
+            android:parentActivityName=".view.activity.MainActivity" />
 
         <service android:name=".backgroundservice.AuthService" />
 
