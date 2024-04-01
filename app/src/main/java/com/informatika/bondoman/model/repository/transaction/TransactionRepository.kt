@@ -23,7 +23,7 @@ interface TransactionRepository {
 
     suspend fun getTransaction(id: Int)
     suspend fun getAllTransaction()
-//    suspend fun getCategoryPercentage()
+    suspend fun getCategoryPercentage()
     suspend fun insertTransaction(title: String, category: Category, amount: Int, location: Location)
     suspend fun insertTransaction(title: String, category: Category, amount: Int)
     suspend fun updateTransaction(_id:Int, title: String, amount: Int, location: Location)

@@ -67,15 +67,16 @@ class TransactionRepositoryImpl(private var transactionDao: TransactionDao) :
             location_adminArea = location.adminArea
         )
     }
-//    override suspend fun getCategoryPercentage() {
-//        _categoryPercentageLiveData.postValue(Resource.Loading())
-//        try {
-//            val categoryPercentage = transactionDao.getCategoryPercentages()
-//            _categoryPercentageLiveData.postValue(Resource.Success(categoryPercentage))
-//        } catch (e: Exception) {
-//            _categoryPercentageLiveData.postValue(Resource.Error(e))
-//        }
-//    }
+
+    override suspend fun getCategoryPercentage() {
+        _categoryPercentageLiveData.postValue(Resource.Loading())
+        try {
+            val categoryPercentage = transactionDao.getCategoryPercentages()
+            _categoryPercentageLiveData.postValue(Resource.Success(categoryPercentage))
+        } catch (e: Exception) {
+            _categoryPercentageLiveData.postValue(Resource.Error(e))
+        }
+    }
 
     override suspend fun insertTransaction(title: String, category: Category, amount: Int) {
         transactionDao.insert(title, category, amount)
