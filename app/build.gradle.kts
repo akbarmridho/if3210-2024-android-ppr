@@ -126,6 +126,14 @@ dependencies {
     val MPAndroidChartVersion = "3.1.0"
     implementation("com.github.PhilJay:MPAndroidChart:v$MPAndroidChartVersion")
 
+    // Camera
+    val cameraVersion = "1.1.0"
+    implementation("androidx.camera:camera-core:$cameraVersion")
+    implementation("androidx.camera:camera-camera2:$cameraVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraVersion")
+    implementation("androidx.camera:camera-view:1.1.0-alpha07")
+    implementation("androidx.camera:camera-extensions:1.0.0-alpha30")
+
 
     // Unit Test
     testImplementation("junit:junit:4.13.2")
