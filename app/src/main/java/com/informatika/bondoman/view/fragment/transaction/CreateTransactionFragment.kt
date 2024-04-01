@@ -1,10 +1,5 @@
 package com.informatika.bondoman.view.fragment.transaction
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Context.RECEIVER_EXPORTED
-import android.content.Intent
-import android.content.IntentFilter
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
@@ -18,7 +13,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -32,8 +26,6 @@ import com.informatika.bondoman.R
 import com.informatika.bondoman.databinding.FragmentCreateTransactionBinding
 import com.informatika.bondoman.model.local.entity.transaction.Category
 import com.informatika.bondoman.util.LocationUtil
-import com.informatika.bondoman.view.activity.BROADCAST_TRANSACTION
-import com.informatika.bondoman.view.activity.MainActivity.Companion.listTransactionFragmentTag
 import com.informatika.bondoman.viewmodel.transaction.CreateTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber

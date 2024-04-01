@@ -1,8 +1,8 @@
 package com.informatika.bondoman.view.fragment.transaction
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,18 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.NavigationUI
 import com.informatika.bondoman.DetailTransactionFragmentBinding
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.entity.transaction.Transaction
-import com.informatika.bondoman.view.activity.MainActivity.Companion.updateTransactionFragmentTag
 import com.informatika.bondoman.viewmodel.transaction.DetailTransactionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -75,13 +70,27 @@ class DetailTransactionFragment : Fragment() {
         }
 
         ibDelete.setOnClickListener {
-            detailTransactionViewModel.deleteTransaction(transaction)
-            findNavController().navigate(com.informatika.bondoman.R.id.navigation_transaction)
-            Toast.makeText(requireContext(), "Transaction Deleted", Toast.LENGTH_SHORT).show()
+            val dialog = AlertDialog.Builder(requireContext())
+                .setTitle("Delete Transaction")
+                .setMessage("Are you sure you want to delete this transaction?")
+                .setPositiveButton("Yes") { _, _ ->
+                    detailTransactionViewModel.deleteTransaction(transaction)
+                    findNavController().navigateUp()
+                    Toast.makeText(requireContext(), "Transaction Deleted", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                .setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+            dialog.show()
         }
 
         ibEdit.setOnClickListener {
-            val action = DetailTransactionFragmentDirections.actionNavigationDetailTransactionToNavigationUpdateTransaction(transaction)
+            val action =
+                DetailTransactionFragmentDirections.actionNavigationDetailTransactionToNavigationUpdateTransaction(
+                    transaction
+                )
             findNavController().navigate(action)
         }
     }
