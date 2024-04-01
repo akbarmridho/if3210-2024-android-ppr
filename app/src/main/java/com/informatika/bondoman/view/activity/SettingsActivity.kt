@@ -45,7 +45,6 @@ class SettingsActivity : NetworkAwareActivity() {
 
         mSettingsActivityBinding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(mSettingsActivityBinding.root)
-        setSupportActionBar(findViewById(R.id.setting_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val btnBroadcastTransaction = mSettingsActivityBinding.btnBroadcastTransaction

@@ -39,7 +39,6 @@ class ScanPreviewActivity : AppCompatActivity() {
             LocationServices.getFusedLocationProviderClient(applicationContext)
 
         setContentView(mScanPreviewBinding.root)
-        setSupportActionBar(findViewById(R.id.scan_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val image: Uri? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

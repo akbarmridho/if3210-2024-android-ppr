@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.informatika.bondoman.R
@@ -79,9 +81,16 @@ class MainActivity : NetworkAwareActivity(), TransactionRecyclerAdapter.ItemTouc
 
 
         val navView: BottomNavigationView = binding.navView
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_transaction,
+                R.id.navigation_twibbon,
+                R.id.navigation_report,
+                R.id.navigation_settings
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
