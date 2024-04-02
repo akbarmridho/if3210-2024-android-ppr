@@ -34,6 +34,9 @@ class LoginActivity : NetworkAwareActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        actionBar?.hide()
+        supportActionBar?.hide()
+
         val etUsername = binding.etUsername
         val etPassword = binding.etPassword
         val etLogin = binding.btnSignIn
