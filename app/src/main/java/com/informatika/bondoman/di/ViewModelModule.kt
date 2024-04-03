@@ -1,6 +1,7 @@
 package com.informatika.bondoman.di
 
 import com.informatika.bondoman.viewmodel.JWTViewModel
+import com.informatika.bondoman.viewmodel.ReportViewModel
 import com.informatika.bondoman.viewmodel.connectivity.ConnectivityViewModel
 import com.informatika.bondoman.viewmodel.login.LoginViewModel
 import com.informatika.bondoman.viewmodel.scanner.ScanPreviewViewModel
@@ -46,6 +47,11 @@ val viewModelModule = module {
     // Dependency: ListTransactionViewModel
     viewModel {
         ListTransactionViewModel(get())
+    }
+
+    // Dependency: ReportViewModel
+    viewModel {
+        ReportViewModel(get())
     }
 
     // Dependency: ExporterTransactionViewModel

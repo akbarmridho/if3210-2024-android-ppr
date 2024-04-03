@@ -11,17 +11,19 @@ import com.informatika.bondoman.databinding.FragmentReportBinding
 import com.informatika.bondoman.model.Resource
 import com.informatika.bondoman.model.local.entity.transaction.CategoryPercentage
 import com.informatika.bondoman.viewmodel.ReportViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class ReportFragment : Fragment() {
-
     private lateinit var mReportFragmentBinding: FragmentReportBinding
-    private val reportViewModel: ReportViewModel by viewModels()
+    private val reportViewModel: ReportViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_report, container, false)
+        mReportFragmentBinding = FragmentReportBinding.inflate(inflater, container, false)
+        return mReportFragmentBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
