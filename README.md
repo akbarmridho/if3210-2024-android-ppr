@@ -56,20 +56,20 @@ BondoMan adalah sebuah aplikasi pencatatan pemasukan dan pengeluaran.
 
 ## Pembagian Kerja
 
-| Tugas                            | NIM      |
-|----------------------------------|----------| 
-| Header dan Navbar                | 13521093 |
-| Login                            | 13521087 |
-| Logout                           | 13521060 |
-| Create, Update, Delete Transaksi | 13521087 |
-| Halaman daftar transaksi         | 13521087 |
-| Scan nota                        | 13521093 |
-| Halaman graf                     | 13521060 |
-| Export XLSX, XLS                 | 13521093 |
-| Intent Gmail                     | 13521060 |
-| Background service JWT           | 13521093 |
-| Network sensing                  | 13521060 |
-| Broadcast receiver transaksi     | 13521087 |
+| Tugas                            | NIM                 |
+|----------------------------------|---------------------| 
+| Header dan Navbar                | 13521093            |
+| Login                            | 13521087            |
+| Logout                           | 13521060 & 13521087 |
+| Create, Update, Delete Transaksi | 13521087            |
+| Halaman daftar transaksi         | 13521087            |
+| Scan nota                        | 13521093            |
+| Halaman graf                     | 13521060            |
+| Export XLSX, XLS                 | 13521093            |
+| Intent Gmail                     | 13521060            |
+| Background service JWT           | 13521093            |
+| Network sensing                  | 13521060            |
+| Broadcast receiver transaksi     | 13521087            |
 
 ## Alokasi Jam Kerja
 
