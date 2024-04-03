@@ -46,6 +46,10 @@ BondoMan adalah sebuah aplikasi pencatatan pemasukan dan pengeluaran.
 
 ![Scan Preview](./images/scan_preview.jpg)
 
+### Report
+
+![Settings](./images/report.png)
+
 ### Settings
 
 ![Settings](./images/settings.jpg)
