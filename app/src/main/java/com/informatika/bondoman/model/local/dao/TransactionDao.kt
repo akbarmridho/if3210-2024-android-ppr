@@ -17,7 +17,7 @@ interface TransactionDao {
     @Query("SELECT * FROM `" + DBConstants.mTableTransaction + "` ORDER BY createdAt DESC")
     fun getAll(): List<Transaction>
 
-    @Query("SELECT category, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `" + DBConstants.mTableTransaction + "` ) AS percentage FROM `" + DBConstants.mTableTransaction + "` GROUP BY category")
+    @Query("SELECT category, SUM(amount) * 100.0 / (SELECT SUM(amount) FROM `" + DBConstants.mTableTransaction + "` ) AS percentage FROM `" + DBConstants.mTableTransaction + "` GROUP BY category")
     fun getCategoryPercentages(): List<CategoryPercentage>
 
     @Query("INSERT INTO `" + DBConstants.mTableTransaction + "` (title, category, amount, location_lat, location_lon, location_adminArea) VALUES(:title, :category, :amount, :location_lat, :location_lon, :location_adminArea)")

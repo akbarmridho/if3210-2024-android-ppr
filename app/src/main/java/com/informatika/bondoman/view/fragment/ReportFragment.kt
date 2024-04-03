@@ -87,6 +87,7 @@ class ReportFragment : Fragment() {
     }
 
     private fun displayChart(data: List<CategoryPercentage>) {
+
         mReportFragmentBinding.chartWrapper.visibility = View.VISIBLE
         mReportFragmentBinding.reportLoadingText.visibility = View.GONE
         mReportFragmentBinding.reportErrorText.visibility = View.GONE
