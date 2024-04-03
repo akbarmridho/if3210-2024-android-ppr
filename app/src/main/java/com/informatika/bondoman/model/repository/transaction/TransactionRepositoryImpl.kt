@@ -86,6 +86,7 @@ class TransactionRepositoryImpl(
             val categoryPercentage = transactionDao.getCategoryPercentages()
             _categoryPercentageLiveData.postValue(Resource.Success(categoryPercentage))
         } catch (e: Exception) {
+            Timber.e(e)
             _categoryPercentageLiveData.postValue(Resource.Error(e))
         }
     }

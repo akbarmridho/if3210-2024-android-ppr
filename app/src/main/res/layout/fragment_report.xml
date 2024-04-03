@@ -10,42 +10,27 @@
     android:orientation="vertical"
     tools:context=".view.activity.MainActivity">
 
-    <TextView
-        android:id="@+id/report_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:gravity="center"
-        android:padding="4dp"
-        android:text="@string/title_report"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <!--Ui component for our pie chart-->
 
     <TextView
         android:id="@+id/reportLoadingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="@string/report_loading"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/reportErrorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="@string/report_error"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/report_title"
-        app:layout_constraintTop_toBottomOf="@id/report_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +39,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report_title"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="gone">
 
         <com.github.mikephil.charting.charts.PieChart
@@ -110,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/income"
-                    android:textColor="@android:color/holo_green_dark"
+                    android:textColor="@color/green"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/expense_text"
