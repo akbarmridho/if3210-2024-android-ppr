@@ -60,9 +60,10 @@
     <string name="report_error">"Error Making Reports"</string>
     <string name="report_chart">"Report Chart"</string>
 
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_transaction_action">Add Transaction Action</string>
     <string name="scan_transaction_action">Scan Transaction Action</string>
+    <string name="capture_twibbon">"Capture Twibbon"</string>
+
 
 </resources>
