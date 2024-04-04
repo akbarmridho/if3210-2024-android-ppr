@@ -58,6 +58,40 @@ BondoMan adalah sebuah aplikasi pencatatan pemasukan dan pengeluaran.
 
 ![Twibbon](./images/twibbon.jpg)
 
+### Accessibility Testing
+
+![1](./images/accessibility-scan/1.jpg)
+![2](./images/accessibility-scan/2.jpg)
+![3](./images/accessibility-scan/3.jpg)
+![4](./images/accessibility-scan/4.jpg)
+![5](./images/accessibility-scan/5.jpg)
+![6](./images/accessibility-scan/6.jpg)
+![7](./images/accessibility-scan/7.jpg)
+![8](./images/accessibility-scan/8.jpg)
+![9](./images/accessibility-scan/9.jpg)
+![10](./images/accessibility-scan/10.jpg)
+![11](./images/accessibility-scan/11.jpg)
+![12](./images/accessibility-scan/12.jpg)
+![13](./images/accessibility-scan/13.jpg)
+![14](./images/accessibility-scan/14.jpg)
+![15](./images/accessibility-scan/15.jpg)
+![16](./images/accessibility-scan/16.jpg)
+![17](./images/accessibility-scan/17.jpg)
+![18](./images/accessibility-scan/18.jpg)
+![19](./images/accessibility-scan/19.jpg)
+![20](./images/accessibility-scan/20.jpg)
+![21](./images/accessibility-scan/21.jpg)
+![22](./images/accessibility-scan/22.jpg)
+![23](./images/accessibility-scan/23.jpg)
+![24](./images/accessibility-scan/24.jpg)
+![25](./images/accessibility-scan/25.jpg)
+![26](./images/accessibility-scan/26.jpg)
+![27](./images/accessibility-scan/27.jpg)
+
+
+
+
+
 ## Pembagian Kerja
 
 | Tugas                            | NIM                 |
@@ -74,6 +108,7 @@ BondoMan adalah sebuah aplikasi pencatatan pemasukan dan pengeluaran.
 | Background service JWT           | 13521093            |
 | Network sensing                  | 13521060            |
 | Broadcast receiver transaksi     | 13521087            |
+| Accessibility Testing            | 13521060            |
 
 ## Alokasi Jam Kerja
 
