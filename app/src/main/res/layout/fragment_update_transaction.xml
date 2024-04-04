@@ -34,9 +34,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="144dp"
                 android:hint="@string/prompt_title"
-                android:text="@{transaction.title}"
                 android:inputType="text"
                 android:selectAllOnFocus="true"
+                android:text="@{transaction.title}"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,8 +48,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:textAlignment="viewStart"
                 android:text="@{BindingUtils.getCategory(transaction.category)}"
+                android:textAlignment="viewStart"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etTransactionTitle" />
@@ -58,13 +60,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@{BindingUtils.getAmountString(transaction.amount)}"
                 android:hint="@string/prompt_amount"
                 android:inputType="number"
                 android:selectAllOnFocus="true"
-                app:layout_constraintTop_toBottomOf="@+id/tvTransactionCategory"
+                android:text="@{BindingUtils.getAmountString(transaction.amount)}"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTransactionCategory" />
             />
 
             <com.google.android.material.textview.MaterialTextView

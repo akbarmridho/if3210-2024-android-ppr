@@ -16,63 +16,60 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
-        android:orientation="horizontal"
+        android:accessibilityHeading="true"
+        android:accessibilityPaneTitle="@string/transaction_card"
         android:background="@color/teal_200"
-        >
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="start"
             android:layout_weight=".5"
-            >
+            android:gravity="start"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_list_item_transaction_createdAt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:text="@{BindingUtils.getDate(transaction.createdAt)}"
-                android:textSize="12sp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:text="@{BindingUtils.getDate(transaction.createdAt)}"
                 android:textColor="@color/black"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                tools:text="29/02/2024"
-                />
+                tools:text="29/02/2024" />
 
             <TextView
                 android:id="@+id/tv_list_item_transaction_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{BindingUtils.createTitle(transaction.title)}"
-                android:textSize="12sp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
+                android:text="@{BindingUtils.createTitle(transaction.title)}"
                 android:textColor="@color/black"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                tools:text="@string/app_name"
-                />
+                tools:text="@string/app_name" />
 
             <TextView
                 android:id="@+id/tv_list_item_transaction_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{BindingUtils.createAmount(transaction.amount)}"
-                android:textSize="12sp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:text="@{BindingUtils.createAmount(transaction.amount)}"
                 android:textColor="@color/black"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                tools:text="3,000"
-                />
+                tools:text="3,000" />
 
         </LinearLayout>
 
@@ -80,39 +77,35 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_weight=".5"
             android:gravity="end"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_list_item_transaction_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{BindingUtils.getCategory(transaction.category)}"
-                android:textSize="12sp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
+                android:text="@{BindingUtils.getCategory(transaction.category)}"
                 android:textColor="@color/black"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                tools:text="Expense"
-                />
+                tools:text="Expense" />
 
             <TextView
                 android:id="@+id/tv_list_item_transaction_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{transaction.location.adminArea}"
-                android:textSize="12sp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="35dp"
                 android:layout_marginBottom="10dp"
+                android:text="@{transaction.location.adminArea}"
                 android:textColor="@color/black"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:visibility="@{BindingUtils.isLocationNotNull(transaction.location) ? View.VISIBLE : View.GONE}"
-                tools:text="@tools:sample/cities"
-                />
-
+                tools:text="@tools:sample/cities" />
 
 
         </LinearLayout>

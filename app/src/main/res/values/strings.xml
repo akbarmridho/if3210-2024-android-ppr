@@ -39,6 +39,8 @@
     <string name="invalid_amount_empty">"Fill the amount!"</string>
     <string name="invalid_amount_negative">"Amount must be positive!"</string>
     <string name="invalid_category">"Category Required!"</string>
+    <string name="transaction_card">Transaction Card</string>
+
     <string name="transaction_saved">"Transaction saved!"</string>
     <string name="transaction_deleted">"Transaction deleted!"</string>
     <string name="transaction_updated">"Transaction updated!"</string>

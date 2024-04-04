@@ -83,6 +83,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/expense"
+                        android:textColor="@color/red"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/income_text"
                         app:layout_constraintStart_toStartOf="parent"
