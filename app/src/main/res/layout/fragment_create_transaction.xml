@@ -5,85 +5,90 @@
     android:id="@+id/create_transaction_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="60dp"
     tools:context=".view.fragment.transaction.CreateTransactionFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:background="@color/white"
-        >
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etTransactionTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="144dp"
-            android:hint="@string/prompt_title"
-            android:inputType="text"
-            android:selectAllOnFocus="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:background="@color/white"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTransactionTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="144dp"
+                android:hint="@string/prompt_title"
+                android:inputType="text"
+                android:selectAllOnFocus="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spTransactionCategory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:spinnerMode="dropdown"
-            android:prompt="@string/prompt_category"
-            android:autofillHints="@string/prompt_category"
-            android:textAlignment="viewStart"
-            android:contextClickable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etTransactionTitle" />
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spTransactionCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:spinnerMode="dropdown"
+                android:prompt="@string/prompt_category"
+                android:autofillHints="@string/prompt_category"
+                android:textAlignment="viewStart"
+                android:contextClickable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etTransactionTitle" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etTransactionAmount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/prompt_amount"
-            android:inputType="number"
-            android:selectAllOnFocus="true"
-            app:layout_constraintTop_toBottomOf="@+id/spTransactionCategory"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTransactionAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/prompt_amount"
+                android:inputType="number"
+                android:selectAllOnFocus="true"
+                app:layout_constraintTop_toBottomOf="@+id/spTransactionCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvTransactionLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
-            android:textAlignment="textStart"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/etTransactionAmount"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="@tools:sample/cities"
-            />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTransactionLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/etTransactionAmount"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="@tools:sample/cities"
+                />
 
-        <Button
-            android:id="@+id/btnCreateTransaction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="24dp"
-            android:enabled="false"
-            android:textAlignment="center"
-            android:text="@string/action_create"
-            app:layout_constraintTop_toBottomOf="@+id/tvTransactionLocation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.2" />
+            <Button
+                android:id="@+id/btnCreateTransaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:enabled="false"
+                android:textAlignment="center"
+                android:text="@string/action_create"
+                app:layout_constraintTop_toBottomOf="@+id/tvTransactionLocation"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.2" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </FrameLayout>
