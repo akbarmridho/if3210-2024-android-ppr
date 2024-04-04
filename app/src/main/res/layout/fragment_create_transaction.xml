@@ -30,6 +30,7 @@
                 android:hint="@string/prompt_title"
                 android:inputType="text"
                 android:selectAllOnFocus="true"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,11 +41,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:spinnerMode="dropdown"
-                android:prompt="@string/prompt_category"
                 android:autofillHints="@string/prompt_category"
-                android:textAlignment="viewStart"
                 android:contextClickable="true"
+                android:paddingVertical="16dp"
+                android:prompt="@string/prompt_category"
+                android:spinnerMode="dropdown"
+                android:textAlignment="viewStart"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etTransactionTitle" />
@@ -57,9 +60,10 @@
                 android:hint="@string/prompt_amount"
                 android:inputType="number"
                 android:selectAllOnFocus="true"
-                app:layout_constraintTop_toBottomOf="@+id/spTransactionCategory"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spTransactionCategory" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvTransactionLocation"

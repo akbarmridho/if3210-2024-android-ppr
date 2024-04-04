@@ -37,6 +37,8 @@
         android:id="@+id/chartWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:accessibilityHeading="true"
+        android:accessibilityPaneTitle="@string/report_chart"
         android:contentDescription="@string/report_chart">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +48,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -81,7 +83,6 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/expense"
-                        android:textColor="@color/red"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/income_text"
                         app:layout_constraintStart_toStartOf="parent"

@@ -30,14 +30,15 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="wrap_content">
 
                 <ImageButton
                     android:id="@+id/ibEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp"
                     android:contentDescription="@string/edit_description"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:src="@drawable/ic_edit"
                     app:layout_constraintEnd_toStartOf="@id/ibDelete"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -47,8 +48,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
-                    android:contentDescription="delete_button"
-                    android:padding="16dp"
+                    android:contentDescription="@string/delete_description"
+                    android:padding="20dp"
                     android:src="@drawable/ic_trash"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="Title"
                 android:textColor="@color/black"
                 android:textSize="24sp"
