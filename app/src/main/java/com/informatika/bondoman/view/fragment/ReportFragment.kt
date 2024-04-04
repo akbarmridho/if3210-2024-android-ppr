@@ -92,6 +92,17 @@ class ReportFragment : Fragment() {
         mReportFragmentBinding.reportLoadingText.visibility = View.GONE
         mReportFragmentBinding.reportErrorText.visibility = View.GONE
 
+        val pieChart = mReportFragmentBinding.pieChart
+
+        if(data.size <= 0) {
+            pieChart.clear()
+            mReportFragmentBinding.legendContainer.visibility = View.GONE
+            return;
+        }
+
+        mReportFragmentBinding.legendContainer.visibility = View.VISIBLE
+
+
         val dataSet = PieDataSet(data.map { categoryPercentage -> PieEntry(categoryPercentage.percentage) }, "Transactions").apply {
             this.setDrawIcons(false);
             this.sliceSpace = 3f;
@@ -108,7 +119,6 @@ class ReportFragment : Fragment() {
         pieData.setValueTypeface(Typeface.DEFAULT_BOLD)
         pieData.setValueTextColor(Color.BLACK)
 
-        val pieChart = mReportFragmentBinding.pieChart
         pieChart.data = pieData
 
         pieChart.highlightValues(null)
