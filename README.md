@@ -79,4 +79,4 @@ BondoMan adalah sebuah aplikasi pencatatan pemasukan dan pengeluaran.
 
 1. Akbar Maulana Ridho - 30 jam
 2. Fatih Nararya R. I. - 30 jam
-3. Razzan Raksana Yoni - 30 jam
+3. Razzan Daksana Yoni - 30 jam
