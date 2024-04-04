@@ -27,28 +27,35 @@
             android:id="@+id/fabAddTransaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/action_create"
-            android:src="@drawable/ic_add"
             android:layout_margin="16dp"
+            android:backgroundTint="@color/purple_700"
+            android:contentDescription="@string/add_transaction_action"
+            android:padding="10dp"
+            android:src="@drawable/ic_add_white"
+            android:text="@string/action_create"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/add_transaction_action"
-            android:backgroundTint="@color/white" />
+            app:tint="@color/white" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabScanTransaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:src="@drawable/ic_scan"
             android:layout_margin="16dp"
-            android:visibility="visible"
+            android:background="#FFFFFF"
+            android:backgroundTint="@color/purple_700"
             android:contentDescription="@string/scan_transaction_action"
+            android:foregroundTint="#FFFFFF"
+            android:foregroundTintMode="add"
+            android:padding="10dp"
+            android:src="@drawable/ic_scan_white"
+            android:tint="#FFFFFF"
+            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/fabAddTransaction"
             app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="@color/white" />
+            app:rippleColor="#FFFFFF"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/tvEmpty"
