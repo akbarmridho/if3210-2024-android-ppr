@@ -22,19 +22,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="10dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancelScan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            android:text="@string/action_cancel" />
+            android:backgroundTint="@color/grey_dark"
+            android:text="@string/action_cancel"
+            android:textColor="@color/white" />
 
         <Space
             android:layout_width="wrap_content"
